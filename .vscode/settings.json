@@ -1,9 +1,0 @@
-{
-  "cSpell.words": [
-    "tailwindcss",
-    "vite",
-    "vitejs"
-  ],
-  "scss.format.spaceAroundSelectorSeparator": true,
-  "tailwindCSS.emmetCompletions": true
-}

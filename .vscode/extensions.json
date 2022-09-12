@@ -1,7 +1,3 @@
 {
-  "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "bradlc.vscode-tailwindcss",
-    "sutter-nicolas.tailwind-loves-sass-snippets"
-  ]
+  "recommendations": ["Vue.volar"]
 }
