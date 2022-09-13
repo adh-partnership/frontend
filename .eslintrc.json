@@ -1,4 +1,5 @@
 {
+  "root": true,
   "settings": {
     "import/resolver": {
       "typescript": {}
@@ -16,6 +17,9 @@
     "airbnb-typescript/base",
     "@vue/eslint-config-prettier"
   ],
+  "globals": {
+		"M": true
+	},
   "parser": "vue-eslint-parser",
   "parserOptions": {
     "ecmaVersion": "latest",
