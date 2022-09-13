@@ -1,18 +1,22 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
-
+import { createRouter, createWebHistory } from "vue-router";
+import Home from "@/views/pages/HomePage.vue";
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: HomeView
-  }
+    path: "/",
+    name: "Home",
+    component: Home,
+  },
+  {
+    path: "/not-implemented",
+    name: "NotImplemented",
+    component: () => import("@/views/pages/NotImplementedPage.vue"),
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 });
 
 export default router;

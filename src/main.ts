@@ -1,15 +1,15 @@
-import { createApp } from 'vue';
-import vuetify from './plugins/vuetify';
-import { loadFonts } from './plugins/webfontloader';
-import router from './router';
-import { createPinia } from 'pinia';
+import { createApp } from "vue";
+import { createPinia } from "pinia";
 
-import App from './App.vue';
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
 
-loadFonts();
+import App from "./App.vue";
+import router from "./router";
 
-createApp(App)
-  .use(vuetify)
-  .use(router)
-  .use(createPinia())
-  .mount('#app');
+import "@materializecss/materialize/sass/materialize.scss";
+
+library.add(faCaretDown);
+
+createApp(App).component("fa-icon", FontAwesomeIcon).use(router).use(createPinia()).mount("#app");

@@ -1,26 +1,20 @@
 <template>
-  <v-app>
-    <v-main>
-      <HelloWorld/>
-    </v-main>
-  </v-app>
+  <PartialHeader />
+
+  <main>
+    <div class="row main-content wrapper">
+      <div class="main_content col s12">
+        <RouterView />
+      </div>
+    </div>
+  </main>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+<script lang="ts" setup>
+import { onMounted } from "vue";
+import PartialHeader from "./views/partials/PartialHeader.vue";
 
-export default defineComponent({
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
-
-  data () {
-    return {
-      //
-    }
-  },
-})
+onMounted(() => {
+  M.AutoInit();
+});
 </script>
