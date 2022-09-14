@@ -18,15 +18,9 @@
 </template>
 
 <script setup lang="ts">
-import { RouteLocationRaw } from "vue-router";
+import type { Link } from "./links";
 
-export interface Links {
-  to: string | RouteLocationRaw;
-  title: string;
-  sublinks?: Links[];
-}
-
-const props = withDefaults(defineProps<Links>(), {
+const props = withDefaults(defineProps<Link>(), {
   sublinks: () => [],
 });
 </script>
