@@ -14,8 +14,9 @@
 </template>
 
 <script setup lang="ts">
+import links from "@/links";
+
 import HeaderNavItem from "./HeaderNavItem.vue";
-import links from "./links";
 </script>
 
 <style scoped></style>

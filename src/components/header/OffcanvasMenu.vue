@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import links from "./links";
+import links from "@/links";
 import OffcanvasMenuItem from "./OffcanvasMenuItem.vue";
 
 defineEmits(["toggle"]);

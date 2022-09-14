@@ -36,8 +36,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 
-import HeaderNav from "./HeaderNav.vue";
-import OffcanvasMenu from "./OffcanvasMenu.vue";
+import HeaderNav from "@/components/header/HeaderNav.vue";
+import OffcanvasMenu from "@/components/header/OffcanvasMenu.vue";
 
 const isSticky = ref(false);
 const navOpen = ref(false);
