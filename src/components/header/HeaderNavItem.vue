@@ -9,7 +9,10 @@
       class="top-full left-0 absolute w-[200px] bg-white border-b-[3px] border-primary py-4 shadow-md shadow-black/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-[20px] group-hover:translate-y-0 z-30"
     >
       <li v-for="(link, index) in props.sublinks" :key="index">
-        <RouterLink :to="link.to" class="block text-heading-light font-semibold py-1 px-4 hover:text-primary">
+        <RouterLink
+          :to="link.to"
+          class="block text-heading-light font-semibold py-1 px-4 hover:text-primary hover:bg-gray-light"
+        >
           {{ link.title }}
         </RouterLink>
       </li>
