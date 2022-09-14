@@ -2,11 +2,11 @@
   <div class="fixed top-0 left-0 w-screen h-screen opacity-0 invisible z-50 transition-all">
     <div class="top-0 left-0 w-full h-full absolute bg-black bg-opacity-80 content-['']" @click="$emit('toggle')"></div>
     <div
-      class="mobile-menu-inner relative w-[400px] max-w-[80%] h-full text-left bg-white -translate-x-full transition-all"
+      class="mobile-menu-inner relative w-[400px] max-w-[80%] h-full text-left bg-white dark:bg-black-deep dark:text-white -translate-x-full transition-all"
     >
       <button
         aria-label="Settings"
-        class="absolute top-0 left-full w-16 h-16 text-4xl text-heading-light hover:text-primary bg-white group"
+        class="absolute top-0 left-full w-16 h-16 text-4xl text-heading-light hover:text-primary bg-white dark:bg-black-light dark:text-white group"
         @click="$emit('toggle')"
       >
         <i class="fa-solid fa-xmark group-hover:rotate-180 block transition-all duration-500"></i>

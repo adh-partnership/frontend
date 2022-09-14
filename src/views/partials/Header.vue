@@ -1,6 +1,6 @@
 <template>
   <div
-    class="header-main bg-colorado-blue text-white shadow-md mb-[10px]"
+    class="header-main bg-colorado-blue text-white shadow-md mb-[10px] dark:bg-black-deep"
     :class="{ 'fixed top-0 left-0 w-full z-50 transition-all shadow-md animate-fadeInDown': isSticky }"
   >
     <div class="py-4 lg:py-1">
@@ -9,9 +9,7 @@
           <div class="col-span-2 lg:col-span-1 logo">
             <router-link to="/">
               <img src="https://cdn.denartcc.org/assets/img/logo_150.png" class="h-[50px]" alt="logo" />
-              <h1 class="text-[20px] font-semibold text-colorado-red inline align-middle pl-4 zdvcolors">
-                Denver <span class="text-colorado-yellow">ARTCC</span>
-              </h1>
+              <h1 class="text-[20px] font-semibold inline align-middle pl-4">Denver ARTCC</h1>
             </router-link>
           </div>
           <div class="col-span-2 lg:col-span-3 hidden lg:block ml-auto">

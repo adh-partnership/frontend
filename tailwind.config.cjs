@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./index.html", "./src/**/*.vue"],
+  darkMode: "class",
   theme: {
     colors: {
       "colorado-blue": "#002868",

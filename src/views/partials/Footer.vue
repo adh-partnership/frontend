@@ -1,0 +1,38 @@
+<template>
+  <div class="bg-gray-light dark:bg-black-deep dark:text-white">
+    <div class="footer-main mt-10 py-4">
+      <div class="container text-sm">
+        This site is not affiliated with the Federal Aviation Administration or any governing aviation body. All content
+        contained herein is approved only for use on the VATSIM network.
+      </div>
+    </div>
+  </div>
+  <div class="bg-colorado-blue text-white dark:bg-black">
+    <div class="py-4">
+      <div class="container text-sm">
+        Copyright &copy; 2022 by Denver ARTCC. <RouterLink to="/privacy">Privacy Policy</RouterLink>. Open Source at
+        <RouterLink to="https://github.com/kzdv/frontend">GitHub</RouterLink>.
+        <div class="float-right text-right">
+          <button @click="toggleDark()">
+            <i v-if="isDark" class="fa-solid fa-sun"></i>
+            <i v-else class="fa-solid fa-moon"></i>
+            <span class="ml-2">{{ isDark ? "Light" : "Dark" }} Mode</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useDark, useToggle } from "@vueuse/core";
+
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
+</script>
+
+<style scoped>
+a {
+  @apply text-colorado-yellow hover:text-colorado-red;
+}
+</style>

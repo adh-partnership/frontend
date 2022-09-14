@@ -12,7 +12,8 @@
     "lib": ["esnext", "dom"],
     "paths": {
       "@/*": ["./src/*", "./dist/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "*.config.cjs", "postcss.config.js", "tailwind.config.js"],
   "references": [{ "path": "./tsconfig.node.json" }],

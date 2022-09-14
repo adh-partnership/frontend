@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Link } from "./links";
+import { Link } from "@/types";
 
 const props = withDefaults(defineProps<Link>(), {
   sublinks: () => [],

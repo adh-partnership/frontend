@@ -4,7 +4,7 @@
 
 @layer base {
     body {
-        @apply text-body text-base font-base;
+        @apply text-body text-base font-base dark:bg-black-deep;
     }
     img {
         @apply inline-block;
@@ -18,7 +18,7 @@
     h4,
     h5,
     h6 {
-        @apply font-semibold text-heading-light leading-[1.4] mb-2.5;
+        @apply font-semibold leading-[1.4] mb-2.5;
     }
     h2 {
         @apply text-2xl;
