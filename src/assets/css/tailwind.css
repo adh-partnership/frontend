@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply text-body text-base font-base;
+    }
+    img {
+        @apply inline-block;
+    }
+    p {
+        @apply mb-4 last:mb-0 leading-6;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-semibold text-heading-light leading-[1.4] mb-2.5;
+    }
+    h2 {
+        @apply text-2xl;
+    }
+    h3 {
+        @apply text-xl md:text-2xl mb-5;
+    }
+    h4 {
+        @apply text-xl mb-5;
+    }
+    h5 {
+        @apply text-lg;
+    }
+    li {
+        @apply last:mr-0;
+    }
+    a {
+        @apply transition;
+    }
+    blockquote {
+        @apply bg-[#fafafa] py-15 px-3 md:px-15 text-center relative before:content-["“"] before:text-primary-light before:text-[96px] before:absolute before:top-4 before:left-1/2 before:transform before:-translate-x-1/2 my-6 rounded-lg;
+    }
+    .content ul {
+        @apply list-disc pl-6 mb-2.5;
+    }
+    .content ul li {
+        @apply mb-2.5;
+    }
+    .swiper-button-prev::after,
+    .swiper-button-next::after {
+        @apply hidden;
+    }
+}
+
+@layer components {
+    .py-section {
+        @apply md:py-[90px] py-15;
+    }
+    .pt-section {
+        @apply md:pt-[90px] pt-15;
+    }
+    .pb-section {
+        @apply md:pb-[90px] pb-15;
+    }
+}
+
+@layer utilities {
+    .category.food {
+        @apply bg-[#f9e7a0];
+    }
+    .category.technology {
+        @apply bg-[#c8e8d4];
+    }
+    .category.education {
+        @apply bg-[#e1f3ff];
+    }
+    .category.food {
+        @apply bg-[#f9e7a0];
+    }
+    .category.business {
+        @apply bg-[#e1f3ff];
+    }
+}
