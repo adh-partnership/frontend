@@ -19,8 +19,8 @@
           </div>
           <div class="col-span-2 text-right block lg:hidden">
             <button
-              class="text-primary text-xl w-11 h-11 leading-10 rounded-md border-[1px] border-primary hover:bg-primary hover:text-white hover:border-primary transition-all"
-              @click="navOpen = !navOpen"
+              class="text-white text-xl w-11 h-11 leading-10 rounded-md border-[1px] border-white hover:bg-primary hover:text-white hover:border-white transition-all"
+              @click="toggleNav()"
             >
               <i class="fa-solid fa-bars"></i>
             </button>
@@ -29,25 +29,29 @@
       </div>
     </div>
 
-    <OffcanvasMenu :class="{ 'show-mobile-menu': navOpen }" @toggle="navOpen = !navOpen" />
+    <OffcanvasMenu :class="{ 'show-mobile-menu': navOpen }" @toggle="toggleNav()" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 import HeaderNav from "./HeaderNav.vue";
 import OffcanvasMenu from "./OffcanvasMenu.vue";
 
-let isSticky = false;
-const navOpen = false;
+const isSticky = ref(false);
+const navOpen = ref(false);
+
+const toggleNav = (): void => {
+  navOpen.value = !navOpen.value;
+};
 
 onMounted(() => {
   window.addEventListener("scroll", () => {
     if (window.scrollY >= 200) {
-      isSticky = true;
+      isSticky.value = true;
     } else {
-      isSticky = false;
+      isSticky.value = false;
     }
   });
 });

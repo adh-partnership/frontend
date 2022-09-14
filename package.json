@@ -11,9 +11,6 @@
     "lint:fix": "eslint src --ext .ts,.js,.vue --fix"
   },
   "dependencies": {
-    "@materializecss/materialize": "^1.1.0",
-    "@popperjs/core": "^2.11.6",
-    "bootstrap": "^5.2.1",
     "core-js": "^3.25.1",
     "pinia": "^2.0.22",
     "tailwind-loves-sass": "^1.1.3",

@@ -8,7 +8,6 @@
     </main>
     <!-- Footer ?? -->
   </div>
-  <PartialHeader />
 </template>
 
 <script lang="ts" setup>

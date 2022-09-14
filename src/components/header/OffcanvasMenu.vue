@@ -37,4 +37,15 @@ import OffcanvasMenuItem from "./OffcanvasMenuItem.vue";
 defineEmits(["toggle"]);
 </script>
 
-<style scoped></style>
+<style scoped>
+.submenu.active {
+  @apply block;
+}
+
+.submenu-toggle.active i {
+  @apply -rotate-180 inline-block transition-all;
+}
+.mobile-menu-inner {
+  @apply transform-none;
+}
+</style>

@@ -30,6 +30,11 @@ module.exports = {
           lighter: "#fafafa",
           deep: "#EDEBF5",
         },
+        black: {
+          DEFAULT: "#000000",
+          light: "#333333",
+          deep: "#222222",
+        },
         gray: {
           light: "#f7f7f7",
         },
