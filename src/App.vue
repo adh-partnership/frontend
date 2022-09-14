@@ -1,20 +1,16 @@
 <template>
-  <PartialHeader />
-
-  <main>
-    <div class="row main-content wrapper">
-      <div class="main_content col s12">
-        <RouterView />
+  <div class="theme-blue">
+    <HeaderBar />
+    <main>
+      <div class="container mx-auto">
+        <router-view />
       </div>
-    </div>
-  </main>
+    </main>
+    <!-- Footer ?? -->
+  </div>
+  <PartialHeader />
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
-import PartialHeader from "./views/partials/PartialHeader.vue";
-
-onMounted(() => {
-  M.AutoInit();
-});
+import HeaderBar from "./components/HeaderBar.vue";
 </script>

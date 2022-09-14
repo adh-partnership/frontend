@@ -2,6 +2,11 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.vue"],
   theme: {
+    colors: {
+      "colorado-blue": "#002868",
+      "colorado-red": "#bf0a30",
+      "colorado-yellow": "#ffd700",
+    },
     extend: {
       colors: {
         primary: {
