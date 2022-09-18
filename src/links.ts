@@ -3,6 +3,7 @@ import { RouteLocationRaw } from "vue-router";
 export interface Link {
   title: string;
   to: string | RouteLocationRaw;
+  href?: string;
   sublinks?: Link[];
 }
 

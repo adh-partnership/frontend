@@ -1,5 +1,5 @@
 <template>
-  <div class="theme-blue dark:bg-black-light dark:text-white">
+  <div v-if="userStore.hasFetched" class="dark:bg-black-light dark:text-white">
     <Header />
     <main>
       <div class="container mx-auto">
@@ -8,9 +8,26 @@
     </main>
     <Footer />
   </div>
+  <div v-else class="dark:bg-black-deep dark:text-white">
+    <div class="flex items-center justify-center h-screen">
+      <Spinner :size="16" />
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
+import { onMounted } from "vue";
+
 import Footer from "@/views/partials/Footer.vue";
 import Header from "@/views/partials/Header.vue";
+import Spinner from "@/components/Spinner.vue";
+import useUserStore from "@/stores/users";
+
+const userStore = useUserStore();
+
+console.log(JSON.stringify(import.meta.env));
+
+onMounted(() => {
+  userStore.fetchUser();
+});
 </script>

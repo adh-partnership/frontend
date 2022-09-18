@@ -1,6 +1,11 @@
 <template>
   <li class="relative mr-12 group">
-    <RouterLink :to="props.to" class="block text-[16px] font-semibold group-hover:text-white py-7 text-white">
+    <RouterLink
+      :to="props.to"
+      :href="props.href"
+      class="block text-[16px] font-semibold group-hover:text-colorado-yellow py-7 text-white group-hover:cursor-pointer"
+      @click="checkClick()"
+    >
       {{ props.title }} <i v-if="props.sublinks.length > 0" class="fa-solid fa-chevron-down ml-2"></i>
     </RouterLink>
 
@@ -24,8 +29,18 @@
 import { Link } from "@/types";
 
 const props = withDefaults(defineProps<Link>(), {
+  to: "#",
   sublinks: () => [],
 });
+
+// @TODO Replace by extending RouteLink
+const checkClick = (): boolean => {
+  if (props.href) {
+    window.location.href = props.href;
+    return false;
+  }
+  return true;
+};
 </script>
 
 <style scoped></style>
