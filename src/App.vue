@@ -25,8 +25,6 @@ import useUserStore from "@/stores/users";
 
 const userStore = useUserStore();
 
-console.log(JSON.stringify(import.meta.env));
-
 onMounted(() => {
   userStore.fetchUser();
 });

@@ -10,6 +10,7 @@
       >
       </HeaderNavItem>
       <HeaderNavItem v-if="!userStore.isLoggedIn" title="Login" :href="`${apiUrl}/v1/user/login?redirect=${loc}`" />
+      <HeaderNavItem v-else :title="getName()" to="#" />
     </ul>
   </nav>
 </template>
@@ -22,6 +23,10 @@ import useUserStore from "@/stores/users";
 import HeaderNavItem from "./HeaderNavItem.vue";
 
 const userStore = useUserStore();
+
+const getName = (): string => {
+  return `${userStore.user?.first_name} ${userStore.user?.last_name}`;
+};
 
 // eslint-disable-next-line no-restricted-globals
 const loc = location.href;

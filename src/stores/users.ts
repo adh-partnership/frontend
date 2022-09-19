@@ -2,12 +2,42 @@ import { defineStore } from "pinia";
 
 import { ZDVAPI } from "@/utils/axios";
 
+interface UserState {
+  user: User | null;
+  fetching: boolean;
+  hasFetched: boolean;
+}
+
+interface User {
+  cid: number;
+  first_name: string;
+  last_name: string;
+  operating_initials: string;
+  controller_type: string;
+  certifications: Certifications;
+  rating: string;
+  status: string;
+  roles: string[];
+  discord_id: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface Certifications {
+  delivery: string;
+  ground: string;
+  local: string;
+  approach: string;
+  enroute: string;
+}
+
 const useUserStore = defineStore("user", {
-  state: () => ({
-    user: null,
-    fetching: false,
-    hasFetched: false,
-  }),
+  state: () =>
+    ({
+      user: null,
+      fetching: false,
+      hasFetched: false,
+    } as UserState),
   getters: {
     isLoggedIn: (state) => !!state.user,
   },
