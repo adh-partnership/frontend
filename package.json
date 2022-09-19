@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
+    "build-dev": "vite build --mode staging",
     "dev": "vite",
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.js,.vue",
