@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
+    "build-dev": "vite build --mode staging",
     "dev": "vite",
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.js,.vue",
@@ -32,7 +33,7 @@
     "@vue/eslint-config-typescript": "^11.0.0",
     "autoprefixer": "^10.4.10",
     "editorconfig": "^0.15.3",
-    "eslint": "^8.17.0",
+    "eslint": "^8.23.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
