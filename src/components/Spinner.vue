@@ -4,6 +4,7 @@
       aria-hidden="true"
       class="mr-2 text-colorado-blue dark:text-black-light animate-spin dark:text-gray-600 fill-colorado-red"
       :class="classes"
+      :style="`height: ${size}px; width: ${size}px;`"
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -39,6 +40,14 @@ const classes = computed(() => {
   }
 
   return props.large ? "h-16 w-16" : "h-8 w-8";
+});
+
+const size = computed(() => {
+  if (props.size > 0) {
+    return props.size * 4;
+  }
+
+  return props.large ? 64 : 32;
 });
 </script>
 

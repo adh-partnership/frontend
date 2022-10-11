@@ -1,13 +1,23 @@
 <template>
   <li class="relative mr-12 group">
     <RouterLink
+      v-if="props.to"
       :to="props.to"
-      :href="props.href"
       class="block text-[16px] font-semibold group-hover:text-colorado-yellow py-7 text-white group-hover:cursor-pointer"
       @click="checkClick()"
     >
       {{ props.title }} <i v-if="props.sublinks.length > 0" class="fa-solid fa-chevron-down ml-2"></i>
     </RouterLink>
+
+    <a
+      v-else
+      :href="props.href"
+      target="_blank"
+      class="block text-[16px] font-semibold group-hover:text-colorado-yellow py-7 text-white group-hover:cursor-pointer"
+      @click="checkClick()"
+    >
+      {{ props.title }} <i v-if="props.sublinks.length > 0" class="fa-solid fa-chevron-down ml-2"></i>
+    </a>
 
     <ul
       v-if="props.sublinks.length > 0"
@@ -15,11 +25,20 @@
     >
       <li v-for="(link, index) in props.sublinks" :key="index">
         <RouterLink
+          v-if="link.to"
           :to="link.to"
           class="block text-heading-light font-semibold py-1 px-4 hover:text-primary hover:bg-gray-light"
         >
           {{ link.title }}
         </RouterLink>
+        <a
+          v-else
+          :href="link.href"
+          target="_blank"
+          class="block text-heading-light font-semibold py-1 px-4 hover:text-primary hover:bg-gray-light"
+        >
+          {{ link.title }}
+        </a>
       </li>
     </ul>
   </li>

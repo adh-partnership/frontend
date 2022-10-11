@@ -2,7 +2,7 @@ import { RouteLocationRaw } from "vue-router";
 
 export interface Link {
   title: string;
-  to: string | RouteLocationRaw;
+  to?: string | RouteLocationRaw;
   href?: string;
   sublinks?: Link[];
 }
@@ -21,20 +21,12 @@ const Links: Link[] = [
     to: "#",
     sublinks: [
       {
-        to: { name: "NotImplemented" },
+        href: "https://www.skyvector.com",
         title: "SkyVector",
       },
       {
         to: { name: "NotImplemented" },
-        title: "Weather",
-      },
-      {
-        to: { name: "NotImplemented" },
-        title: "Charts",
-      },
-      {
-        to: { name: "NotImplemented" },
-        title: "ZDV Airports",
+        title: "Facility Map",
       },
       {
         to: { name: "NotImplemented" },
