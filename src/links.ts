@@ -39,11 +39,11 @@ const Links: Link[] = [
     to: "#",
     sublinks: [
       {
-        to: { name: "NotImplemented" },
+        to: { name: "Staff" },
         title: "Staff",
       },
       {
-        to: { name: "NotImplemented" },
+        to: { name: "Roster" },
         title: "Roster",
       },
       {

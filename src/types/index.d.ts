@@ -5,4 +5,27 @@ declare interface MenuItem {
   href?: string;
 }
 
+export type Controller = {
+  cid: number;
+  first_name: string;
+  last_name: string;
+  operating_initials: string;
+  controller_type: string;
+  certifications: {
+    ground: string;
+    major_ground: string;
+    local: string;
+    major_local: string;
+    approach: string;
+    major_approach: string;
+    enroute: string;
+  };
+  rating: string;
+  status: string;
+  roles: string[];
+  discord_id: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type { Link } from "@/links";

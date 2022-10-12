@@ -21,13 +21,13 @@
 
     <ul
       v-if="props.sublinks.length > 0"
-      class="top-full left-0 absolute w-[200px] bg-white border-b-[3px] border-primary py-4 shadow-md shadow-black/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-[20px] group-hover:translate-y-0 z-30"
+      class="top-full left-0 absolute w-[200px] bg-white dark:bg-black-deep border-b-[3px] border-primary py-4 shadow-md shadow-black/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-[20px] group-hover:translate-y-0 z-30"
     >
       <li v-for="(link, index) in props.sublinks" :key="index">
         <RouterLink
           v-if="link.to"
           :to="link.to"
-          class="block text-heading-light font-semibold py-1 px-4 hover:text-primary hover:bg-gray-light"
+          class="block text-heading-light dark:text-white-deep font-semibold py-1 px-4 hover:text-primary dark:hover:text-colorado-yellow hover:bg-gray-light dark:hover:bg-body"
         >
           {{ link.title }}
         </RouterLink>
@@ -35,7 +35,7 @@
           v-else
           :href="link.href"
           target="_blank"
-          class="block text-heading-light font-semibold py-1 px-4 hover:text-primary hover:bg-gray-light"
+          class="block text-heading-light dark:text-white-deep font-semibold py-1 px-4 hover:text-primary dark:hover:text-colorado-yellow hover:bg-gray-light dark:hover:bg-body"
         >
           {{ link.title }}
         </a>
