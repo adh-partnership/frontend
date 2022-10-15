@@ -11,10 +11,11 @@
         <table
           v-for="(controller, index) in roster.sort((a, b) => a.last_name.localeCompare(b.last_name))"
           :key="controller.cid"
-          class="cursor-pointer w-full"
-          :class="{ shaded: (index - 1) % 2 }"
+          class="w-full"
+          :class="{ shaded: (index - 1) % 2, 'cursor-pointer': canGoToController() }"
+          @click="goToController(controller.cid)"
         >
-          <tbody class="border-collapse text-center">
+          <tbody class="border-collapse text-center w-full">
             <tr>
               <td class="w-1/10">
                 <h2 class="text-3xl font-bold text-muted mb-0">
@@ -23,10 +24,10 @@
               </td>
               <td class="w-2/5 pl-4 py-2 text-left">
                 <h5 class="mb-0 text-xl">{{ `${controller.first_name} ${controller.last_name}` }}</h5>
-                <p class="mb-0">{{ getTitle(controller) }}</p>
+                <p class="mb-0">{{ getControllerTitle(controller) }}</p>
               </td>
               <td class="w-1/2 pl-3 py-2">
-                <ControllerCertificationBadges :controller="controller" :dark="isDark" />
+                <ControllerCertificationBadges :controller="controller" />
               </td>
             </tr>
           </tbody>
@@ -38,17 +39,19 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { useDark } from "@vueuse/core";
+import { useRouter } from "vue-router";
 
 import ControllerCertificationBadges from "@/components/ControllerCertificationBadges.vue";
 
+import { hasRole, isAuthenticated } from "@/utils/auth";
 import type { Controller } from "@/types";
+import { getControllerTitle } from "@/utils/helpers";
 import { ZDVAPI } from "@/utils/axios";
 
 const fetched = ref(false);
 const error = ref("");
 const roster = ref<Controller[]>([]);
-const isDark = useDark();
+const router = useRouter();
 
 async function getRoster(): Promise<void> {
   try {
@@ -62,37 +65,15 @@ async function getRoster(): Promise<void> {
   }
 }
 
-function getTitle(controller: Controller): string {
-  if (controller.roles.includes("atm")) {
-    return "Air Traffic Manager";
-  }
-  if (controller.roles.includes("datm")) {
-    return "Deputy Air Traffic Manager";
-  }
-  if (controller.roles.includes("ta")) {
-    return "Training Administrator";
-  }
-  if (controller.roles.includes("ec")) {
-    return "Events Coordinator";
-  }
-  if (controller.roles.includes("fe")) {
-    return "Facility Engineer";
-  }
-  if (controller.roles.includes("wm")) {
-    return "Webmaster";
-  }
-  if (controller.rating === "I1" && controller.status === "home") {
-    return "Instructor";
-  }
-  if (controller.roles.includes("mtr")) {
-    return "Mentor";
-  }
-  if (controller.status === "visitor") {
-    return "Visiting Controller";
-  }
+const canGoToController = (): boolean => {
+  return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
+};
 
-  return "Controller";
-}
+const goToController = (cid: number): void => {
+  if (canGoToController()) {
+    router.push(`/roster/${cid}`);
+  }
+};
 
 onMounted(() => {
   getRoster();
@@ -105,5 +86,8 @@ onMounted(() => {
 }
 .text-muted {
   color: #6c757d;
+}
+.w-1\/10 {
+  width: 10%;
 }
 </style>

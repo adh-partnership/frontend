@@ -15,7 +15,6 @@ import type { Controller } from "@/types";
 
 interface Props {
   controller: Controller;
-  dark: boolean;
 }
 
 const props = defineProps<Props>();
@@ -34,7 +33,7 @@ function genClass(cert: string): string {
 }
 </script>
 
-<style scoped lang="postcss">
+<style scoped>
 .badge {
   display: inline-block;
   padding: 0.25rem 0.4rem;
