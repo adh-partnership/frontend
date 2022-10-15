@@ -2,7 +2,7 @@
   <RouterLink v-if="display" v-bind="$attrs" :to="props.to">
     <slot />
   </RouterLink>
-  <div v-else>
+  <div v-else-if="!display && !hideUnauthed">
     <slot />
   </div>
 </template>
@@ -16,11 +16,13 @@ import useUserStore from "@/stores/users";
 const props = withDefaults(
   defineProps<{
     to: RouteLocationRaw;
+    hideUnauthed?: boolean;
     auth?: boolean;
     roles?: string[];
   }>(),
   {
     auth: false,
+    hideUnauthed: false,
     roles: () => [],
   }
 );

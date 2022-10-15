@@ -8,7 +8,7 @@
   </p>
   <p>
     <!-- This is to demo/test a link that will only be a link if authenticated... -->
-    <AuthLink to="#" :auth="true" :roles="['wm']">
+    <AuthLink to="#" :auth="true" :roles="['wm']" :hide-unauthed="true">
       <span class="text-green-500">Authenticated if linked</span>
     </AuthLink>
   </p>
