@@ -2,9 +2,9 @@
   <RouterLink v-if="display" v-bind="$attrs" :to="props.to">
     <slot />
   </RouterLink>
-  <span v-else>
+  <div v-else>
     <slot />
-  </span>
+  </div>
 </template>
 
 <script setup lang="ts">
