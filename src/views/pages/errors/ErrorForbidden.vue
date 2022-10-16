@@ -18,7 +18,7 @@
     <div class="w-1/2 pt-4 align-middle text-center h-full">
       <h2 class="font-bold text-4xl">You Shall Not Pass!</h2>
       <p class="text-xl">
-        Uh-oh! Gandolf blocks your path! The path you have selected is blocked. Are you logged in? Do you have the
+        Uh-oh! Gandalf blocks your path! The path you have selected is blocked. Are you logged in? Do you have the
         appropriate roles?
       </p>
       <p class="text-sm">

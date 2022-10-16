@@ -16,16 +16,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
-
 import Footer from "@/views/partials/Footer.vue";
 import Header from "@/views/partials/Header.vue";
 import Spinner from "@/components/Spinner.vue";
 import useUserStore from "@/stores/users";
 
 const userStore = useUserStore();
-
-onMounted(() => {
-  userStore.fetchUser();
-});
 </script>

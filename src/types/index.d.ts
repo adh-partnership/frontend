@@ -23,6 +23,9 @@ export type Controller = {
   rating: string;
   status: string;
   roles: string[];
+  region: string;
+  division: string;
+  subdivision: string;
   discord_id: string;
   created_at: string;
   updated_at: string;

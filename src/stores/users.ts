@@ -6,6 +6,7 @@ interface UserState {
   user: User | null;
   fetching: boolean;
   hasFetched: boolean;
+  loading: Promise<void> | null;
 }
 
 interface User {
