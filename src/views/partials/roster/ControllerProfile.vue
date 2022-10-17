@@ -227,11 +227,4 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped>
-.bg-green {
-  background-color: #003717;
-}
-.bg-red {
-  background-color: #c01907;
-}
-</style>
+<style scoped></style>

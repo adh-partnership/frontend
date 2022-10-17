@@ -23,3 +23,13 @@ import useUserStore from "@/stores/users";
 
 const userStore = useUserStore();
 </script>
+
+<style lang="scss">
+.bg-green {
+  background-color: #003717;
+}
+
+.bg-red {
+  background-color: #c01907;
+}
+</style>

@@ -26,7 +26,7 @@ export const getControllerTitle = (controller: Controller): string => {
   if (controller.roles.includes("mtr")) {
     return "Mentor";
   }
-  if (controller.status === "visitor") {
+  if (controller.controller_type === "visitor") {
     return "Visiting Controller";
   }
 
