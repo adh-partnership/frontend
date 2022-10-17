@@ -26,6 +26,11 @@ const routes = [
     component: () => import("@/views/pages/errors/ErrorNotFound.vue"),
   },
   {
+    path: "/privacy",
+    name: "PrivacyPolicy",
+    component: () => import("@/views/pages/PrivacyPolicy.vue"),
+  },
+  {
     path: "/roster",
     name: "Roster",
     component: () => import("@/views/pages/RosterPage.vue"),
