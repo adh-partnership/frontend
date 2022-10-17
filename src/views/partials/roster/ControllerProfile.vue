@@ -12,6 +12,11 @@
   <p class="mb-0">
     <strong>Status:</strong> <span class="capitalize">{{ controller.status }}</span>
   </p>
+
+  <p class="mb-0">
+    <strong>Discord ID:</strong>
+    <span class="capitalize"> {{ controller.discord_id !== "NULL" ? controller.discord_id : " Not Connected" }} </span>
+  </p>
   <h2 class="text-3xl mt-4">Certifications</h2>
   <div class="flex items-center mb-4">
     <div class="w-1/5">
