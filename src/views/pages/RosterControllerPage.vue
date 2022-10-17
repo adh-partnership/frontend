@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading" class="flex flex-wrap">Loading ...</div>
-  <div v-else class="flex flex-wrap">
+  <div v-else :key="controller.cid" class="flex flex-wrap">
     <div class="grid grid-cols-4 gap-4 w-full m-0">
       <div class="col-span-3">
         <h1 class="text-2xl mb-0">
@@ -68,158 +68,12 @@
         <div class="px-4 py-5 flex-auto">
           <div class="tab-content tab-space">
             <div :class="{ hidden: openTab !== 1, block: openTab === 1 }">
-              <h2 class="text-3xl">General</h2>
-              <p class="mb-0"><strong>Rating:</strong> {{ controller.rating }}</p>
-              <p class="mb-0">
-                <strong>Type:</strong> <span class="capitalize">{{ controller.controller_type }}</span>
-              </p>
-              <p v-if="controller.controller_type === 'visitor'" class="mb-0">
-                <strong>Visiting From:</strong>
-                {{ `${controller.region} ${controller.division} ${controller.subdivision}` }}
-              </p>
-
-              <p class="mb-0">
-                <strong>Status:</strong> <span class="capitalize">{{ controller.status }}</span>
-              </p>
-              <h2 class="text-3xl mt-4">Certifications</h2>
-              <div class="flex items-center mb-4">
-                <div class="w-1/5">
-                  <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="ground-cert">
-                    Ground
-                  </label>
-                </div>
-                <div class="w-1/5">
-                  <select
-                    id="ground-cert"
-                    v-model="certs.ground"
-                    data-position="ground"
-                    class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-                    @change="onChange($event)"
-                  >
-                    <option value="none">None</option>
-                    <option value="training">Training</option>
-                    <option value="solo">Solo</option>
-                    <option value="certified">Certified</option>
-                  </select>
-                </div>
-                <div class="w-1/5">
-                  <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="major-ground-cert">
-                    Major Ground
-                  </label>
-                </div>
-                <div class="w-1/5">
-                  <select
-                    id="major-ground-cert"
-                    v-model="certs.major_ground"
-                    class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-                  >
-                    <option value="none">None</option>
-                    <option value="training">Training</option>
-                    <option value="solo">Solo</option>
-                    <option value="certified">Certified</option>
-                  </select>
-                </div>
-              </div>
-              <div class="flex items-center mb-4">
-                <div class="w-1/5">
-                  <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="local-cert">
-                    Local
-                  </label>
-                </div>
-                <div class="w-1/5">
-                  <select
-                    id="local-cert"
-                    v-model="certs.local"
-                    class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-                  >
-                    <option value="none">None</option>
-                    <option value="training">Training</option>
-                    <option value="solo">Solo</option>
-                    <option value="certified">Certified</option>
-                  </select>
-                </div>
-                <div class="w-1/5">
-                  <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="major-local-cert">
-                    Major Local
-                  </label>
-                </div>
-                <div class="w-1/5">
-                  <select
-                    id="major-local-cert"
-                    v-model="certs.major_local"
-                    class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-                  >
-                    <option value="none">None</option>
-                    <option value="training">Training</option>
-                    <option value="solo">Solo</option>
-                    <option value="certified">Certified</option>
-                  </select>
-                </div>
-              </div>
-              <div class="flex items-center mb-4">
-                <div class="w-1/5">
-                  <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="approach-cert">
-                    Approach
-                  </label>
-                </div>
-                <div class="w-1/5">
-                  <select
-                    id="approach-cert"
-                    v-model="certs.approach"
-                    class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-                  >
-                    <option value="none">None</option>
-                    <option value="training">Training</option>
-                    <option value="solo">Solo</option>
-                    <option value="certified">Certified</option>
-                  </select>
-                </div>
-                <div class="w-1/5">
-                  <label
-                    class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                    for="major-approach-cert"
-                  >
-                    Major Approach
-                  </label>
-                </div>
-                <div class="w-1/5">
-                  <select
-                    id="major-approach-cert"
-                    v-model="certs.major_approach"
-                    class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-                  >
-                    <option value="none">None</option>
-                    <option value="training">Training</option>
-                    <option value="solo">Solo</option>
-                    <option value="certified">Certified</option>
-                  </select>
-                </div>
-              </div>
-              <div class="flex items-center mb-4">
-                <div class="w-1/5">
-                  <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="enroute-cert">
-                    Enroute
-                  </label>
-                </div>
-                <div class="w-1/5">
-                  <select
-                    id="enroute-cert"
-                    v-model="certs.enroute"
-                    class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-                  >
-                    <option value="none">None</option>
-                    <option value="training">Training</option>
-                    <option value="solo">Solo</option>
-                    <option value="certified">Certified</option>
-                  </select>
-                </div>
-                <div v-if="hasRole(['atm', 'datm', 'ta', 'wm', 'ins'])" class="w-3/5 text-center">
-                  <button class="btn bg-colorado-blue text-white font-bold py-2 px-4 rounded">Save</button>
-                </div>
-              </div>
+              <ControllerProfile :controller="controller" />
             </div>
             <div :class="{ hidden: openTab !== 2, block: openTab === 2 }">asdfasdfasdfasdfasdfasdfasdf</div>
-            <div :class="{ hidden: openTab !== 3, block: openTab === 3 }">asdfasdfasdfasdfasdfasdfasdf</div>
+            <div :class="{ hidden: openTab !== 3, block: openTab === 3 }">
+              <ControllerActions :controller="controller" />
+            </div>
           </div>
         </div>
       </div>
@@ -228,22 +82,24 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 
 import { Controller } from "@/types";
+import ControllerActions from "@/views/partials/roster/ControllerActions.vue";
 import ControllerCertificationBadges from "@/components/ControllerCertificationBadges.vue";
+import ControllerProfile from "@/views/partials/roster/ControllerProfile.vue";
 import { getControllerTitle } from "@/utils/helpers";
-import { hasRole } from "@/utils/auth";
 import useRosterStore from "@/stores/roster";
 
 const loading = ref(true);
 const openTab = ref(1);
 const route = useRoute();
 const rosterStore = useRosterStore();
+const { controllers } = storeToRefs(rosterStore);
 const cid = parseInt(route.params.cid as string, 10);
 const controller = ref(rosterStore.getController(cid) as Controller);
-const certs = { ...controller.value.certifications }; // Dereference
 
 onMounted(() => {
   if (controller.value) {
@@ -254,6 +110,19 @@ onMounted(() => {
       loading.value = false;
     });
   }
+
+  // Allow navigation direct to tab
+  const { hash } = window.location;
+  if (hash && hash.startsWith("#tab")) {
+    const tab = parseInt(hash.replace("#tab", ""), 10);
+    if (tab) {
+      openTab.value = tab;
+    }
+  }
+});
+
+watch(controllers, () => {
+  controller.value = controllers.value.find((c) => c.cid === cid) as Controller;
 });
 
 const toggleTabs = (tab: number): void => {

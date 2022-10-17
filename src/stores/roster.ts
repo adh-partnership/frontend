@@ -33,6 +33,15 @@ const useRosterStore = defineStore("roster", {
     },
   },
   actions: {
+    updateController(cid: number, controller: Controller) {
+      // Dirty hack.. but it works
+      const controllers = [...this.controllers];
+      const index = controllers.findIndex((c) => c.cid === cid);
+      if (index > -1) {
+        controllers.splice(index, 1, controller);
+        this.controllers = controllers;
+      }
+    },
     async fetchRoster() {
       this.fetching = true;
       try {
