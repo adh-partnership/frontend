@@ -8,6 +8,7 @@ interface RosterState {
   fetching: boolean;
   hasFetched: boolean;
   fetched: Date;
+  lastRoster: string;
 }
 
 const useRosterStore = defineStore("roster", {
@@ -17,6 +18,7 @@ const useRosterStore = defineStore("roster", {
       fetching: false,
       hasFetched: false,
       fetched: new Date(),
+      lastRoster: "",
     } as RosterState),
   getters: {
     shouldFetch: (state) => {
@@ -30,6 +32,12 @@ const useRosterStore = defineStore("roster", {
     },
     getController: (state) => (cid: number) => {
       return state.controllers.find((c) => c.cid === cid);
+    },
+    getActiveRoster: (state) => {
+      return state.controllers.filter((c) => c.controller_type !== "none");
+    },
+    getInactiveRoster: (state) => {
+      return state.controllers.filter((c) => c.controller_type === "none");
     },
   },
   actions: {
@@ -45,8 +53,8 @@ const useRosterStore = defineStore("roster", {
     async fetchRoster() {
       this.fetching = true;
       try {
-        const { data } = await ZDVAPI.get("/v1/user/roster");
-        this.controllers = data;
+        const { data } = await ZDVAPI.get("/v1/user/all");
+        this.controllers = data.sort((a: Controller, b: Controller) => a.last_name.localeCompare(b.last_name));
       } catch (e) {
         this.controllers = [];
       } finally {

@@ -32,4 +32,15 @@ const userStore = useUserStore();
 .bg-red {
   background-color: #c01907;
 }
+.shaded {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.text-muted {
+  color: #6c757d;
+}
+
+.w-1\/10 {
+  width: 10%;
+}
 </style>

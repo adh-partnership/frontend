@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold mb-4">Roster</h1>
+    <h1 class="text-3xl font-bold mb-4">Inactives Roster</h1>
 
     <div class="rounded-md w-full bg-white dark:bg-black-deep border-1 drop-shadow-md flex flex-col">
       <div v-if="!fetched" class="m-3">Getting roster...</div>
@@ -24,10 +24,10 @@ const error = ref("");
 const rosterStore = useRosterStore();
 const { controllers } = storeToRefs(rosterStore);
 
-const activeControllers = computed(() => controllers.value.filter((c) => c.controller_type !== "none"));
+const activeControllers = computed(() => controllers.value.filter((c) => c.controller_type === "none"));
 
 onMounted(() => {
-  rosterStore.lastRoster = "Roster";
+  rosterStore.lastRoster = "InactiveRoster";
   if (rosterStore.hasFetched) {
     fetched.value = true;
   } else {

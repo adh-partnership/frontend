@@ -1,13 +1,15 @@
 <template>
   <li class="relative mr-12 group">
-    <RouterLink
+    <AuthLink
       v-if="props.to"
       :to="props.to"
+      :auth="props.auth"
+      :roles="props.roles"
       class="block text-[16px] font-semibold group-hover:text-colorado-yellow py-7 text-white group-hover:cursor-pointer"
       @click="checkClick()"
     >
       {{ props.title }} <i v-if="props.sublinks.length > 0" class="fa-solid fa-chevron-down ml-2"></i>
-    </RouterLink>
+    </AuthLink>
 
     <a
       v-else
@@ -45,6 +47,7 @@
 </template>
 
 <script setup lang="ts">
+import AuthLink from "@/components/AuthLink.vue";
 import { Link } from "@/types";
 
 const props = withDefaults(defineProps<Link>(), {

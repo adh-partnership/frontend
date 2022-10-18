@@ -5,6 +5,8 @@ export interface Link {
   to?: string | RouteLocationRaw;
   href?: string;
   sublinks?: Link[];
+  auth?: boolean;
+  roles?: string[];
 }
 
 const Links: Link[] = [
@@ -45,6 +47,12 @@ const Links: Link[] = [
       {
         to: { name: "Roster" },
         title: "Roster",
+      },
+      {
+        to: { name: "InactiveRoster" },
+        title: "Inactive Roster",
+        auth: true,
+        roles: ["atm", "datm", "wm"],
       },
       {
         to: { name: "NotImplemented" },

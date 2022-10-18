@@ -5,29 +5,65 @@
       <div class="w-1/5">
         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="controllerType"> Type </label>
       </div>
-      <div class="w-1/5">
-        <select
-          id="controllerType"
-          v-model="form.ControllerType"
-          class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-        >
-          <option value="none">None</option>
-          <option value="home">Home</option>
-          <option value="visitor">Visitor</option>
-        </select>
+      <div class="w-1/5 capitalize">
+        {{ controller.controller_type }}
       </div>
       <div v-if="props.controller.controller_type !== 'none'" class="w-1/5">
         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="controllerType">
           Removal Reason
         </label>
       </div>
-      <div v-if="props.controller.controller_type !== 'none'" class="w-1/5">
+      <div v-if="props.controller.controller_type !== 'none'" class="w-3/10">
         <input
           id="removalReason"
           v-model="form.RemovalReason"
           type="text"
           class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
         />
+      </div>
+      <div v-if="props.controller.controller_type !== 'none'" class="w-1/5 pl-4">
+        <button
+          v-if="removalButtonState === ButtonStates.Idle"
+          class="bg-colorado-red hover:bg-colorado-yellow hover:text-black text-white font-bold py-2 px-4 rounded"
+          @click="removeController"
+        >
+          Remove
+        </button>
+        <button
+          v-if="removalButtonState === ButtonStates.Saving"
+          class="bg-colorado-blue hover:bg-colorado-blue text-white font-bold py-2 px-4 rounded"
+          disabled
+        >
+          Removing
+        </button>
+        <button
+          v-if="removalButtonState === ButtonStates.Error"
+          class="bg-colorado-blue hover:bg-colorado-blue text-white font-bold py-2 px-4 rounded"
+        >
+          Error
+        </button>
+      </div>
+      <div v-if="props.controller.controller_type === 'none'" class="w-1/5">
+        <button
+          v-if="visitButtonState === ButtonStates.Idle"
+          class="bg-colorado-yellow hover:bg-colorado-blue text-black hover:text-white font-bold py-2 px-4 rounded"
+          @click="addVisitor()"
+        >
+          Add as Visitor
+        </button>
+        <button
+          v-if="visitButtonState === ButtonStates.Saving"
+          class="bg-colorado-blue hover:bg-colorado-blue text-white font-bold py-2 px-4 rounded"
+          disabled
+        >
+          Adding...
+        </button>
+        <button
+          v-if="visitButtonState === ButtonStates.Error"
+          class="bg-colorado-blue hover:bg-colorado-blue text-white font-bold py-2 px-4 rounded"
+        >
+          Error
+        </button>
       </div>
     </div>
     <div class="flex items-center mb-4">
@@ -122,6 +158,8 @@ enum ButtonStates {
   Error = 3,
 }
 const buttonState = ref(ButtonStates.Idle);
+const removalButtonState = ref(ButtonStates.Idle);
+const visitButtonState = ref(ButtonStates.Idle);
 
 const props = defineProps<{
   controller: Controller;
@@ -146,20 +184,90 @@ onUnmounted(() => {
 let counter = 4;
 let flashTimer: ReturnType<typeof setInterval>;
 
+const focusRemoval = (): void => {
+  document.getElementById("removalReason")?.focus();
+  document.getElementById("removalReason")?.classList.add("border-red");
+  // Flash the border red
+  flashTimer = setInterval(() => {
+    document.getElementById("removalReason")?.classList.toggle("border-red");
+    if (counter === 0) {
+      clearInterval(flashTimer);
+    } else {
+      counter -= 1;
+    }
+  }, 200);
+};
+
+const addVisitor = async (): Promise<void> => {
+  // This shouldn't be possible, in theory...
+  if (props.controller.controller_type !== "none") {
+    return;
+  }
+
+  if (!form.value.RemovalReason) {
+    focusRemoval();
+    return;
+  }
+
+  removalButtonState.value = ButtonStates.Saving;
+  try {
+    const response = await ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
+      controller_type: "visitor",
+    });
+    if (response.status === 200) {
+      removalButtonState.value = ButtonStates.Saved;
+      store.updateController(props.controller.cid, {
+        ...props.controller,
+        controller_type: "none",
+      });
+      saveTimer = setTimeout(() => {
+        removalButtonState.value = ButtonStates.Idle;
+      }, 2000);
+    } else {
+      removalButtonState.value = ButtonStates.Error;
+    }
+  } catch (error) {
+    buttonState.value = ButtonStates.Error;
+  }
+};
+
+const removeController = async (): Promise<void> => {
+  // This shouldn't be possible, in theory...
+  if (props.controller.controller_type === "none") {
+    return;
+  }
+
+  if (!form.value.RemovalReason) {
+    focusRemoval();
+    return;
+  }
+
+  removalButtonState.value = ButtonStates.Saving;
+  try {
+    const response = await ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
+      controller_type: "none",
+      removal_reason: form.value.RemovalReason,
+    });
+    if (response.status === 200) {
+      removalButtonState.value = ButtonStates.Saved;
+      store.updateController(props.controller.cid, {
+        ...props.controller,
+        controller_type: "none",
+      });
+      saveTimer = setTimeout(() => {
+        removalButtonState.value = ButtonStates.Idle;
+      }, 2000);
+    } else {
+      removalButtonState.value = ButtonStates.Error;
+    }
+  } catch (error) {
+    buttonState.value = ButtonStates.Error;
+  }
+};
+
 const save = async (): Promise<void> => {
   if (props.controller.controller_type !== form.value.ControllerType && props.controller.controller_type !== "none") {
     if (!form.value.RemovalReason) {
-      document.getElementById("removalReason")?.focus();
-      document.getElementById("removalReason")?.classList.add("border-red");
-      // Flash the border red
-      flashTimer = setInterval(() => {
-        document.getElementById("removalReason")?.classList.toggle("border-red");
-        if (counter === 0) {
-          clearInterval(flashTimer);
-        } else {
-          counter -= 1;
-        }
-      }, 200);
       return;
     }
   }

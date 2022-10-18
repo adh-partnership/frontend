@@ -36,6 +36,15 @@ const routes = [
     component: () => import("@/views/pages/RosterPage.vue"),
   },
   {
+    path: "/roster/inactive",
+    name: "InactiveRoster",
+    component: () => import("@/views/pages/InactiveRoster.vue"),
+    meta: {
+      requiresAuth: true,
+      requiresRole: ["atm", "datm", "wm"],
+    },
+  },
+  {
     path: "/roster/:cid",
     name: "RosterController",
     component: () => import("@/views/pages/RosterControllerPage.vue"),

@@ -11,7 +11,7 @@
         <h2 class="text-sm mt-0 mb-1 font-normal">{{ getControllerTitle(controller) }}</h2>
       </div>
       <div class="col-span-1 text-right mt-auto mb-auto">
-        <RouterLink to="/roster">
+        <RouterLink :to="{ name: lastRoster }">
           <button class="flex-1 bg-colorado-red text-white hover:bg-dark-red font-bold py-2 px-4 rounded">
             Back to Roster
           </button>
@@ -83,8 +83,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import { useRoute } from "vue-router";
 
 import { Controller } from "@/types";
 import ControllerActions from "@/views/partials/roster/ControllerActions.vue";
@@ -96,8 +96,9 @@ import useRosterStore from "@/stores/roster";
 const loading = ref(true);
 const openTab = ref(1);
 const route = useRoute();
+const router = useRouter();
 const rosterStore = useRosterStore();
-const { controllers } = storeToRefs(rosterStore);
+const { controllers, lastRoster } = storeToRefs(rosterStore);
 const cid = parseInt(route.params.cid as string, 10);
 const controller = ref(rosterStore.getController(cid) as Controller);
 
@@ -107,7 +108,12 @@ onMounted(() => {
   } else {
     rosterStore.fetchRoster().then(() => {
       controller.value = rosterStore.getController(parseInt(route.params.cid as string, 10)) as Controller;
-      loading.value = false;
+
+      if (controller.value === undefined) {
+        router.push({ name: "NotFound" });
+      } else {
+        loading.value = false;
+      }
     });
   }
 
