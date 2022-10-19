@@ -7,7 +7,17 @@
       <div v-else-if="fetched && error !== ''">
         <div class="m-3">Error getting roster: {{ error }}</div>
       </div>
-      <div v-else><RosterTable :roster="activeControllers"></RosterTable></div>
+      <div v-else>
+        <div class="w-full text-right">
+          Filter:
+          <input
+            v-model="search"
+            type="text"
+            class="w-1/5 bg-white dark:bg-black-deep border border-gray-500 dark:border-gray-100 text-gray-700 dark:text-white py-2 my-2 px-4 pr-8 rounded leading-tight"
+          />
+        </div>
+        <RosterTable :roster="filteredControllers"></RosterTable>
+      </div>
     </div>
   </div>
 </template>
@@ -23,8 +33,23 @@ const fetched = ref(false);
 const error = ref("");
 const rosterStore = useRosterStore();
 const { controllers } = storeToRefs(rosterStore);
+const search = ref("");
 
 const activeControllers = computed(() => controllers.value.filter((c) => c.controller_type === "none"));
+const filteredControllers = computed(() =>
+  activeControllers.value.filter((c) => {
+    if (search.value === "") {
+      return true;
+    }
+
+    return (
+      c.cid.toString().includes(search.value) ||
+      c.first_name.includes(search.value) ||
+      c.last_name.includes(search.value) ||
+      c.operating_initials.includes(search.value)
+    );
+  })
+);
 
 onMounted(() => {
   rosterStore.lastRoster = "InactiveRoster";

@@ -3,11 +3,6 @@ module.exports = {
   content: ["./index.html", "./src/**/*.vue"],
   darkMode: "class",
   theme: {
-    colors: {
-      "colorado-blue": "#002868",
-      "colorado-red": "#bf0a30",
-      "colorado-yellow": "#ffd700",
-    },
     extend: {
       colors: {
         primary: {
@@ -25,6 +20,9 @@ module.exports = {
           light: "var(--color-heading-light)",
         },
         body: "#555555",
+        "colorado-blue": "#002868",
+        "colorado-red": "#bf0a30",
+        "colorado-yellow": "#ffd700",
         white: {
           DEFAULT: "#FFFFFF",
           light: "#f9f9f9",

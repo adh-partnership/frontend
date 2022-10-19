@@ -30,6 +30,7 @@
     "@types/node": "18.8.0",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
+    "@vitejs/plugin-basic-ssl": "^0.1.2",
     "@vitejs/plugin-vue": "^3.0.1",
     "@volar/vue-language-service": "^1.0.7",
     "@vue/eslint-config-prettier": "^7.0.0",
