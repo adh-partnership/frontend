@@ -16,19 +16,24 @@ import useUserStore from "@/stores/users";
 const props = withDefaults(
   defineProps<{
     to: RouteLocationRaw;
-    hideUnauthed?: boolean;
-    auth?: boolean;
+    hideUnauthed?: boolean | undefined;
+    auth?: boolean | undefined;
     roles?: string[];
   }>(),
   {
-    auth: false,
-    hideUnauthed: false,
+    auth: undefined,
+    hideUnauthed: undefined,
     roles: () => [],
   }
 );
 
 const store = useUserStore();
 const display = computed(() => {
+  console.log(`Link: ${JSON.stringify(props.to)}, Auth: ${props.auth}, Roles: ${props.roles}`);
+  if (props.auth === undefined || !props.auth) {
+    return true;
+  }
+
   if (props.auth) {
     if (props.roles !== undefined && props.roles.length > 0) {
       return store.user !== null && props.roles.some((role) => store.user?.roles.includes(role));

@@ -31,4 +31,18 @@ export type Controller = {
   updated_at: string;
 };
 
+export type TrainingNote = {
+  id: number;
+  controller_id: number;
+  controller: Controller;
+  instructor_id: number;
+  instructor: Controller;
+
+  position: string;
+  duration: string;
+  session_date: string;
+  type: string;
+  comments: string;
+};
+
 export type { Link } from "@/links";

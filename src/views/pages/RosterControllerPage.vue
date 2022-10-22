@@ -70,7 +70,9 @@
             <div :class="{ hidden: openTab !== 1, block: openTab === 1 }">
               <ControllerProfile :controller="controller" />
             </div>
-            <div :class="{ hidden: openTab !== 2, block: openTab === 2 }">asdfasdfasdfasdfasdfasdfasdf</div>
+            <div :class="{ hidden: openTab !== 2, block: openTab === 2 }">
+              <TrainingNotes :controller="controller" />
+            </div>
             <div :class="{ hidden: openTab !== 3, block: openTab === 3 }">
               <ControllerActions :controller="controller" />
             </div>
@@ -91,6 +93,7 @@ import ControllerActions from "@/views/partials/roster/ControllerActions.vue";
 import ControllerCertificationBadges from "@/components/ControllerCertificationBadges.vue";
 import ControllerProfile from "@/views/partials/roster/ControllerProfile.vue";
 import { getControllerTitle } from "@/utils/helpers";
+import TrainingNotes from "@/views/partials/roster/TrainingNotes.vue";
 import useRosterStore from "@/stores/roster";
 
 const loading = ref(true);
