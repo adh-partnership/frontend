@@ -18,7 +18,7 @@ const useRosterStore = defineStore("roster", {
       fetching: false,
       hasFetched: false,
       fetched: new Date(),
-      lastRoster: "",
+      lastRoster: "roster",
     } as RosterState),
   getters: {
     shouldFetch: (state) => {

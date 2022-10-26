@@ -7,7 +7,27 @@
       <div v-else-if="loaded && error" class="flex justify-center">
         <Alert type="error"> <b>Error</b>: There was an error loading the training notes for this controller.</Alert>
       </div>
-      <div v-else class="flex justify-center">Success!</div>
+      <div v-else class="flex justify-center flex-col">
+        <div class="flex w-full">
+          <div class="w-4/5">
+            <h2>Training Notes</h2>
+          </div>
+          <div class="w-1/5">
+            <div class="flex justify-end">
+              <AuthLink
+                :to="{ name: 'NewTrainingNote', params: { cid: props.controller.cid } }"
+                class="btn bg-colorado-blue hover:bg-blue-dark"
+                :auth="true"
+                :role="['atm', 'datm', 'ta', 'ins', 'mtr', 'wm']"
+                >New Note</AuthLink
+              >
+            </div>
+          </div>
+        </div>
+        <div class="w-full">
+          <table v-for="note in trainingNotes" :key="note.id" class="w-full"></table>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -15,6 +35,7 @@
 <script setup lang="ts">
 import type { Controller, TrainingNote } from "@/types";
 import { onMounted, ref } from "vue";
+import AuthLink from "@/components/AuthLink.vue";
 import type { Ref } from "vue";
 import { ZDVAPI } from "@/utils/axios";
 

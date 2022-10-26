@@ -35,12 +35,17 @@ const userStore = useUserStore();
 .shaded {
   background-color: rgba(0, 0, 0, 0.03);
 }
-
 .text-muted {
   color: #6c757d;
 }
 
 .w-1\/10 {
   width: 10%;
+}
+</style>
+
+<style lang="postcss">
+.btn {
+  @apply flex-1 bg-colorado-red text-white hover:bg-red-900 font-bold py-2 px-4 rounded text-center;
 }
 </style>

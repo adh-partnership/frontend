@@ -21,6 +21,11 @@ const routes = [
     component: () => import("@/views/pages/errors/ErrorForbidden.vue"),
   },
   {
+    path: "/roster/:cid/training/new",
+    name: "NewTrainingNote",
+    component: () => import("@/views/pages/training/TrainingNoteForm.vue"),
+  },
+  {
     path: "/error/not-found",
     name: "NotFound",
     component: () => import("@/views/pages/errors/ErrorNotFound.vue"),

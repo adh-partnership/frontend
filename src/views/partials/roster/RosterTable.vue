@@ -3,14 +3,14 @@
     <table
       v-for="(controller, index) in props.roster"
       :key="controller.cid"
-      class="w-full"
-      :class="{ shaded: (index - 1) % 2, 'cursor-pointer': canGoToController() }"
+      class="w-full dark:bg-slate-900 bg-slate-50"
+      :class="{ 'bg-slate-100 dark:bg-slate-800': (index - 1) % 2, 'cursor-pointer': canGoToController() }"
       @click="goToController(controller.cid)"
     >
       <tbody class="border-collapse text-center w-full">
         <tr>
           <td class="w-1/10">
-            <h2 class="text-3xl font-bold text-muted mb-0">
+            <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-400 mb-0">
               {{ controller.operating_initials }}
             </h2>
           </td>
@@ -52,12 +52,6 @@ const goToController = (cid: number): void => {
 </script>
 
 <style lang="scss" scoped>
-.shaded {
-  background-color: rgba(0, 0, 0, 0.03);
-}
-.text-muted {
-  color: #6c757d;
-}
 .w-1\/10 {
   width: 10%;
 }

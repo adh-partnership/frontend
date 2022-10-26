@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
+const flowbite = require("flowbite/plugin");
+
 module.exports = {
-  content: ["./index.html", "./src/**/*.vue"],
+  content: ["./index.html", "./src/**/*.vue", "./node_modules/flowbite/**/*.js"],
   darkMode: "class",
   theme: {
     extend: {
@@ -114,5 +116,5 @@ module.exports = {
       xl: "1200px",
     },
   },
-  plugins: [],
+  plugins: [flowbite],
 };

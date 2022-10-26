@@ -93,7 +93,7 @@ import ControllerActions from "@/views/partials/roster/ControllerActions.vue";
 import ControllerCertificationBadges from "@/components/ControllerCertificationBadges.vue";
 import ControllerProfile from "@/views/partials/roster/ControllerProfile.vue";
 import { getControllerTitle } from "@/utils/helpers";
-import TrainingNotes from "@/views/partials/roster/TrainingNotes.vue";
+import TrainingNotes from "@/views/partials/training/TrainingNotes.vue";
 import useRosterStore from "@/stores/roster";
 
 const loading = ref(true);

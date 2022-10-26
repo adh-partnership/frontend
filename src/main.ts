@@ -8,6 +8,7 @@ import App from "./App.vue";
 import router from "./router";
 
 import "./assets/css/style.scss";
+import "flowbite";
 
 const app = createApp(App);
 
