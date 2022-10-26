@@ -33,7 +33,7 @@
     "@typescript-eslint/parser": "^5.40.0",
     "@vitejs/plugin-basic-ssl": "^0.1.2",
     "@vitejs/plugin-vue": "^3.0.1",
-    "@volar/vue-language-service": "^1.0.7",
+    "@volar/vue-language-service": "^1.0.9",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.0",
     "autoprefixer": "^10.4.10",
