@@ -6,6 +6,7 @@ declare module "vue-router" {
   interface RouteMeta {
     requiresAuth?: boolean;
     requiresRole?: string[] | string;
+    cidOverridesRole?: boolean;
   }
 }
 
@@ -59,9 +60,28 @@ const routes = [
     },
   },
   {
+    path: "/roster/:cid/training/:id",
+    name: "TrainingNote",
+    component: () => import("@/views/pages/training/TrainingNoteForm.vue"),
+    meta: {
+      requiresAuth: true,
+      requiresRole: ["atm", "datm", "ta", "wm", "ins", "mtr"],
+    },
+  },
+  {
     path: "/staff",
     name: "Staff",
     component: () => import("@/views/pages/StaffPage.vue"),
+  },
+  {
+    path: "/training/:cid/:id",
+    name: "TrainingNoteView",
+    component: () => import("@/views/pages/training/TrainingNote.vue"),
+    meta: {
+      requiresAuth: true,
+      requiresRole: ["atm", "datm", "ta", "wm", "ins", "mtr"],
+      cidOverridesRole: true,
+    },
   },
   {
     path: "/not-implemented",
@@ -86,13 +106,19 @@ const check: NavigationGuard = (to, from, next): void => {
 
   if (requiresAuth && !userStore.user) {
     next({ name: "Forbidden" });
+    return;
   }
 
   if (requiresAuth && userStore.user) {
-    const { requiresRole } = to.meta;
+    const { requiresRole, cidOverridesRole } = to.meta;
+    if (cidOverridesRole && to.params.cid === userStore.user.cid.toString()) {
+      next();
+      return;
+    }
     if (requiresRole) {
       if (!userStore.user.roles.some((role) => requiresRole.includes(role))) {
         next({ name: "Forbidden" });
+        return;
       }
     }
   }

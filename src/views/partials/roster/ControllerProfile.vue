@@ -20,7 +20,9 @@
   <h2 class="text-3xl mt-4">Certifications</h2>
   <div class="flex items-center mb-4">
     <div class="w-1/5">
-      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="ground-cert"> Ground </label>
+      <label class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4" for="ground-cert">
+        Ground
+      </label>
     </div>
     <div class="w-1/5">
       <select
@@ -36,7 +38,10 @@
       </select>
     </div>
     <div class="w-1/5">
-      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="major-ground-cert">
+      <label
+        class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        for="major-ground-cert"
+      >
         Major Ground
       </label>
     </div>
@@ -55,7 +60,9 @@
   </div>
   <div class="flex items-center mb-4">
     <div class="w-1/5">
-      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="local-cert"> Local </label>
+      <label class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4" for="local-cert">
+        Local
+      </label>
     </div>
     <div class="w-1/5">
       <select
@@ -70,7 +77,10 @@
       </select>
     </div>
     <div class="w-1/5">
-      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="major-local-cert">
+      <label
+        class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        for="major-local-cert"
+      >
         Major Local
       </label>
     </div>
@@ -89,7 +99,10 @@
   </div>
   <div class="flex items-center mb-4">
     <div class="w-1/5">
-      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="approach-cert">
+      <label
+        class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        for="approach-cert"
+      >
         Approach
       </label>
     </div>
@@ -106,7 +119,10 @@
       </select>
     </div>
     <div class="w-1/5">
-      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="major-approach-cert">
+      <label
+        class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        for="major-approach-cert"
+      >
         Major Approach
       </label>
     </div>
@@ -125,7 +141,12 @@
   </div>
   <div class="flex items-center mb-4">
     <div class="w-1/5">
-      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="enroute-cert"> Enroute </label>
+      <label
+        class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        for="enroute-cert"
+      >
+        Enroute
+      </label>
     </div>
     <div class="w-1/5">
       <select

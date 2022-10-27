@@ -34,9 +34,9 @@ export type Controller = {
 export type TrainingNote = {
   id: number;
   controller_id: number;
-  controller: Controller;
+  controller: Controller | null;
   instructor_id: number;
-  instructor: Controller;
+  instructor: Controller | null;
 
   position: string;
   duration: string;

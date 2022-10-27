@@ -1,29 +1,13 @@
 <template>
   <div v-if="loading" class="flex flex-wrap">Loading ...</div>
   <div v-else :key="controller.cid" class="flex flex-wrap">
-    <div class="grid grid-cols-4 gap-4 w-full m-0">
-      <div class="col-span-3">
-        <h1 class="text-2xl mb-0">
-          {{ controller.first_name }} {{ controller.last_name }} - {{ controller.operating_initials }} ({{
-            controller.cid
-          }}/{{ controller.rating }})
-        </h1>
-        <h2 class="text-sm mt-0 mb-1 font-normal">{{ getControllerTitle(controller) }}</h2>
-      </div>
-      <div class="col-span-1 text-right mt-auto mb-auto">
-        <RouterLink :to="{ name: lastRoster }">
-          <button class="flex-1 bg-colorado-red text-white hover:bg-dark-red font-bold py-2 px-4 rounded">
-            Back to Roster
-          </button>
-        </RouterLink>
-      </div>
-    </div>
-    <div class="w-full">
-      <ControllerCertificationBadges
-        :controller="(rosterStore.getController(cid) as Controller)"
-        class="align-middle"
-      />
-    </div>
+    <ControllerHeader :controller="controller">
+      <RouterLink :to="{ name: lastRoster }">
+        <button class="flex-1 bg-colorado-red text-white hover:bg-dark-red font-bold py-2 px-4 rounded">
+          Back to Roster
+        </button>
+      </RouterLink>
+    </ControllerHeader>
     <div class="w-full">
       <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -90,9 +74,8 @@ import { storeToRefs } from "pinia";
 
 import { Controller } from "@/types";
 import ControllerActions from "@/views/partials/roster/ControllerActions.vue";
-import ControllerCertificationBadges from "@/components/ControllerCertificationBadges.vue";
+import ControllerHeader from "@/components/ControllerHeader.vue";
 import ControllerProfile from "@/views/partials/roster/ControllerProfile.vue";
-import { getControllerTitle } from "@/utils/helpers";
 import TrainingNotes from "@/views/partials/training/TrainingNotes.vue";
 import useRosterStore from "@/stores/roster";
 
