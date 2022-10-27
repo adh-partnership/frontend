@@ -1,4 +1,4 @@
-name: Check eslint
+name: Build and Deploy
 
 on:
   push:
