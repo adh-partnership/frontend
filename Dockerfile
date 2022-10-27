@@ -2,8 +2,7 @@ FROM node:lts-alpine as build
 WORKDIR /app
 COPY package*.json ./
 COPY . .
-RUN npm install -g yarn && \
-    yarn install && \
+RUN yarn install && \
     yarn build && \
     rm dist/vite.svg
 
