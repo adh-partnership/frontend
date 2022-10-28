@@ -16,26 +16,15 @@ import { useRegisterSW } from "virtual:pwa-register/vue";
 // eslint-disable-next-line no-console
 console.log(pwaInfo);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const reloadSW = "__RELOAD_SW__";
-
 const { needRefresh, updateServiceWorker } = useRegisterSW({
   immediate: true,
   onRegisteredSW(swUrl, r) {
     // eslint-disable-next-line no-console
     console.log(`Service Worker at: ${swUrl}`);
-    if (reloadSW === "true") {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      r &&
-        setInterval(async () => {
-          // eslint-disable-next-line no-console
-          console.log("Checking for sw update");
-          await r.update();
-        }, 20000 /* 20s for testing purposes */);
-    } else {
-      // eslint-disable-next-line no-console
-      console.log(`SW Registered: ${r}`);
-    }
+
+    setInterval(async () => {
+      await r.update();
+    }, 20000);
   },
 });
 </script>
@@ -52,6 +41,7 @@ const { needRefresh, updateServiceWorker } = useRegisterSW({
   z-index: 1;
   text-align: left;
   box-shadow: 3px 4px 5px 0px #8885;
+  background-color: #fff;
 }
 
 .pwa-toast .message {
