@@ -1,6 +1,6 @@
 <template>
   <div v-if="isSticky">
-    <div class="h-[90px]"></div>
+    <div class="h-[98px]"></div>
   </div>
   <div
     class="header-main bg-colorado-blue text-white shadow-md mb-[10px] dark:bg-black-deep"
@@ -49,7 +49,12 @@ const toggleNav = (): void => {
 
 onMounted(() => {
   window.addEventListener("scroll", () => {
-    isSticky.value = window.scrollY > 0;
+    if (window.scrollY > 88) {
+      isSticky.value = true;
+    }
+    if (window.scrollY === 0) {
+      isSticky.value = false;
+    }
   });
 });
 </script>
