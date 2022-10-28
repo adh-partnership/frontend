@@ -29,7 +29,6 @@ const props = withDefaults(
 
 const store = useUserStore();
 const display = computed(() => {
-  console.log(`Link: ${JSON.stringify(props.to)}, Auth: ${props.auth}, Roles: ${props.roles}`);
   if (props.auth === undefined || !props.auth) {
     return true;
   }

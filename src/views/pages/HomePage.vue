@@ -6,16 +6,8 @@
     volunteers who enjoy flying and controlling in the VATSIM network. We are located in the United States and control
     airspace in the Rocky Mountain region.
   </p>
-  <p>
-    <!-- This is to demo/test a link that will only be a link if authenticated... -->
-    <AuthLink to="#" :auth="true" :roles="['wm']" :hide-unauthed="true">
-      <span class="text-green-500">Authenticated if linked</span>
-    </AuthLink>
-  </p>
 </template>
 
-<script setup lang="ts">
-import AuthLink from "@/components/AuthLink.vue";
-</script>
+<script setup lang="ts"></script>
 
 <style scoped></style>
