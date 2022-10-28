@@ -1,4 +1,7 @@
 <template>
+  <div v-if="isSticky">
+    <div class="h-[90px]"></div>
+  </div>
   <div
     class="header-main bg-colorado-blue text-white shadow-md mb-[10px] dark:bg-black-deep"
     :class="{ 'fixed top-0 left-0 w-full z-50 transition-all shadow-md animate-fadeInDown': isSticky }"
