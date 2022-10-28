@@ -1,5 +1,8 @@
 <template>
   <h1>Welcome to the Denver ARTCC</h1>
+  <Alert type="info">
+    This site is still heavily under construction and is not ready for public use. Please check back later.
+  </Alert>
   <p>Hello!</p>
   <p>
     We are the Denver ARTCC, a division of VATSIM, the Virtual Air Traffic Simulation Network. We are a group of
