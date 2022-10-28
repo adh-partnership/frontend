@@ -17,7 +17,7 @@ import { useRegisterSW } from "virtual:pwa-register/vue";
 console.log(pwaInfo);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const reloadSW: any = "__RELOAD_SW__";
+const reloadSW = "__RELOAD_SW__";
 
 const { needRefresh, updateServiceWorker } = useRegisterSW({
   immediate: true,
