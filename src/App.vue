@@ -13,11 +13,13 @@
       <Spinner :size="16" />
     </div>
   </div>
+  <ReloadPrompt />
 </template>
 
 <script lang="ts" setup>
 import Footer from "@/views/partials/Footer.vue";
 import Header from "@/views/partials/Header.vue";
+import ReloadPrompt from "@/components/ReloadPrompt.vue";
 import Spinner from "@/components/Spinner.vue";
 import useUserStore from "@/stores/users";
 
