@@ -8,7 +8,8 @@ import { VitePWA } from "vite-plugin-pwa";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), VueTypeImports(), basicSsl(), VitePWA({
-    registerType: 'prompt'
+    registerType: 'prompt',
+    srcDir: "src",
   })],
   resolve: {
     alias: {
