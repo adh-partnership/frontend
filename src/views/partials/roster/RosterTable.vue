@@ -16,7 +16,7 @@
           </td>
           <td class="w-2/5 pl-4 py-2 text-left">
             <h5 class="mb-0 text-xl">{{ `${controller.first_name} ${controller.last_name}` }}</h5>
-            <p class="mb-0">{{ getControllerTitle(controller) }}</p>
+            <p class="mb-0">{{ getControllerTitle(controller) }} ({{ controller.rating }})</p>
           </td>
           <td class="w-1/2 pl-3 py-2">
             <ControllerCertificationBadges :controller="controller" :show-active="true" />

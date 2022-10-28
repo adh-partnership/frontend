@@ -48,6 +48,9 @@ const userStore = useUserStore();
 .w-1\/10 {
   width: 10%;
 }
+.w-3\/10 {
+  width: 30%;
+}
 </style>
 
 <style lang="postcss">
