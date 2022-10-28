@@ -1,12 +1,15 @@
 <template>
   <div class="mr-2 overflow-hidden dark:mr-2" style="border-radius: 0.2rem">
-    <div class="badge w-1/7" :class="genClass(props.controller.certifications.ground)">GC</div>
-    <div class="badge w-1/7" :class="genClass(props.controller.certifications.major_ground)">MAJ GC</div>
-    <div class="badge w-1/7" :class="genClass(props.controller.certifications.local)">LC</div>
-    <div class="badge w-1/7" :class="genClass(props.controller.certifications.major_local)">MAJ LC</div>
-    <div class="badge w-1/7" :class="genClass(props.controller.certifications.approach)">APP</div>
-    <div class="badge w-1/7" :class="genClass(props.controller.certifications.major_approach)">MAJ APP</div>
-    <div class="badge w-1/7" :class="genClass(props.controller.certifications.enroute)">ENR</div>
+    <div v-if="props.showActive" class="badge" :class="genActiveClass(props.controller.status)">
+      <span class="badge-text">{{ props.controller.status || "unknown" }}</span>
+    </div>
+    <div class="badge" :class="genClass(props.controller.certifications.ground)">GC</div>
+    <div class="badge" :class="genClass(props.controller.certifications.major_ground)">MAJ GC</div>
+    <div class="badge" :class="genClass(props.controller.certifications.local)">LC</div>
+    <div class="badge" :class="genClass(props.controller.certifications.major_local)">MAJ LC</div>
+    <div class="badge" :class="genClass(props.controller.certifications.approach)">APP</div>
+    <div class="badge" :class="genClass(props.controller.certifications.major_approach)">MAJ APP</div>
+    <div class="badge" :class="genClass(props.controller.certifications.enroute)">ENR</div>
   </div>
 </template>
 
@@ -15,20 +18,44 @@ import type { Controller } from "@/types";
 
 interface Props {
   controller: Controller;
+  showActive: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  showActive: false,
+});
 
 function genClass(cert: string): string {
+  let c = `w-1/7`;
+  if (props.showActive) {
+    c = `w-1/8`;
+  }
   switch (cert) {
     case "cantrain":
     case "certified":
     case "solo":
     case "training":
     case "none":
-      return `color-${cert} dark:color-${cert}`;
+      return `${c} color-${cert} dark:color-${cert}`;
     default:
-      return "color-none dark:color-none";
+      return `${c} color-none dark:color-none`;
+  }
+}
+
+function genActiveClass(status: string): string {
+  let c = `w-1/7`;
+  if (props.showActive) {
+    c = `w-1/8`;
+  }
+  switch (status) {
+    case "active":
+      return `${c} color-certified dark:color-certified capitalize`;
+    case "inactive":
+      return `${c} color-training dark:color-training capitalize`;
+    case "loa":
+      return `${c} color-cantrain dark:color-cantrain uppercase`;
+    default:
+      return `${c} color-none dark:color-none capitalize`;
   }
 }
 </script>
@@ -44,10 +71,6 @@ function genClass(cert: string): string {
   vertical-align: baseline;
   color: white;
   font-size: 0.75rem;
-}
-
-.w-1\/7 {
-  width: 14.2857143%;
 }
 </style>
 

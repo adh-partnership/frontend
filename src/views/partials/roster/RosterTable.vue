@@ -19,7 +19,7 @@
             <p class="mb-0">{{ getControllerTitle(controller) }}</p>
           </td>
           <td class="w-1/2 pl-3 py-2">
-            <ControllerCertificationBadges :controller="controller" />
+            <ControllerCertificationBadges :controller="controller" :show-active="true" />
           </td>
         </tr>
       </tbody>

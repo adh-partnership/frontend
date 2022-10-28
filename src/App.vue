@@ -39,6 +39,12 @@ const userStore = useUserStore();
   color: #6c757d;
 }
 
+.w-1\/7 {
+  width: 14.2857143%;
+}
+.w-1\/8 {
+  width: 12.5%;
+}
 .w-1\/10 {
   width: 10%;
 }
