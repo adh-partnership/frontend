@@ -54,8 +54,14 @@ jobs:
     - name: Install cosign
       uses: sigstore/cosign-installer@main
     - name: Build Image
+      if: ${{ env.branch == 'main' }}
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }} .
+    # If dev branch, we want to target the dev API... so we do this through an ARG that sets the mode to staging.
+    - name: Build Staging Image
+      if: ${{ env.branch == 'dev' }}
+      run: |
+        docker build --build-arg build_suffix="-dev" -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }} .
     - name: Push Image
       if: ${{ github.event_name == 'push' }}
       run: |
