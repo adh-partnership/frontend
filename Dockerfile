@@ -1,11 +1,13 @@
-ARG build_suffix=""
+ARG build_cmd="build"
 
 FROM node:lts-alpine as build
+ARG build_cmd
+
 WORKDIR /app
 COPY package*.json ./
 COPY . .
 RUN yarn install && \
-    yarn build${build_suffix} && \
+    yarn $build_cmd && \
     rm dist/vite.svg
 
 FROM nginx:alpine

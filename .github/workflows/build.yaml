@@ -61,7 +61,7 @@ jobs:
     - name: Build Staging Image
       if: ${{ env.branch == 'dev' }}
       run: |
-        docker build --build-arg build_suffix="-dev" -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }} .
+        docker build --build-arg build_cmd="build-dev" -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }} .
     - name: Push Image
       if: ${{ github.event_name == 'push' }}
       run: |
