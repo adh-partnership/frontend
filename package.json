@@ -45,7 +45,7 @@
     "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "^9.2.0",
+    "eslint-plugin-vue": "^9.7.0",
     "postcss": "^8.4.18",
     "prettier": "^2.6.2",
     "sass": "^1.54.9",
