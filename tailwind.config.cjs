@@ -4,6 +4,7 @@ const flowbite = require("flowbite/plugin");
 module.exports = {
   content: ["./index.html", "./src/**/*.vue", "./node_modules/flowbite/**/*.js"],
   darkMode: "class",
+  jit: true,
   theme: {
     extend: {
       colors: {

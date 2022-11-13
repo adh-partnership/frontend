@@ -27,7 +27,7 @@ const Links: Link[] = [
         title: "SkyVector",
       },
       {
-        to: { name: "NotImplemented" },
+        to: { name: "Map" },
         title: "Facility Map",
       },
       {

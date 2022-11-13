@@ -17,6 +17,11 @@ const routes = [
     component: Home,
   },
   {
+    path: "/map",
+    name: "Map",
+    component: () => import("@/views/pages/FacilityMap.vue"),
+  },
+  {
     path: "/error/forbidden",
     name: "Forbidden",
     component: () => import("@/views/pages/errors/ErrorForbidden.vue"),
