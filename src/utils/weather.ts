@@ -289,6 +289,11 @@ const getMetars = async (stations: string | string[]): Promise<string> => {
   return metars.data;
 };
 
+const getTAF = async (station: string): Promise<string> => {
+  const taf = await ZDVAPI.get(`/v1/proxy/taf/${station}`);
+  return taf.data;
+};
+
 const getFlightCategory = (metar: string): string | undefined => {
   const metarObject = parseMetar(metar);
   return metarObject.flight_category;
@@ -297,5 +302,6 @@ const getFlightCategory = (metar: string): string | undefined => {
 export default {
   getFlightCategory,
   getMetars,
+  getTAF,
   parseMetar,
 };

@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import "leaflet/dist/leaflet.css";
 
-import { onMounted, ref, Ref } from "vue";
+import { onMounted, onUnmounted, ref, Ref } from "vue";
 import axios from "axios";
 import Facility from "@/facility";
 import leaflet from "leaflet";
@@ -19,8 +19,29 @@ import Weather from "@/utils/weather";
 let map: leaflet.Map;
 let metarLayer: leaflet.LayerGroup;
 let nexradLayer: leaflet.Layer;
+let updateTimer: ReturnType<typeof setInterval>;
 const weather: Ref<{ [key: string]: ParsedMetar | null }> = ref({});
+const tafs: Ref<{ [key: string]: string | null }> = ref({});
 const airportMarkers: Ref<{ [key: string]: leaflet.Marker }> = ref({});
+
+const updatePopups = (): void => {
+  Facility.airports.forEach((airport) => {
+    airportMarkers.value[airport.icao].bindTooltip(
+      `<table style="max-width: 20rem; color: #eee; font-size: 0.9rem; background-color: rgb(0,0,0); border: 1px solid white;">
+        <tr class="border-b-1"><td class="px-2 text-xl"><b>${airport.name}</b> (${airport.icao})</td></tr>
+      <tr class="border-b-1"><td><small><b>METAR</b>:<pre>${
+        weather.value[airport.icao]?.raw_text
+      }</pre></small></td></tr>
+        <tr><td><small><b>TAF</b>: <pre>${
+          tafs.value[airport.icao] || "<i>No TAF Available</i></div>"
+        }</pre></small></td></tr></table>`,
+      {
+        opacity: 1,
+        direction: "right",
+      }
+    );
+  });
+};
 
 const updateWeather = (): void => {
   Facility.airports.forEach((airport) => {
@@ -33,6 +54,16 @@ const updateWeather = (): void => {
           iconAnchor: [8, 8],
         })
       );
+      updatePopups();
+    });
+  });
+};
+
+const updateTAFs = (): void => {
+  Facility.airports.forEach((airport) => {
+    Weather.getTAF(airport.icao).then((taf: string) => {
+      tafs.value[airport.icao] = taf;
+      updatePopups();
     });
   });
 };
@@ -76,6 +107,7 @@ onMounted(() => {
   metarLayer = leaflet.layerGroup(Object.values(airportMarkers.value)).addTo(map);
   Facility.airports.forEach((airport) => {
     weather.value[airport.icao] = null;
+    tafs.value[airport.icao] = null;
     airportMarkers.value[airport.icao] = leaflet
       .marker(new leaflet.LatLng(airport.latitude, airport.longitude), {
         icon: leaflet.icon({
@@ -89,8 +121,28 @@ onMounted(() => {
 
   updateNexrad();
   updateWeather();
+  updateTAFs();
+
+  updateTimer = setInterval(() => {
+    updateNexrad();
+    updateWeather();
+    updateTAFs();
+  }, 5 * 60000); // every 5 minutes
+});
+
+onUnmounted(() => {
+  clearInterval(updateTimer);
 });
 </script>
+
+<style lang="postcss">
+.leaflet-tooltip table tbody tr td pre {
+  @apply pb-2;
+}
+.leaflet-tooltip table tbody tr td {
+  @apply px-2;
+}
+</style>
 
 <style>
 .leaflet-control-attribution {
@@ -101,5 +153,21 @@ onMounted(() => {
 
 .leaflet-control-attribution > a {
   color: rgba(255, 255, 255, 0.15);
+}
+
+.leaflet-tooltip {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  box-shadow: none;
+  white-space: normal;
+  width: 20rem;
+}
+
+.leaflet-tooltip::before {
+  border-right-color: rgba(0, 0, 0, 0) !important;
+}
+
+.leaflet-tooltip-left::before {
+  border-left-color: rgba(0, 0, 0, 0) !important;
 }
 </style>
