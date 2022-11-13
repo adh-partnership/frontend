@@ -7,8 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY . .
 RUN yarn install && \
-    yarn $build_cmd && \
-    rm dist/vite.svg
+    yarn $build_cmd
 
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
