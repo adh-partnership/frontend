@@ -27,8 +27,12 @@ const airportMarkers: Ref<{ [key: string]: leaflet.Marker }> = ref({});
 const updatePopups = (): void => {
   Facility.airports.forEach((airport) => {
     airportMarkers.value[airport.icao].bindTooltip(
-      `<table style="max-width: 20rem; color: #eee; font-size: 0.9rem; background-color: rgb(0,0,0); border: 1px solid white;">
-        <tr class="border-b-1"><td class="px-2 text-xl"><b>${airport.name}</b> (${airport.icao})</td></tr>
+      `<table class="tooltip-table">
+        <tr class="border-b-1"><td class="px-2 text-xl">
+          <button class="wx-badge wx-badge-${weather.value[airport.icao]?.flight_category?.toLowerCase()}">
+            ${weather.value[airport.icao]?.flight_category}
+          </button>
+          <b>${airport.name}</b> (${airport.icao})</td></tr>
       <tr class="border-b-1"><td><small><b>METAR</b>:<pre>${
         weather.value[airport.icao]?.raw_text
       }</pre></small></td></tr>
@@ -37,7 +41,7 @@ const updatePopups = (): void => {
         }</pre></small></td></tr></table>`,
       {
         opacity: 1,
-        direction: "right",
+        direction: "auto",
       }
     );
   });
@@ -50,8 +54,8 @@ const updateWeather = (): void => {
       airportMarkers.value[airport.icao].setIcon(
         leaflet.icon({
           iconUrl: `/assets/images/map/${weather.value[airport.icao]?.flight_category?.toLowerCase() || "unknown"}.png`,
-          iconSize: [16, 16],
-          iconAnchor: [8, 8],
+          iconSize: [12, 12],
+          iconAnchor: [6, 6],
         })
       );
       updatePopups();
@@ -112,8 +116,8 @@ onMounted(() => {
       .marker(new leaflet.LatLng(airport.latitude, airport.longitude), {
         icon: leaflet.icon({
           iconUrl: "/assets/images/map/unknown.png",
-          iconSize: [16, 16],
-          iconAnchor: [8, 8],
+          iconSize: [12, 12],
+          iconAnchor: [6, 6],
         }),
       })
       .addTo(metarLayer);
@@ -142,6 +146,28 @@ onUnmounted(() => {
 .leaflet-tooltip table tbody tr td {
   @apply px-2;
 }
+
+.wx-badge {
+  @apply text-center text-lg font-bold uppercase rounded-md px-2;
+  @apply text-white;
+  @apply border-1 border-white;
+}
+
+.wx-badge-vfr {
+  @apply bg-green-700;
+}
+
+.wx-badge-mvfr {
+  @apply bg-blue-900;
+}
+
+.wx-badge-ifr {
+  @apply bg-red-900;
+}
+
+.wx-badge-lifr {
+  @apply bg-purple-900;
+}
 </style>
 
 <style>
@@ -169,5 +195,13 @@ onUnmounted(() => {
 
 .leaflet-tooltip-left::before {
   border-left-color: rgba(0, 0, 0, 0) !important;
+}
+
+.tooltip-table {
+  max-width: 20rem;
+  color: #eee;
+  font-size: 0.9rem;
+  background-color: rgb(0, 0, 0);
+  border: 1px solid white;
 }
 </style>
