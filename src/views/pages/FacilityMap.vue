@@ -2,7 +2,7 @@
   <div>
     <h1 class="text-2xl">Facility Map</h1>
 
-    <div id="map" style="width: 100%; min-height: 600px"></div>
+    <div id="map" style="width: 100%; min-height: 600px" class="z-20"></div>
   </div>
 </template>
 
