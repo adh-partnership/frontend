@@ -106,7 +106,7 @@ jobs:
         git config user.name "${{ secrets.GH_PIPELINE_USERNAME }}"
         git config user.email "wm@denartcc.org"
     - name: Setup Kustomize
-      uses: imranismail/setup-kustomize@v1
+      uses: imranismail/setup-kustomize@v2
       with:
         kustomize-version: "4.4.1"
     - name: Update dev overlay
@@ -158,7 +158,7 @@ jobs:
         git config user.name "${{ secrets.PAZA_GITOPS_USER }}"
         git config user.email "${{ secrets.PAZA_GITOPS_EMAIL }}"
     - name: Setup Kustomize
-      uses: imranismail/setup-kustomize@v1
+      uses: imranismail/setup-kustomize@v2
       with:
         kustomize-version: "4.4.1"
     - name: Update dev overlay
@@ -212,7 +212,7 @@ jobs:
         git config user.name "${{ secrets.PAZA_GITOPS_USER }}"
         git config user.email "${{ secrets.PAZA_GITOPS_EMAIL }}"
     - name: Setup Kustomize
-      uses: imranismail/setup-kustomize@v1
+      uses: imranismail/setup-kustomize@v2
       with:
         kustomize-version: "4.4.1"
     - name: Update dev overlay
