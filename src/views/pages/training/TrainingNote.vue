@@ -77,7 +77,7 @@ import type { Controller, TrainingNote } from "@/types";
 import ControllerHeader from "@/components/ControllerHeader.vue";
 import Spinner from "@/components/Spinner.vue";
 import useRosterStore from "@/stores/roster";
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 const rosterStore = useRosterStore();
 const route = useRoute();

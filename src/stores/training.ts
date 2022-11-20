@@ -1,7 +1,7 @@
 import type { Controller } from "@/types";
 import { defineStore } from "pinia";
 import { TrainingNote } from "@/types/index.d";
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 const defaultState: TrainingNote = {
   id: 0,

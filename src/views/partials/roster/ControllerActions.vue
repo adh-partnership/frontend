@@ -134,7 +134,7 @@ import type { Ref } from "vue";
 import type { Controller } from "@/types";
 import { hasRole } from "@/utils/auth";
 import useRosterStore from "@/stores/roster";
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 let saveTimer: ReturnType<typeof setTimeout>;
 

@@ -55,8 +55,8 @@ const Links: Link[] = [
         roles: ["atm", "datm", "wm"],
       },
       {
-        to: { name: "NotImplemented" },
-        title: "Documents",
+        to: { name: "Resources" },
+        title: "Resources",
       },
       {
         to: { name: "NotImplemented" },

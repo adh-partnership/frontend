@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 import { Controller } from "@/types";
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 interface RosterState {
   controllers: Controller[];

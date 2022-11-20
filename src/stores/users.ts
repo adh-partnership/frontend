@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 interface UserState {
   user: User | null;
