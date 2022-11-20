@@ -1,5 +1,5 @@
 import type { ParsedMetar } from "@/types";
-import { ZDVAPI } from "./axios";
+import { ZDVAPI } from "./api";
 
 const convert = {
   celsiusToFahrenheit(celsius: number): number {
