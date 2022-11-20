@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v3.1.0
@@ -61,26 +61,29 @@ jobs:
     - name: Create ZDV env
       if: ${{ matrix.facility == 'zdv' }}
       run: |
+        SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
         cat <<EOF > .env
         VITE_EMAIL_DOMAIN="denartcc.org"
         VITE_FACILITY_NAME="Denver ARTCC"
-        VITE_GIT_HASH="${{ steps.vars.outputs.sha_short }}"
+        VITE_GIT_HASH="$SHA_SHORT"
         EOF
     - name: Create ZAN env
       if: ${{ matrix.facility == 'zan' }}
       run: |
+        SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
         cat <<EOF > .env
         VITE_EMAIL_DOMAIN="vzanartcc.net"
         VITE_FACILITY_NAME="Anchorage ARTCC"
-        VITE_GIT_HASH="${{ steps.vars.outputs.sha_short }}"
+        VITE_GIT_HASH="$SHA_SHORT"
         EOF
     - name: Create HCF env
       if: ${{ matrix.facility == 'hcf' }}
       run: |
+        SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
         cat <<EOF > .env
         VITE_EMAIL_DOMAIN="vhcf.net"
         VITE_FACILITY_NAME="Honolulu Control Facility"
-        VITE_GIT_HASH="${{ steps.vars.outputs.sha_short }}"
+        VITE_GIT_HASH="$SHA_SHORT"
         EOF
     - name: Setup Facility file
       run: |
