@@ -1,3 +1,4 @@
+import apiUrl from "@/utils/api";
 import { RouteLocationRaw } from "vue-router";
 
 export interface Link {
@@ -7,7 +8,20 @@ export interface Link {
   sublinks?: Link[];
   auth?: boolean;
   roles?: string[];
+  sameWindow?: boolean;
 }
+
+const ProfileLinks: Link[] = [
+  {
+    title: "Discord Dashboard",
+    href: `https://discord.${import.meta.env.VITE_EMAIL_DOMAIN}/`,
+  },
+  {
+    title: "Logout",
+    href: `${apiUrl}/v1/user/logout?redirect=${window.location.href}`,
+    sameWindow: true,
+  },
+];
 
 const Links: Link[] = [
   {
@@ -71,3 +85,4 @@ const Links: Link[] = [
 ];
 
 export default Links;
+export { ProfileLinks };

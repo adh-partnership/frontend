@@ -10,14 +10,14 @@
       >
       </HeaderNavItem>
       <HeaderNavItem v-if="!userStore.isLoggedIn" title="Login" :href="`${apiUrl}/v1/user/login?redirect=${loc}`" />
-      <HeaderNavItem v-else :title="getName()" to="#" />
+      <HeaderNavItem v-else :title="getName()" :sublinks="profilelinks" to="#" />
     </ul>
   </nav>
 </template>
 
 <script setup lang="ts">
+import links, { ProfileLinks as profilelinks } from "@/links";
 import apiUrl from "@/utils/api";
-import links from "@/links";
 import useUserStore from "@/stores/users";
 
 import HeaderNavItem from "./HeaderNavItem.vue";
