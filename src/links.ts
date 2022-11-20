@@ -76,10 +76,6 @@ const Links: Link[] = [
         to: { name: "NotImplemented" },
         title: "Visitor Application",
       },
-      {
-        to: { name: "NotImplemented" },
-        title: "Contact Staff",
-      },
     ],
   },
 ];
