@@ -99,6 +99,11 @@ const routes = [
     },
   },
   {
+    path: "/visit",
+    name: "VisitingApplication",
+    component: () => import("@/views/pages/VisitingApplication.vue"),
+  },
+  {
     path: "/not-implemented",
     name: "NotImplemented",
     component: () => import("@/views/pages/NotImplementedPage.vue"),

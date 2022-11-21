@@ -8,6 +8,7 @@ declare interface MenuItem {
 export type Facility = {
   id: string;
   name: string;
+  minVisitorRating: string;
   center: [number, number];
   domain: string;
   defaultZoom: number;
@@ -110,6 +111,13 @@ export type TrainingNote = {
   session_date: string;
   type: string;
   comments: string;
+};
+
+export type VisitorApplication = {
+  id: number;
+  user: Controller;
+  created_at: string;
+  updated_at: string;
 };
 
 export type { Link } from "@/links";

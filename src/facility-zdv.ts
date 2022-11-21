@@ -3,6 +3,7 @@ import type { Facility } from "@/types";
 const fac: Facility = {
   id: "KZDV",
   name: "Denver ARTCC",
+  minVisitorRating: "S2",
   domain: "denartcc.org",
   boundaries: {
     center: [
