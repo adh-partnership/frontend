@@ -1,4 +1,5 @@
 <template>
+  <h1 class="text-2xl font-bold">Resources</h1>
   <div v-if="!loaded" class="flex"><Spinner class="fill-colorado-blue" /> Loading resources...</div>
   <div v-else class="flex">
     <div class="w-1/6 mr-4 border-r border-gray-200 dark:border-gray-700">

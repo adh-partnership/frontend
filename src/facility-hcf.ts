@@ -3,6 +3,7 @@ import type { Facility } from "@/types";
 const fac: Facility = {
   id: "PHZH",
   name: "Honolulu Control Facility",
+  minVisitorRating: "S2",
   domain: "vhcf.net",
   boundaries: {
     center: [
