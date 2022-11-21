@@ -5,6 +5,16 @@ declare interface MenuItem {
   href?: string;
 }
 
+export type Facility = {
+  id: string;
+  name: string;
+  center: [number, number];
+  domain: string;
+  defaultZoom: number;
+  boundaries: { [key: string]: [number, number][] };
+  airports: { icao: string; name: string; latitude: number; longitude: number }[];
+};
+
 export type ParsedMetar = {
   raw_text: string;
   raw_parts: string[];

@@ -1,4 +1,5 @@
 import apiUrl from "@/utils/api";
+import fac from "@/facility";
 import { RouteLocationRaw } from "vue-router";
 
 export interface Link {
@@ -14,7 +15,7 @@ export interface Link {
 const ProfileLinks: Link[] = [
   {
     title: "Discord Dashboard",
-    href: `https://discord.${import.meta.env.VITE_EMAIL_DOMAIN}/`,
+    href: `https://discord.${fac.domain}/`,
   },
   {
     title: "Logout",

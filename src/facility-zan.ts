@@ -1,13 +1,9 @@
-type Facility = {
-  id: string;
-  center: [number, number];
-  defaultZoom: number;
-  boundaries: { [key: string]: [number, number][] };
-  airports: { icao: string; name: string; latitude: number; longitude: number }[];
-};
+import type { Facility } from "@/types";
 
 const fac: Facility = {
   id: "PAZA",
+  name: "Anchorage ARTCC",
+  domain: "vzanartcc.net",
   boundaries: {
     center: [
       [68, -168.973056],
