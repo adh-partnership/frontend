@@ -89,4 +89,30 @@ export type TrainingNote = {
   comments: string;
 };
 
+export type EventPosition = {
+  id: number;
+  position: string;
+  user: Controller | null;
+};
+
+export type EventSignup = {
+  id: number;
+  choice1: string;
+  choice2: string;
+  choice3: string;
+  notes: string;
+  user: Controller;
+};
+
+export type Event = {
+  id: number;
+  banner: string;
+  title: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+  positions: EventPosition[] | null;
+  signups: EventSignup[] | null;
+};
+
 export type { Link } from "@/links";
