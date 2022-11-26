@@ -18,5 +18,5 @@ export const hasRole = (role: string[] | string): boolean => {
 export const isAuthenticated = (): boolean => {
   const store = useUserStore();
 
-  return store.user !== undefined;
+  return store.user !== null;
 };
