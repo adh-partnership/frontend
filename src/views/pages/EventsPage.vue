@@ -27,7 +27,6 @@ const router = useRouter();
 const fetched = ref(false);
 const error = ref("");
 const eventStore = useEventStore();
-// const { events } = storeToRefs(eventStore);
 
 const canCreateEvent = (): boolean => {
   return isAuthenticated() && hasRole(["atm", "datm", "ta", "ec"]);
