@@ -16,19 +16,7 @@
           class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
           @click="toggleModal()"
         >
-          <svg
-            aria-hidden="true"
-            class="w-5 h-5"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
+          <i class="fas fa-xmark w-4"></i>
           <span class="sr-only">Close modal</span>
         </button>
       </div>
@@ -133,12 +121,16 @@
           Cancel
         </button>
       </div>
+      <alert v-if="error != null" type="error">
+        <b>Error</b>: There was an error creating the event, recheck your form values and try again. {{ error }}
+      </alert>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { hasRole, isAuthenticated } from "@/utils/auth";
+import Alert from "@/components/Alert.vue";
 import { DatePicker } from "v-calendar";
 import { Event } from "@/types";
 import { ref } from "vue";
@@ -150,6 +142,7 @@ const isDark = useDark();
 const eventStore = useEventStore();
 const isOpen = ref(false);
 const event = ref({} as Event);
+const error = ref();
 
 const startDate = ref();
 const endDate = ref();
@@ -190,8 +183,9 @@ const createEvent = async (): Promise<void> => {
       } else {
         buttonState.value = ButtonStates.Error;
       }
-    } catch (error) {
+    } catch (err) {
       buttonState.value = ButtonStates.Error;
+      error.value = err;
     }
   }
 };

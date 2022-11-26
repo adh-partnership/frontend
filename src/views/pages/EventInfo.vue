@@ -42,6 +42,9 @@
         >
           <i class="fas fa-xmark mr-2"></i>Delete
         </button>
+        <alert v-if="error != null" type="error" class="m-2">
+          <b>Error</b>: There was an error deleting the event. {{ error }}
+        </alert>
       </div>
       <div v-else>
         <form>
@@ -126,6 +129,9 @@
             <span v-else-if="buttonState === ButtonStates.Saving">Saving</span>
             <span v-else-if="buttonState === ButtonStates.Error">Error!</span>
           </button>
+          <alert v-if="error != null" type="error">
+            <b>Error</b>: There was an error editting the event, recheck your form values and try again. {{ error }}
+          </alert>
         </form>
       </div>
       <img class="max-w-10 h-auto mt-4 lg:mt-0" :src="event.banner" :alt="event.title" />
@@ -172,6 +178,7 @@ const id = parseInt(route.params.id as string, 10);
 const event = ref(eventStore.getEvent(id) as Event);
 const modifiedEvent = ref({} as Event);
 const editing = ref(false);
+const error = ref();
 
 const localDate = (s: string): string => {
   const dt = new Date(s);
@@ -218,8 +225,8 @@ const deleteEvent = async (): Promise<void> => {
         await eventStore.fetchEvents();
         await router.push(`/events/`);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      error.value = err;
     }
   }
 };
@@ -240,8 +247,9 @@ const saveEvent = async (e: Event): Promise<void> => {
       } else {
         buttonState.value = ButtonStates.Error;
       }
-    } catch (error) {
+    } catch (err) {
       buttonState.value = ButtonStates.Error;
+      error.value = err;
     }
   }
 };
