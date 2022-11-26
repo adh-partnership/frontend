@@ -60,7 +60,7 @@
           </div>
           <div class="grid md:grid-cols-2 md:gap-6">
             <div class="relative z-10 mb-6 w-full group">
-              <v-date-picker v-model="startDate" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
+              <date-picker v-model="startDate" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
                 <template #default="{ inputValue, inputEvents }">
                   <input
                     id="start-date"
@@ -69,7 +69,7 @@
                     v-on="inputEvents"
                   />
                 </template>
-              </v-date-picker>
+              </date-picker>
 
               <label
                 for="start-date"
@@ -78,7 +78,7 @@
               >
             </div>
             <div class="relative z-10 mb-6 w-full group">
-              <v-date-picker v-model="endDate" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
+              <date-picker v-model="endDate" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
                 <template #default="{ inputValue, inputEvents }">
                   <input
                     id="end-date"
@@ -87,7 +87,7 @@
                     v-on="inputEvents"
                   />
                 </template>
-              </v-date-picker>
+              </date-picker>
               <label
                 for="end-date"
                 class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-black-light px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-focus:text-sm peer-placeholder-shown:text-lg peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-3/7 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
@@ -139,6 +139,7 @@
 
 <script setup lang="ts">
 import { hasRole, isAuthenticated } from "@/utils/auth";
+import { DatePicker } from "v-calendar";
 import { Event } from "@/types";
 import { ref } from "vue";
 import { useDark } from "@vueuse/core";

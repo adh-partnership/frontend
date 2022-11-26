@@ -63,7 +63,7 @@
           <div class="flex font-medium text-lg m-0 mt-2">
             <span class="font-bold mr-2 mt-1 w-14">Start:</span>
             <div class="relative w-full">
-              <v-date-picker v-model="modifiedEvent.start_date" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
+              <date-picker v-model="modifiedEvent.start_date" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
                 <template #default="{ inputValue, inputEvents }">
                   <input
                     id="event-start_date"
@@ -72,7 +72,7 @@
                     v-on="inputEvents"
                   />
                 </template>
-              </v-date-picker>
+              </date-picker>
               <label
                 for="event-end_date"
                 class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-black-light px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-focus:text-sm peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
@@ -83,7 +83,7 @@
           <div class="flex font-medium text-lg m-0 mt-2">
             <span class="font-bold mr-2 mt-1 w-14">End:</span>
             <div class="relative w-full">
-              <v-date-picker v-model="modifiedEvent.end_date" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
+              <date-picker v-model="modifiedEvent.end_date" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
                 <template #default="{ inputValue, inputEvents }">
                   <input
                     id="event-start_date"
@@ -92,7 +92,7 @@
                     v-on="inputEvents"
                   />
                 </template>
-              </v-date-picker>
+              </date-picker>
               <label
                 for="event-end_date"
                 class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-black-light px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-focus:text-sm peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
@@ -153,6 +153,7 @@ import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import CreatePositionModal from "@/views/partials/events/CreatePositionModal.vue";
+import { DatePicker } from "v-calendar";
 import Positions from "@/views/partials/events/Positions.vue";
 import SignupModal from "@/views/partials/events/SignupModal.vue";
 
