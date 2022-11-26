@@ -33,7 +33,15 @@
           <i class="fas fa-edit mr-2"></i>Edit
         </button>
         <create-position-modal v-if="canEditEvent()" :id="id" />
-        <signup-modal v-if="isAuthenticated()" :id="id" :positions="event.positions" />
+        <signup-modal v-if="canSignup()" :id="id" :positions="event.positions" />
+        <button
+          v-if="canDeleteEvent()"
+          class="btn bg-red-500 text-white font-bold py-2 px-4 ml-2 rounded"
+          type="button"
+          @click="deleteEvent()"
+        >
+          <i class="fas fa-xmark mr-2"></i>Delete
+        </button>
       </div>
       <div v-else>
         <form>
@@ -55,13 +63,16 @@
           <div class="flex font-medium text-lg m-0 mt-2">
             <span class="font-bold mr-2 mt-1 w-14">Start:</span>
             <div class="relative w-full">
-              <input
-                id="event-start_date"
-                v-model="modifiedEvent.start_date"
-                type="text"
-                class="block px-1 pb-1 pt-2 w-full text-sm font-bold text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-              />
+              <v-date-picker v-model="modifiedEvent.start_date" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
+                <template #default="{ inputValue, inputEvents }">
+                  <input
+                    id="event-start_date"
+                    class="block px-1 pb-1 pt-2 w-full text-sm font-bold text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    :value="inputValue"
+                    v-on="inputEvents"
+                  />
+                </template>
+              </v-date-picker>
               <label
                 for="event-end_date"
                 class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-black-light px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-focus:text-sm peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
@@ -72,13 +83,16 @@
           <div class="flex font-medium text-lg m-0 mt-2">
             <span class="font-bold mr-2 mt-1 w-14">End:</span>
             <div class="relative w-full">
-              <input
-                id="event-start_date"
-                v-model="modifiedEvent.end_date"
-                type="text"
-                class="block px-1 pb-1 pt-2 w-full text-sm font-bold text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-              />
+              <v-date-picker v-model="modifiedEvent.end_date" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
+                <template #default="{ inputValue, inputEvents }">
+                  <input
+                    id="event-start_date"
+                    class="block px-1 pb-1 pt-2 w-full text-sm font-bold text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    :value="inputValue"
+                    v-on="inputEvents"
+                  />
+                </template>
+              </v-date-picker>
               <label
                 for="event-end_date"
                 class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-black-light px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-focus:text-sm peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
@@ -144,9 +158,11 @@ import SignupModal from "@/views/partials/events/SignupModal.vue";
 
 import { Event } from "@/types";
 
+import { useDark } from "@vueuse/core";
 import useEventStore from "@/stores/event";
 import { ZDVAPI } from "@/utils/axios";
 
+const isDark = useDark();
 const loading = ref(true);
 const route = useRoute();
 const router = useRouter();
@@ -163,6 +179,14 @@ const localDate = (s: string): string => {
 
 const canEditEvent = (): boolean => {
   return isAuthenticated() && hasRole(["atm", "datm", "ta", "ec"]);
+};
+
+const canDeleteEvent = (): boolean => {
+  return isAuthenticated() && hasRole(["atm", "datm", "ta", "ec"]);
+};
+
+const canSignup = (): boolean => {
+  return isAuthenticated();
 };
 
 enum ButtonStates {
@@ -182,6 +206,18 @@ const editEvent = (): void => {
     modifiedEvent.value.end_date = event.value.end_date;
     modifiedEvent.value.banner = event.value.banner;
     editing.value = true;
+  }
+};
+
+const deleteEvent = async (): Promise<void> => {
+  if (canEditEvent()) {
+    try {
+      const result = await ZDVAPI.delete(`/v1/events/${id}`);
+      if (result.status === 204) {
+        await eventStore.fetchEvents();
+        await router.push(`/events/`);
+      }
+    } catch (error) {}
   }
 };
 

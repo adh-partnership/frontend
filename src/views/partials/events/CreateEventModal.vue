@@ -59,28 +59,35 @@
             ></textarea>
           </div>
           <div class="grid md:grid-cols-2 md:gap-6">
-            <div class="relative z-0 mb-6 w-full group">
-              <input
-                id="start-date"
-                v-model="event.start_date"
-                type="text"
-                class="block px-2.5 pb-2.5 pt-4 w-full rounded-md text-lg text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-              />
+            <div class="relative z-10 mb-6 w-full group">
+              <v-date-picker v-model="startDate" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
+                <template #default="{ inputValue, inputEvents }">
+                  <input
+                    id="start-date"
+                    class="block px-2.5 pb-2.5 pt-4 w-full rounded-md text-lg text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    :value="inputValue"
+                    v-on="inputEvents"
+                  />
+                </template>
+              </v-date-picker>
+
               <label
                 for="start-date"
                 class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-black-light px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-focus:text-sm peer-placeholder-shown:text-lg peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-3/7 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                 >Start Date</label
               >
             </div>
-            <div class="relative z-0 mb-6 w-full group">
-              <input
-                id="end-date"
-                v-model="event.end_date"
-                type="text"
-                class="block px-2.5 pb-2.5 pt-4 w-full rounded-md text-lg text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-              />
+            <div class="relative z-10 mb-6 w-full group">
+              <v-date-picker v-model="endDate" mode="dateTime" timezone="utc" is24hr :is-dark="isDark">
+                <template #default="{ inputValue, inputEvents }">
+                  <input
+                    id="end-date"
+                    class="block px-2.5 pb-2.5 pt-4 w-full rounded-md text-lg text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    :value="inputValue"
+                    v-on="inputEvents"
+                  />
+                </template>
+              </v-date-picker>
               <label
                 for="end-date"
                 class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-black-light px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-focus:text-sm peer-placeholder-shown:text-lg peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-3/7 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
@@ -134,12 +141,17 @@
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import { Event } from "@/types";
 import { ref } from "vue";
+import { useDark } from "@vueuse/core";
 import useEventStore from "@/stores/event";
 import { ZDVAPI } from "@/utils/axios";
 
+const isDark = useDark();
 const eventStore = useEventStore();
 const isOpen = ref(false);
 const event = ref({} as Event);
+
+const startDate = ref();
+const endDate = ref();
 
 const toggleModal = (): void => {
   isOpen.value = !isOpen.value;
@@ -160,6 +172,8 @@ const buttonState = ref(ButtonStates.Idle);
 
 const createEvent = async (): Promise<void> => {
   if (canCreateEvent()) {
+    event.value.start_date = new Date(startDate.value).toISOString();
+    event.value.end_date = new Date(endDate.value).toISOString();
     try {
       const result = await ZDVAPI.post(`/v1/events`, event.value);
       if (result.status === 201) {
