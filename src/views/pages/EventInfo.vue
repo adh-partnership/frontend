@@ -217,7 +217,9 @@ const deleteEvent = async (): Promise<void> => {
         await eventStore.fetchEvents();
         await router.push(`/events/`);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 };
 
