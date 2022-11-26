@@ -273,7 +273,7 @@ import { computed, ref } from "vue";
 import type { EventPosition, EventSignup } from "@/types";
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import useEventStore from "@/stores/event";
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 const eventStore = useEventStore();
 const isOpen = ref(false);

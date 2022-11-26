@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 import { Event } from "@/types";
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 interface EventState {
   events: Event[];

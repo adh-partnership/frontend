@@ -160,7 +160,7 @@ import { Event } from "@/types";
 
 import { useDark } from "@vueuse/core";
 import useEventStore from "@/stores/event";
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 const isDark = useDark();
 const loading = ref(true);

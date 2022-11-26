@@ -143,7 +143,7 @@ import { Event } from "@/types";
 import { ref } from "vue";
 import { useDark } from "@vueuse/core";
 import useEventStore from "@/stores/event";
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 const isDark = useDark();
 const eventStore = useEventStore();
