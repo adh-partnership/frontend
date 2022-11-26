@@ -22,7 +22,8 @@
                 :class="{ hidden: !assign[position.id] }"
               >
                 <div class="py-1.5 px-2 text-sm text-gray-900 dark:text-white">
-                  <p v-if="position.user != null" class="font-medium">
+                  <p v-if="error != null" class="font-medium text-red-500">Error!</p>
+                  <p v-else-if="position.user != null" class="font-medium">
                     {{ position.user.first_name }} {{ position.user.last_name }}
                     <a
                       class="block py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
@@ -58,7 +59,6 @@
                   </a>
                 </div>
               </div>
-              <!--              <assign-position-modal :id="position.id" />-->
               <button
                 type="button"
                 class="btn bg-red-500 text-white font-bold py-0.5 px-2 ml-2 rounded"
@@ -221,16 +221,16 @@
         <form>
           <div class="relative z-0 mb-6 w-full group">
             <input
-              id="event-title"
+              id="controller-id"
               v-model="controllerId"
               type="text"
               class="block px-2.5 pb-2.5 pt-4 w-full text-2xl font-bold rounded-md text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
             />
             <label
-              for="event-title"
+              for="controller-id"
               class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-black-light px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-focus:text-sm peer-placeholder-shown:text-lg peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >Create Position</label
+              >Controller ID</label
             >
           </div>
         </form>
@@ -267,6 +267,7 @@ const eventStore = useEventStore();
 const isOpen = ref(false);
 const assignPosSelected = ref("");
 const controllerId = ref();
+const error = ref();
 
 type Props = {
   eventId: number;
@@ -317,8 +318,8 @@ const assignPosition = async (cid: number, position: string): Promise<void> => {
           .then(() => {})
           .catch(() => {});
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      error.value = err;
     }
   }
 };
@@ -332,8 +333,8 @@ const deletePosition = async (position: string): Promise<void> => {
         .then(() => {})
         .catch(() => {});
     }
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    error.value = err;
   }
 };
 </script>
