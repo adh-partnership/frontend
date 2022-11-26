@@ -23,7 +23,7 @@
 import { onMounted, ref } from "vue";
 
 import type { Controller } from "@/types";
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 import StaffCard from "../partials/StaffCard.vue";
 

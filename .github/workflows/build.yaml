@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v3.1.0
@@ -32,6 +32,11 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     needs: eslint
+
+    strategy:
+      matrix:
+        facility: [zdv, zan, hcf]
+
     steps:
     - uses: actions/checkout@v3
       name: Checkout repo
@@ -53,27 +58,57 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Install cosign
       uses: sigstore/cosign-installer@main
+    - name: Create ZDV env
+      if: ${{ matrix.facility == 'zdv' }}
+      run: |
+        SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
+        cat <<EOF > .env
+        VITE_EMAIL_DOMAIN="denartcc.org"
+        VITE_FACILITY_NAME="Denver ARTCC"
+        VITE_GIT_HASH="$SHA_SHORT"
+        EOF
+    - name: Create ZAN env
+      if: ${{ matrix.facility == 'zan' }}
+      run: |
+        SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
+        cat <<EOF > .env
+        VITE_EMAIL_DOMAIN="vzanartcc.net"
+        VITE_FACILITY_NAME="Anchorage ARTCC"
+        VITE_GIT_HASH="$SHA_SHORT"
+        EOF
+    - name: Create HCF env
+      if: ${{ matrix.facility == 'hcf' }}
+      run: |
+        SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
+        cat <<EOF > .env
+        VITE_EMAIL_DOMAIN="vhcf.net"
+        VITE_FACILITY_NAME="Honolulu Control Facility"
+        VITE_GIT_HASH="$SHA_SHORT"
+        EOF
+    - name: Setup Facility file
+      run: |
+        cp src/facility-${{ matrix.facility }}.ts src/facility.ts
     - name: Build Image
       if: ${{ env.branch == 'main' }}
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }} .
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }} .
     # If dev branch, we want to target the dev API... so we do this through an ARG that sets the mode to staging.
     - name: Build Staging Image
       if: ${{ env.branch == 'dev' }}
       run: |
-        docker build --build-arg build_cmd="build-dev" -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }} .
+        docker build --build-arg build_cmd="build-dev" -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }} .
     - name: Push Image
       if: ${{ github.event_name == 'push' }}
       run: |
-        docker push --all-tags ${{ secrets.DOCKER_USERNAME }}/zdv-frontend
+        docker push --all-tags ${{ secrets.DOCKER_USERNAME }}/frontend
     - name: Sign image
       if: ${{ github.event_name == 'push' }}
       env:
         COSIGN_PASSWORD: ${{ secrets.COSIGN_PRIVATE_KEY_PASSWORD }}
         COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
       run: |
-        image_digest_sha=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }}-${{ env.sha_short }})
-        image_digest_branch=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ secrets.DOCKER_USERNAME }}/zdv-frontend:${{ env.branch }})
+        image_digest_sha=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }}-${{ env.sha_short }})
+        image_digest_branch=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }})
         cosign sign --key env://COSIGN_PRIVATE_KEY $image_digest_sha $image_digest_branch
 ###########################################################################################################
   deploy-kzdv:
@@ -106,19 +141,19 @@ jobs:
         git config user.name "${{ secrets.GH_PIPELINE_USERNAME }}"
         git config user.email "wm@denartcc.org"
     - name: Setup Kustomize
-      uses: imranismail/setup-kustomize@v1
+      uses: imranismail/setup-kustomize@v2
       with:
         kustomize-version: "4.4.1"
     - name: Update dev overlay
       if: ${{ github.ref == 'refs/heads/dev' }}
       run: |
         cd $GITHUB_WORKSPACE/gitops/overlays/dev
-        kustomize edit set image adhp/zdv-frontend=adhp/zdv-frontend:${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/zdv-frontend=adhp/frontend:zdv-${{ env.branch }}-${{ env.sha_short }}
     - name: Update prod overlay
       if: ${{ github.ref == 'refs/heads/main' }}
       run: |
         cd $GITHUB_WORKSPACE/gitops/overlays/prod
-        kustomize edit set image adhp/zdv-frontend=adhp/zdv-frontend:${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/zdv-frontend=adhp/frontend:zdv-${{ env.branch }}-${{ env.sha_short }}
     - name: Commit manifests
       run: |
         cd $GITHUB_WORKSPACE/gitops
@@ -158,20 +193,20 @@ jobs:
         git config user.name "${{ secrets.PAZA_GITOPS_USER }}"
         git config user.email "${{ secrets.PAZA_GITOPS_EMAIL }}"
     - name: Setup Kustomize
-      uses: imranismail/setup-kustomize@v1
+      uses: imranismail/setup-kustomize@v2
       with:
         kustomize-version: "4.4.1"
     - name: Update dev overlay
       if: ${{ github.ref == 'refs/heads/dev' }}
       run: |
         cd $GITHUB_WORKSPACE/gitops-paza/overlays/dev
-        kustomize edit set image adhp/zan-frontend=adhp/zan-frontend:${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/zan-frontend=adhp/frontend:zan-${{ env.branch }}-${{ env.sha_short }}
     - name: Update prod overlay
       if: ${{ github.ref == 'refs/heads/main' }}
       run: |
         HASH=`echo ${GITHUB_SHA} | cut -c1-7`
         cd $GITHUB_WORKSPACE/gitops-paza/overlays/prod
-        kustomize edit set image adhp/zan-frontend=adhp/zan-frontend:${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/zan-frontend=adhp/frontend:zan-${{ env.branch }}-${{ env.sha_short }}
     - name: Commit manifests
       run: |
         cd $GITHUB_WORKSPACE/gitops-paza
@@ -212,19 +247,19 @@ jobs:
         git config user.name "${{ secrets.PAZA_GITOPS_USER }}"
         git config user.email "${{ secrets.PAZA_GITOPS_EMAIL }}"
     - name: Setup Kustomize
-      uses: imranismail/setup-kustomize@v1
+      uses: imranismail/setup-kustomize@v2
       with:
         kustomize-version: "4.4.1"
     - name: Update dev overlay
       if: ${{ github.ref == 'refs/heads/dev' }}
       run: |
         cd $GITHUB_WORKSPACE/gitops-phzh/overlays/dev
-        kustomize edit set image adhp/hcf-frontend=adhp/hcf-frontend:${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/hcf-frontend=adhp/frontend:hcf-${{ env.branch }}-${{ env.sha_short }}
     - name: Update prod overlay
       if: ${{ github.ref == 'refs/heads/main' }}
       run: |
         cd $GITHUB_WORKSPACE/gitops-phzh/overlays/prod
-        kustomize edit set image adhp/hcf-frontend=adhp/hcf-frontend:${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/hcf-frontend=adhp/frontend:hcf-${{ env.branch }}-${{ env.sha_short }}
     - name: Commit manifests
       run: |
         cd $GITHUB_WORKSPACE/gitops-phzh

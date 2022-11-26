@@ -10,7 +10,7 @@
     <a
       v-else
       :href="props.href"
-      target="_blank"
+      :target="props.sameWindow ? '' : '_blank'"
       class="font-semibold leading-9 capitalize text-heading-light dark:text-white dark:group-hover:text-colorado-yellow group-hover:text-colorado-red"
     >
       {{ props.title }}
@@ -28,7 +28,7 @@
         class="mb-1.5 font-medium hover:text-colorado-red text-primary dark:hover:text-colorado-yellow dark:text-gray-light"
       >
         <RouterLink v-if="sl.to" :to="sl.to"> {{ sl.title }} </RouterLink>
-        <a v-else :href="sl.href" target="_blank"> {{ sl.title }} </a>
+        <a v-else :href="sl.href" :target="sl.sameWindow ? '' : '_blank'"> {{ sl.title }} </a>
       </li>
     </ul>
   </li>
@@ -41,9 +41,3 @@ const props = withDefaults(defineProps<Link>(), {
   sublinks: () => [],
 });
 </script>
-
-<style scoped>
-li {
-  @apply text-black;
-}
-</style>

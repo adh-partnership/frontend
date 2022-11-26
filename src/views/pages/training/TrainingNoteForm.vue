@@ -160,7 +160,7 @@ import ControllerHeader from "@/components/ControllerHeader.vue";
 import { storeToRefs } from "pinia";
 import useRosterStore from "@/stores/roster";
 import useTrainingStore from "@/stores/training";
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 const router = useRouter();
 const route = useRoute();

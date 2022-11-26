@@ -27,6 +27,11 @@ const routes = [
     component: () => import("@/views/pages/errors/ErrorForbidden.vue"),
   },
   {
+    path: "/error/crash",
+    name: "ErrorCrash",
+    component: () => import("@/views/pages/errors/ErrorCrash.vue"),
+  },
+  {
     path: "/roster/:cid/training/new",
     name: "NewTrainingNote",
     component: () => import("@/views/pages/training/TrainingNoteForm.vue"),
@@ -40,6 +45,11 @@ const routes = [
     path: "/privacy",
     name: "PrivacyPolicy",
     component: () => import("@/views/pages/PrivacyPolicy.vue"),
+  },
+  {
+    path: "/resources",
+    name: "Resources",
+    component: () => import("@/views/pages/Resources.vue"),
   },
   {
     path: "/roster",
@@ -87,6 +97,11 @@ const routes = [
       requiresRole: ["atm", "datm", "ta", "wm", "ins", "mtr"],
       cidOverridesRole: true,
     },
+  },
+  {
+    path: "/visit",
+    name: "VisitingApplication",
+    component: () => import("@/views/pages/VisitingApplication.vue"),
   },
   {
     path: "/events",

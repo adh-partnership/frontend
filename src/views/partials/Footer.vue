@@ -11,7 +11,7 @@
     <div class="py-4">
       <div class="container text-sm">
         Copyright &copy; 2022 by Denver ARTCC. <RouterLink to="/privacy">Privacy Policy</RouterLink>. Open Source at
-        <RouterLink to="https://github.com/kzdv/frontend">GitHub</RouterLink>.
+        <a href="https://github.com/adh-frontend/frontend">GitHub</a> (version: 0.99.0-{{ gitHash }}).
         <div class="float-right text-right">
           <button @click="toggleDark()">
             <i v-if="isDark" class="fa-solid fa-sun"></i>
@@ -29,6 +29,7 @@ import { useDark, useToggle } from "@vueuse/core";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+const gitHash = import.meta.env.VITE_GIT_HASH || "dirty";
 </script>
 
 <style scoped>

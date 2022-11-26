@@ -1,3 +1,5 @@
+import apiUrl from "@/utils/api";
+import fac from "@/facility";
 import { RouteLocationRaw } from "vue-router";
 
 export interface Link {
@@ -7,7 +9,20 @@ export interface Link {
   sublinks?: Link[];
   auth?: boolean;
   roles?: string[];
+  sameWindow?: boolean;
 }
+
+const ProfileLinks: Link[] = [
+  {
+    title: "Discord Dashboard",
+    href: `https://discord.${fac.domain}/`,
+  },
+  {
+    title: "Logout",
+    href: `${apiUrl}/v1/user/logout?redirect=${window.location.href}`,
+    sameWindow: true,
+  },
+];
 
 const Links: Link[] = [
   {
@@ -55,19 +70,16 @@ const Links: Link[] = [
         roles: ["atm", "datm", "wm"],
       },
       {
-        to: { name: "NotImplemented" },
-        title: "Documents",
+        to: { name: "Resources" },
+        title: "Resources",
       },
       {
-        to: { name: "NotImplemented" },
+        to: { name: "VisitingApplication" },
         title: "Visitor Application",
-      },
-      {
-        to: { name: "NotImplemented" },
-        title: "Contact Staff",
       },
     ],
   },
 ];
 
 export default Links;
+export { ProfileLinks };

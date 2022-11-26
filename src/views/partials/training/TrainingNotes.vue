@@ -80,7 +80,7 @@ import Spinner from "@/components/Spinner.vue";
 import { useRouter } from "vue-router";
 import useTrainingStore from "@/stores/training";
 import useUserStore from "@/stores/users";
-import { ZDVAPI } from "@/utils/axios";
+import { ZDVAPI } from "@/utils/api";
 
 const override = ref(false); // For dev purposes
 const loaded = ref(false);

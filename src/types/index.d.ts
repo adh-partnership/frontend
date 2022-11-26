@@ -5,6 +5,17 @@ declare interface MenuItem {
   href?: string;
 }
 
+export type Facility = {
+  id: string;
+  name: string;
+  minVisitorRating: string;
+  center: [number, number];
+  domain: string;
+  defaultZoom: number;
+  boundaries: { [key: string]: [number, number][] };
+  airports: { icao: string; name: string; latitude: number; longitude: number }[];
+};
+
 export type ParsedMetar = {
   raw_text: string;
   raw_parts: string[];
@@ -49,6 +60,19 @@ export type ParsedMetar = {
   flight_category?: string;
 };
 
+export type Resource = {
+  id: number;
+  category: string;
+  description: string;
+  name: string;
+  url: string;
+
+  created_at: string;
+  created_by: Controller;
+  updated_at: string;
+  updated_by: Controller;
+};
+
 export type Controller = {
   cid: number;
   first_name: string;
@@ -87,6 +111,13 @@ export type TrainingNote = {
   session_date: string;
   type: string;
   comments: string;
+};
+
+export type VisitorApplication = {
+  id: number;
+  user: Controller;
+  created_at: string;
+  updated_at: string;
 };
 
 export type EventPosition = {

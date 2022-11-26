@@ -15,7 +15,7 @@
     <a
       v-else
       :href="props.href"
-      target="_blank"
+      :target="props.sameWindow ? '' : '_blank'"
       class="block text-[16px] font-semibold group-hover:text-colorado-yellow py-7 text-white group-hover:cursor-pointer"
       @click="checkClick()"
     >
@@ -40,7 +40,7 @@
         <a
           v-else
           :href="link.href"
-          target="_blank"
+          :target="link.sameWindow ? '' : '_blank'"
           class="block text-heading-light dark:text-white-deep font-semibold py-1 px-4 hover:text-primary dark:hover:text-colorado-yellow hover:bg-gray-light dark:hover:bg-body"
         >
           {{ link.title }}
