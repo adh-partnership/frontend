@@ -136,7 +136,7 @@
       </div>
       <img class="max-w-10 h-auto mt-4 lg:mt-0" :src="event.banner" :alt="event.title" />
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-5 w-full">
+    <div v-if="!loading" class="grid grid-cols-1 lg:grid-cols-3 gap-x-5 w-full">
       <div>
         <h3 class="mb-1">Enroute Positions</h3>
         <Positions type="Enroute" :positions="event.positions" :signups="event.signups" :event-id="id" />
@@ -155,7 +155,7 @@
 
 <script setup lang="ts">
 import { hasRole, isAuthenticated } from "@/utils/auth";
-import { onMounted, ref } from "vue";
+import { onBeforeMount, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import CreatePositionModal from "@/views/partials/events/CreatePositionModal.vue";
@@ -259,12 +259,14 @@ onMounted(() => {
     loading.value = false;
   } else {
     eventStore.fetchEvents().then(() => {
-      event.value = eventStore.getEvent(parseInt(route.params.id as string, 10)) as Event;
-      if (event.value === undefined) {
-        router.push({ name: "NotFound" });
-      } else {
-        loading.value = false;
-      }
+      eventStore.fetchEvent(id).then(() => {
+        event.value = eventStore.getEvent(id) as Event;
+        if (event.value === undefined) {
+          router.push({ name: "NotFound" });
+        } else {
+          loading.value = false;
+        }
+      });
     });
   }
 });

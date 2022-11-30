@@ -60,19 +60,20 @@ const useEventStore = defineStore("event", {
         this.fetched = new Date();
       }
     },
-    async fetchPositions(id: number) {
+    async fetchEvent(id: number) {
       this.fetching = true;
       try {
-        const { data } = await ZDVAPI.get(`/v1/events/${id}/positions`);
-        if (this.getEvent(id) != null) {
-          this.getEvent(id).positions = data;
+        const { data } = await ZDVAPI.get(`/v1/events/${id}`);
+        if (this.getEvent(id) !== undefined) {
+          this.getEvent(id).positions = data.positions;
+          this.getEvent(id).signups = data.signups;
+        } else {
+          this.events.push(data);
         }
       } catch (e) {
         this.fetching = false;
       } finally {
         this.fetching = false;
-        this.hasFetched = true;
-        this.fetched = new Date();
       }
     },
   },

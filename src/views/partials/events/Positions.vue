@@ -5,7 +5,7 @@
         <div v-for="position in enroutePositions" :key="position.id">
           <div class="grid grid-cols-8 gap-x-4 border border-0 border-b-1 border-black dark:border-white p-2">
             <p class="col-span-3 text-lg font-semibold m-0">{{ position.position }}</p>
-            <p v-if="position.user != null" class="text-lg mb-0">
+            <p v-if="position.user != null" class="col-span-3 text-lg mb-0">
               {{ position.user.first_name }} {{ position.user.last_name }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
@@ -74,7 +74,7 @@
         <div v-for="position in traconPositions" :key="position.id">
           <div class="grid grid-cols-8 gap-x-4 border border-0 border-b-1 border-black dark:border-white p-2">
             <p class="col-span-3 text-lg font-semibold m-0">{{ position.position }}</p>
-            <p v-if="position.user != null" class="text-lg mb-0">
+            <p v-if="position.user != null" class="col-span-3 text-lg mb-0">
               {{ position.user.first_name }} {{ position.user.last_name }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
@@ -139,7 +139,7 @@
         <div v-for="position in localPositions" :key="position.id">
           <div class="grid grid-cols-8 gap-x-4 border border-0 border-b-1 border-black dark:border-white p-2">
             <p class="col-span-3 text-lg font-semibold m-0">{{ position.position }}</p>
-            <p v-if="position.user != null" class="text-lg mb-0">
+            <p v-if="position.user != null" class="col-span-3 text-lg mb-0">
               {{ position.user.first_name }} {{ position.user.last_name }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
@@ -252,6 +252,10 @@
           Cancel
         </button>
       </div>
+      <alert v-if="error != null" type="error"
+        ><b>Error</b>: There was an error assigning the position, recheck the CID and try again.
+        {{ error }}
+      </alert>
     </div>
   </div>
 </template>
@@ -260,6 +264,7 @@
 import { computed, ref } from "vue";
 import type { EventPosition, EventSignup } from "@/types";
 import { hasRole, isAuthenticated } from "@/utils/auth";
+import Alert from "@/components/Alert.vue";
 import useEventStore from "@/stores/event";
 import { ZDVAPI } from "@/utils/api";
 
@@ -283,22 +288,37 @@ const toggleModal = (s: string): void => {
   assignPosSelected.value = s;
   isOpen.value = !isOpen.value;
   window.scrollTo(0, 0);
+  error.value = null;
 };
 
-const enroutePositions = computed(() => props.positions.filter((pos) => pos.position.includes("_CTR")));
-const traconPositions = computed(() =>
-  props.positions.filter((pos) => pos.position.includes("_APP") || pos.position.includes("_DEP"))
-);
-const localPositions = computed(() =>
-  props.positions.filter(
-    (pos) => pos.position.includes("_TWR") || pos.position.includes("_GND") || pos.position.includes("_DEL")
-  )
-);
+const enroutePositions = computed(() => {
+  if (props.positions) {
+    return props.positions.filter((pos) => pos.position.includes("_CTR"));
+  }
+  return [];
+});
+const traconPositions = computed(() => {
+  if (props.positions) {
+    return props.positions.filter((pos) => pos.position.includes("_APP") || pos.position.includes("_DEP"));
+  }
+  return [];
+});
+const localPositions = computed(() => {
+  if (props.positions) {
+    return props.positions.filter(
+      (pos) => pos.position.includes("_TWR") || pos.position.includes("_GND") || pos.position.includes("_DEL")
+    );
+  }
+  return [];
+});
 
 const signupsForPos = (position: string): EventSignup[] => {
-  return props.signups.filter(
-    (signup) => signup.choice1 === position || signup.choice2 === position || signup.choice3 === position
-  );
+  if (props.signups) {
+    return props.signups.filter(
+      (signup) => signup.choice1 === position || signup.choice2 === position || signup.choice3 === position
+    );
+  }
+  return [];
 };
 
 const canModifyPosition = (): boolean => {
@@ -310,11 +330,11 @@ const assignPosition = async (cid: number, position: string): Promise<void> => {
     try {
       const result = await ZDVAPI.put(`/v1/events/${props.eventId}/positions/${position}`, {
         cid,
-        position,
       });
       if (result.status === 200) {
+        eventStore.updateEvent(props.eventId, result.data);
         eventStore
-          .fetchPositions(props.eventId)
+          .fetchEvent(props.eventId)
           .then(() => {})
           .catch(() => {});
       }
@@ -329,7 +349,7 @@ const deletePosition = async (position: string): Promise<void> => {
     const result = await ZDVAPI.delete(`/v1/events/${props.eventId}/positions/${position}`);
     if (result.status === 204) {
       eventStore
-        .fetchPositions(props.eventId)
+        .fetchEvent(props.eventId)
         .then(() => {})
         .catch(() => {});
     }
