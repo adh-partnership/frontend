@@ -155,7 +155,7 @@
 
 <script setup lang="ts">
 import { hasRole, isAuthenticated } from "@/utils/auth";
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import CreatePositionModal from "@/views/partials/events/CreatePositionModal.vue";
