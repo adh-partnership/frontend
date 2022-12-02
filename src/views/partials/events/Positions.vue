@@ -21,13 +21,16 @@
                 class="absolute z-10 mt-1 w-40 text-center bg-white rounded divide-y divide-gray-600 shadow dark:bg-black-deep dark:divide-gray-400 border border-yellow-400"
                 :class="{ hidden: !assign[position.id] }"
               >
-                <div class="py-1.5 px-2 text-sm text-gray-900 dark:text-white">
+                <div class="py-1.5 text-sm text-gray-900 dark:text-white">
                   <p v-if="error != null" class="font-medium text-red-500">Error!</p>
                   <p v-else-if="position.user != null" class="font-medium">
                     {{ position.user.first_name }} {{ position.user.last_name }}
                     <a
-                      class="block py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
-                      @click="assignPosition(0, position.position)"
+                      class="block cursor-pointer py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
+                      @click="
+                        assignPosition(0, position.position);
+                        position.user = null;
+                      "
                     >
                       <i class="fas fa-xmark mr-2"></i>Unassign
                     </a>
@@ -37,8 +40,11 @@
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                   <li v-for="signup in signupsForPos(position.position)" :key="signup.id">
                     <a
-                      class="block py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
-                      @click="assignPosition(signup.user.cid, position.position)"
+                      class="block cursor-pointer py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
+                      @click="
+                        assignPosition(signup.user.cid, position.position);
+                        position.user = signup.user;
+                      "
                     >
                       {{ signup.user.first_name }} {{ signup.user.last_name }}
                     </a>
@@ -49,7 +55,7 @@
                 </ul>
                 <div class="py-1">
                   <a
-                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-black-light dark:text-gray-200 dark:hover:text-white"
+                    class="block cursor-pointer py-2 px-4 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-black-light dark:text-gray-200 dark:hover:text-white"
                     @click="
                       toggleModal(position.position);
                       assign[position.id] = !assign[position.id];
@@ -90,12 +96,15 @@
                 class="absolute z-10 mt-1 w-40 text-center bg-white rounded divide-y divide-gray-600 shadow dark:bg-black-deep dark:divide-gray-400 border border-yellow-400"
                 :class="{ hidden: !assign[position.id] }"
               >
-                <div class="py-1.5 px-2 text-sm text-gray-900 dark:text-white">
+                <div class="py-1.5 text-sm text-gray-900 dark:text-white">
                   <p v-if="position.user != null" class="font-medium">
                     {{ position.user.first_name }} {{ position.user.last_name }}
                     <a
-                      class="block py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
-                      @click="assignPosition(0, position.position)"
+                      class="block cursor-pointer py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
+                      @click="
+                        assignPosition(0, position.position);
+                        position.user = null;
+                      "
                     >
                       <i class="fas fa-xmark mr-2"></i>Unassign
                     </a>
@@ -105,8 +114,11 @@
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                   <li v-for="signup in signupsForPos(position.position)" :key="signup.id">
                     <a
-                      class="block py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
-                      @click="assignPosition(signup.user.cid, position.position)"
+                      class="block cursor-pointer py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
+                      @click="
+                        assignPosition(signup.user.cid, position.position);
+                        position.user = signup.user;
+                      "
                     >
                       {{ signup.user.first_name }} {{ signup.user.last_name }}
                     </a>
@@ -117,10 +129,14 @@
                 </ul>
                 <div class="py-1">
                   <a
-                    href="#"
-                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-black-light dark:text-gray-200 dark:hover:text-white"
-                    ><i class="fas fa-plus"></i> Manually Assign</a
+                    class="block cursor-pointer py-2 px-4 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-black-light dark:text-gray-200 dark:hover:text-white"
+                    @click="
+                      toggleModal(position.position);
+                      assign[position.id] = !assign[position.id];
+                    "
                   >
+                    <i class="fas fa-plus"></i> Manually Assign
+                  </a>
                 </div>
               </div>
               <!--              <assign-position-modal :id="position.id" />-->
@@ -155,12 +171,15 @@
                 class="absolute z-10 mt-1 w-40 text-center bg-white rounded divide-y divide-gray-600 shadow dark:bg-black-deep dark:divide-gray-400 border border-yellow-400"
                 :class="{ hidden: !assign[position.id] }"
               >
-                <div class="py-1.5 px-2 text-sm text-gray-900 dark:text-white">
+                <div class="py-1.5 text-sm text-gray-900 dark:text-white">
                   <p v-if="position.user != null" class="font-medium">
                     {{ position.user.first_name }} {{ position.user.last_name }}
                     <a
-                      class="block py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
-                      @click="assignPosition(0, position.position)"
+                      class="block cursor-pointer py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
+                      @click="
+                        assignPosition(0, position.position);
+                        position.user = null;
+                      "
                     >
                       <i class="fas fa-xmark mr-2"></i>Unassign
                     </a>
@@ -170,8 +189,11 @@
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                   <li v-for="signup in signupsForPos(position.position)" :key="signup.id">
                     <a
-                      class="block py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
-                      @click="assignPosition(signup.user.cid, position.position)"
+                      class="block cursor-pointer py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
+                      @click="
+                        assignPosition(signup.user.cid, position.position);
+                        position.user = signup.user;
+                      "
                     >
                       {{ signup.user.first_name }} {{ signup.user.last_name }}
                     </a>
@@ -182,10 +204,14 @@
                 </ul>
                 <div class="py-1">
                   <a
-                    href="#"
-                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-black-light dark:text-gray-200 dark:hover:text-white"
-                    ><i class="fas fa-plus"></i> Manually Assign</a
+                    class="block cursor-pointer py-2 px-4 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-black-light dark:text-gray-200 dark:hover:text-white"
+                    @click="
+                      toggleModal(position.position);
+                      assign[position.id] = !assign[position.id];
+                    "
                   >
+                    <i class="fas fa-plus"></i> Manually Assign
+                  </a>
                 </div>
               </div>
               <!--              <assign-position-modal :id="position.id" />-->
