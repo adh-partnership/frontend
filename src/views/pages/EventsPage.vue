@@ -33,7 +33,9 @@ const canCreateEvent = (): boolean => {
 };
 
 const goToEvent = (id: number): void => {
-  router.push(`/events/${id}`);
+  eventStore.fetchEvent(id).then(() => {
+    router.push(`/events/${id}`);
+  });
 };
 
 const upcomingEvents = computed(() => eventStore.getUpcomingEvents);
