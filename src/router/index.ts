@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, NavigationGuard } from "vue-router";
+import fac from "@/facility";
 import Home from "@/views/pages/HomePage.vue";
+import { nextTick } from "vue";
 import useUserStore from "@/stores/users";
 
 declare module "vue-router" {
@@ -168,6 +170,15 @@ router.beforeEach((to, from, next) => {
   } else {
     check(to, from, next);
   }
+});
+
+router.afterEach((to, _, __) => {
+  nextTick(() => {
+    document.title = `${fac.name} - ${to.name
+      ?.toString()
+      .replace(/([A-Z])/g, " $1")
+      .trim()}`;
+  });
 });
 
 export default router;

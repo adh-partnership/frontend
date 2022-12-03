@@ -1,8 +1,9 @@
 import axios from "axios";
+import fac from "@/facility";
 import type { Resource } from "@/types";
 
 // const apiUrl = import.meta.env.DEV ? "http://api.denartcc.local" : "https://api.denartcc.org";
-const apiUrl = import.meta.env.DEV ? "https://api.dev.denartcc.org" : "https://api.denartcc.org";
+const apiUrl = import.meta.env.DEV ? fac.devApiUrl : fac.apiUrl;
 
 export const ZDVAPI = axios.create({
   baseURL: apiUrl,

@@ -8,6 +8,9 @@ declare interface MenuItem {
 export type Facility = {
   id: string;
   name: string;
+  logo: string;
+  apiUrl: string;
+  devApiUrl: string;
   minVisitorRating: string;
   center: [number, number];
   domain: string;

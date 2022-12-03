@@ -3,8 +3,11 @@ import type { Facility } from "@/types";
 const fac: Facility = {
   id: "PHZH",
   name: "Honolulu Control Facility",
-  minVisitorRating: "S2",
+  logo: "https://cdn.denartcc.org/assets/img/logo_150.png",
+  minVisitorRating: "S1",
   domain: "vhcf.net",
+  apiUrl: "https://api.vhcf.net",
+  devApiUrl: "https://api.dev.vhcf.net",
   boundaries: {
     center: [
       [44.958333, -103.166667],

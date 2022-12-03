@@ -3,8 +3,11 @@ import type { Facility } from "@/types";
 const fac: Facility = {
   id: "KZDV",
   name: "Denver ARTCC",
-  minVisitorRating: "S2",
+  logo: "https://cdn.denartcc.org/assets/img/logo_150.png",
+  minVisitorRating: "S1",
   domain: "denartcc.org",
+  apiUrl: "https://api.denartcc.org",
+  devApiUrl: "https://api.dev.denartcc.org",
   boundaries: {
     center: [
       [44.958333, -103.166667],
