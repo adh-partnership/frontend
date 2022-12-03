@@ -3,11 +3,14 @@ import type { Facility } from "@/types";
 const fac: Facility = {
   id: "PAZA",
   name: "Anchorage ARTCC",
-  logo: "https://cdn.denartcc.org/assets/img/logo_150.png",
+  logo: "https://cdn.vzanartcc.net/assets/img/logo-no-text.png",
   minVisitorRating: "S2",
   domain: "vzanartcc.net",
   apiUrl: "https://api.vzanartcc.net",
   devApiUrl: "https://api.dev.vzanartcc.net",
+  navbarClasses: "bg-alaska-blue dark:bg-alaska-blue text-white",
+  homeIntroText:
+    "Alaska, the Last Frontier! We cover 2,500,000 square miles of airspace over the state of Alaska, including the Aleutians and the oceanic airspace north of the state to the North Pole (for reference, Houston ARTCC covers 280,000 square miles of airspace and Boston ARTCC covers 165,000 square miles of airspace). We are a division of VATSIM, the Virtual Air Traffic Simulation Network's VATUSA Division. We are a group of volunteers who enjoy the challenge of controlling air traffic in a realistic environment. We are always looking for new members to join our team.",
   boundaries: {
     center: [
       [68, -168.973056],

@@ -11,6 +11,8 @@ export type Facility = {
   logo: string;
   apiUrl: string;
   devApiUrl: string;
+  navbarClasses?: string;
+  homeIntroText?: string;
   minVisitorRating: string;
   center: [number, number];
   domain: string;
@@ -100,6 +102,14 @@ export type Controller = {
   discord_id: string;
   created_at: string;
   updated_at: string;
+};
+
+export type OnlineController = {
+  cid: number;
+  controller: Controller;
+  frequency: string;
+  online_since: string;
+  position: string;
 };
 
 export type TrainingNote = {

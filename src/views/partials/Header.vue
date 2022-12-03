@@ -3,8 +3,11 @@
     <div class="h-[98px]"></div>
   </div>
   <div
-    class="header-main bg-colorado-blue text-white shadow-md mb-[10px] dark:bg-black-deep"
-    :class="{ 'fixed top-0 left-0 w-full z-50 transition-all shadow-md animate-fadeInDown': isSticky }"
+    class="header-main shadow-md mb-[10px]"
+    :class="[
+      navbarClasses,
+      isSticky ? 'fixed top-0 left-0 w-full z-50 transition-all shadow-md animate-fadeInDown' : '',
+    ]"
   >
     <div class="py-4 lg:py-1">
       <div class="container">
@@ -47,6 +50,8 @@ const navOpen = ref(false);
 const toggleNav = (): void => {
   navOpen.value = !navOpen.value;
 };
+
+const navbarClasses = ref(fac.navbarClasses || "bg-colorado-blue text-white dark:bg-black-deep");
 
 onMounted(() => {
   window.addEventListener("scroll", () => {
