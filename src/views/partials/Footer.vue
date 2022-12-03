@@ -2,8 +2,11 @@
   <div class="bg-gray-light dark:bg-black-deep dark:text-white">
     <div class="footer-main mt-10 py-4">
       <div class="container text-sm">
-        This site is not affiliated with the Federal Aviation Administration or any governing aviation body. All content
-        contained herein is approved only for use on the VATSIM network.
+        <p>Dates and times will always be presented in your local time unless otherwise indicated.</p>
+        <p>
+          This site is not affiliated with the Federal Aviation Administration or any governing aviation body. All
+          content contained herein is approved only for use on the VATSIM network.
+        </p>
       </div>
     </div>
   </div>
@@ -34,7 +37,7 @@ const toggleDark = useToggle(isDark);
 const gitHash = import.meta.env.VITE_GIT_HASH || "dirty";
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 a {
   @apply text-colorado-yellow hover:text-colorado-red;
 }

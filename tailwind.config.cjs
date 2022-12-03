@@ -5,6 +5,14 @@ module.exports = {
   content: ["./index.html", "./src/**/*.vue", "./node_modules/flowbite/**/*.js"],
   darkMode: "class",
   jit: true,
+  safelist: [
+    {
+      pattern: /alaska/,
+    },
+    {
+      pattern: /colorado/,
+    },
+  ],
   theme: {
     extend: {
       colors: {
@@ -26,6 +34,8 @@ module.exports = {
         "colorado-blue": "#002868",
         "colorado-red": "#bf0a30",
         "colorado-yellow": "#ffd700",
+        "alaska-blue": "#0f204b",
+        "alaska-gold": "#ffb612",
         white: {
           DEFAULT: "#FFFFFF",
           light: "#f9f9f9",

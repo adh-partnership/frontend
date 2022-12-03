@@ -59,4 +59,7 @@ const userStore = useUserStore();
 .btn {
   @apply flex-1 bg-colorado-red text-white hover:bg-red-900 font-bold py-2 px-4 rounded text-center;
 }
+.card {
+  @apply shadow-lg dark:shadow-neutral-800 rounded p-4 bg-neutral-200 dark:bg-neutral-900;
+}
 </style>
