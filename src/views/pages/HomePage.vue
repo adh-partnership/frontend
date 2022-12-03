@@ -4,7 +4,7 @@
   <div class="flex">
     <div class="card w-3/4">
       <div v-if="event === null">
-        <h2 class="text-xl">No event is currently active</h2>
+        <h2 class="text-xl">No event is currently scheduled</h2>
         <p>Check back later for more information.</p>
       </div>
       <div v-else @click="goTo(`/events/${event?.id || 0}`)">
