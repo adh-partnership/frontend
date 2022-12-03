@@ -104,6 +104,16 @@ const routes = [
     component: () => import("@/views/pages/VisitingApplication.vue"),
   },
   {
+    path: "/events",
+    name: "Events",
+    component: () => import("@/views/pages/EventsPage.vue"),
+  },
+  {
+    path: "/events/:id",
+    name: "EventInfo",
+    component: () => import("@/views/pages/EventInfo.vue"),
+  },
+  {
     path: "/not-implemented",
     name: "NotImplemented",
     component: () => import("@/views/pages/NotImplementedPage.vue"),

@@ -31,7 +31,7 @@ const Links: Link[] = [
   },
   {
     title: "Events",
-    to: { name: "NotImplemented" },
+    to: { name: "Events" },
   },
   {
     title: "Pilots",
