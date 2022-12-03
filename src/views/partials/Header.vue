@@ -11,7 +11,7 @@
         <div class="grid grid-cols-4 items-center justify-between">
           <div class="col-span-2 lg:col-span-1 logo">
             <router-link to="/">
-              <img src="https://cdn.denartcc.org/assets/img/logo_150.png" class="h-[50px]" alt="logo" />
+              <img :src="fac.logo" class="h-[50px]" alt="logo" />
               <h1 class="text-[20px] font-semibold inline align-middle pl-4">{{ fac.name }}</h1>
             </router-link>
           </div>
