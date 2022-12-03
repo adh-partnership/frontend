@@ -10,7 +10,7 @@
   <div class="bg-colorado-blue text-white dark:bg-black">
     <div class="py-4">
       <div class="container text-sm">
-        Copyright &copy; 2022 by Denver ARTCC. <RouterLink to="/privacy">Privacy Policy</RouterLink>. Open Source at
+        Copyright &copy; 2022 by {{ fac.name }}. <RouterLink to="/privacy">Privacy Policy</RouterLink>. Open Source at
         <a href="https://github.com/adh-frontend/frontend">GitHub</a> (version: 0.99.0-{{ gitHash }}).
         <div class="float-right text-right">
           <button @click="toggleDark()">
@@ -26,6 +26,8 @@
 
 <script setup lang="ts">
 import { useDark, useToggle } from "@vueuse/core";
+
+import fac from "@/facility";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);

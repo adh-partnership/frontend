@@ -12,7 +12,7 @@
           <div class="col-span-2 lg:col-span-1 logo">
             <router-link to="/">
               <img src="https://cdn.denartcc.org/assets/img/logo_150.png" class="h-[50px]" alt="logo" />
-              <h1 class="text-[20px] font-semibold inline align-middle pl-4">Denver ARTCC</h1>
+              <h1 class="text-[20px] font-semibold inline align-middle pl-4">{{ fac.name }}</h1>
             </router-link>
           </div>
           <div class="col-span-2 lg:col-span-3 hidden lg:block ml-auto">
@@ -37,6 +37,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 
+import fac from "@/facility";
 import HeaderNav from "@/components/header/HeaderNav.vue";
 import OffcanvasMenu from "@/components/header/OffcanvasMenu.vue";
 
@@ -59,7 +60,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 .zdvcolors {
   text-shadow: 2px 2px 5px #fff;
 }

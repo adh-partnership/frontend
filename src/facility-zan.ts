@@ -3,8 +3,11 @@ import type { Facility } from "@/types";
 const fac: Facility = {
   id: "PAZA",
   name: "Anchorage ARTCC",
+  logo: "https://cdn.denartcc.org/assets/img/logo_150.png",
   minVisitorRating: "S2",
   domain: "vzanartcc.net",
+  apiUrl: "https://api.vzanartcc.net",
+  devApiUrl: "https://api.dev.vzanartcc.net",
   boundaries: {
     center: [
       [68, -168.973056],

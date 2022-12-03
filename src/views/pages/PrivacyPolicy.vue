@@ -135,8 +135,10 @@
 </template>
 
 <script setup lang="ts">
-const emailDomain = import.meta.env.VITE_EMAIL_DOMAIN;
-const facility = import.meta.env.VITE_FACILITY_NAME;
+import fac from "@/facility";
+
+const emailDomain = fac.domain;
+const facility = fac.name;
 </script>
 
 <style scoped></style>

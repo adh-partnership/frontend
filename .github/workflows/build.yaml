@@ -63,8 +63,6 @@ jobs:
       run: |
         SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
         cat <<EOF > .env
-        VITE_EMAIL_DOMAIN="denartcc.org"
-        VITE_FACILITY_NAME="Denver ARTCC"
         VITE_GIT_HASH="$SHA_SHORT"
         EOF
     - name: Create ZAN env
@@ -72,8 +70,6 @@ jobs:
       run: |
         SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
         cat <<EOF > .env
-        VITE_EMAIL_DOMAIN="vzanartcc.net"
-        VITE_FACILITY_NAME="Anchorage ARTCC"
         VITE_GIT_HASH="$SHA_SHORT"
         EOF
     - name: Create HCF env
@@ -81,8 +77,6 @@ jobs:
       run: |
         SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
         cat <<EOF > .env
-        VITE_EMAIL_DOMAIN="vhcf.net"
-        VITE_FACILITY_NAME="Honolulu Control Facility"
         VITE_GIT_HASH="$SHA_SHORT"
         EOF
     - name: Setup Facility file

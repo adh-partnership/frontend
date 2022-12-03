@@ -16,9 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
 import type { Controller } from "@/types";
+import fac from "@/facility";
+import { ref } from "vue";
 import { StaffDescriptions } from "@/descriptions";
 
 type Props = {
@@ -26,7 +26,7 @@ type Props = {
   position: string;
   title: string;
 };
-const emailDomain = import.meta.env.VITE_EMAIL_DOMAIN;
+const emailDomain = fac.domain;
 const props = defineProps<Props>();
 const description = ref(StaffDescriptions[props.position] || "Unknown");
 </script>
