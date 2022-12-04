@@ -348,7 +348,7 @@ const signupsForPos = (position: string): EventSignup[] => {
 };
 
 const canModifyPosition = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "ec"]);
+  return isAuthenticated() && hasRole(["atm", "datm", "ec", "wm"]);
 };
 
 const assignPosition = async (cid: number, position: string): Promise<void> => {
