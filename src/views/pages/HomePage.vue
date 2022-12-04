@@ -75,15 +75,11 @@ const goTo = (url: string): void => {
 
 onMounted(async () => {
   ZDVAPI.get("/v1/stats/online").then((r) => {
-    if (r.data === null) {
-      online.value = [];
-    } else {
-      online.value = r.data;
-    }
+    online.value = r.data;
   });
 
   ZDVAPI.get("/v1/events?limit=1").then((r) => {
-    if (r.data === null) {
+    if ((r.data as Event).id === undefined) {
       event.value = null;
     } else {
       event.value = r.data[0] as Event;
