@@ -59,6 +59,7 @@
             </div>
             <div :class="{ hidden: openTab !== 3, block: openTab === 3 }">
               <ControllerActions :controller="controller" />
+              <ControllerRoles :controller="controller" />
             </div>
           </div>
         </div>
@@ -76,6 +77,7 @@ import { Controller } from "@/types";
 import ControllerActions from "@/views/partials/roster/ControllerActions.vue";
 import ControllerHeader from "@/components/ControllerHeader.vue";
 import ControllerProfile from "@/views/partials/roster/ControllerProfile.vue";
+import ControllerRoles from "@/views/partials/roster/ControllerRoles.vue";
 import TrainingNotes from "@/views/partials/training/TrainingNotes.vue";
 import useRosterStore from "@/stores/roster";
 

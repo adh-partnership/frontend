@@ -59,7 +59,13 @@ const userStore = useUserStore();
 .btn {
   @apply flex-1 bg-colorado-red text-white hover:bg-red-900 font-bold py-2 px-4 rounded text-center;
 }
+.btn-sm {
+  @apply py-0 px-2;
+}
 .card {
   @apply shadow-lg dark:shadow-neutral-800 rounded p-4 bg-neutral-200 dark:bg-neutral-900;
+}
+.badge {
+  @apply inline-block text-white text-sm font-bold rounded-full px-3 py-1 mr-2;
 }
 </style>
