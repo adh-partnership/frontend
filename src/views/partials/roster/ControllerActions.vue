@@ -3,13 +3,21 @@
     <h2 class="text-3xl">Actions</h2>
     <div class="flex items-center mb-4">
       <div class="w-1/5">
-        <label class="block text-gray-500 dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4" for="controllerType"> Type </label>
+        <label
+          class="block text-gray-500 dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4"
+          for="controllerType"
+        >
+          Type
+        </label>
       </div>
       <div class="w-1/5 capitalize">
         {{ controller.controller_type }}
       </div>
       <div v-if="props.controller.controller_type !== 'none'" class="w-1/5">
-        <label class="block text-gray-500 dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4" for="controllerType">
+        <label
+          class="block text-gray-500 dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4"
+          for="controllerType"
+        >
           Removal Reason
         </label>
       </div>
@@ -68,7 +76,10 @@
     </div>
     <div class="flex items-center mb-4">
       <div class="w-1/5">
-        <label class="block text-gray-500 dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4" for="controllerStatus">
+        <label
+          class="block text-gray-500 dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4"
+          for="controllerStatus"
+        >
           Status
         </label>
       </div>
@@ -87,7 +98,10 @@
     </div>
     <div class="flex items-center mb-4">
       <div class="w-1/5">
-        <label class="block text-gray-500 dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4" for="operatingInitials">
+        <label
+          class="block text-gray-500 dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4"
+          for="operatingInitials"
+        >
           Operating Initials
         </label>
       </div>
