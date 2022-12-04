@@ -186,11 +186,11 @@ const localDate = (s: string): string => {
 };
 
 const canEditEvent = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "ec"]);
+  return isAuthenticated() && hasRole(["atm", "datm", "ec", "wm"]);
 };
 
 const canDeleteEvent = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "ec"]);
+  return isAuthenticated() && hasRole(["atm", "datm", "ec", "wm"]);
 };
 
 const canSignup = (): boolean => {
