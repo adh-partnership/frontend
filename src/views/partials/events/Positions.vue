@@ -246,13 +246,21 @@
       <div class="p-6 space-y-6">
         <form>
           <div class="relative z-0 mb-6 w-full group">
-            <input
+            <select
               id="controller-id"
               v-model="controllerId"
               type="text"
-              class="block px-2.5 pb-2.5 pt-4 w-full text-2xl font-bold rounded-md text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-            />
+              class="block px-2.5 pb-1 pt-2 w-full text-lg font-bold rounded-md text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:dark:bg-black-deep"
+            >
+              <option value="" selected>Select Controller</option>
+              <option
+                v-for="controller in rosterStore.getActiveRoster"
+                :key="controller.cid"
+                :value="controller.cid.toString()"
+              >
+                {{ controller.first_name }} {{ controller.last_name }}
+              </option>
+            </select>
             <label
               for="controller-id"
               class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-black-light px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-focus:text-sm peer-placeholder-shown:text-lg peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
@@ -287,14 +295,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import type { EventPosition, EventSignup } from "@/types";
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import Alert from "@/components/Alert.vue";
 import useEventStore from "@/stores/event";
+import useRosterStore from "@/stores/roster";
 import { ZDVAPI } from "@/utils/api";
 
 const eventStore = useEventStore();
+const rosterStore = useRosterStore();
 const isOpen = ref(false);
 const assignPosSelected = ref("");
 const controllerId = ref();
@@ -383,6 +393,10 @@ const deletePosition = async (position: string): Promise<void> => {
     error.value = err;
   }
 };
+
+onMounted(async (): Promise<void> => {
+  await rosterStore.fetchRoster();
+});
 </script>
 
 <style scoped></style>

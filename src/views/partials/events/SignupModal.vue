@@ -67,6 +67,15 @@
               >Choice 3</label
             >
           </div>
+          <div class="relative z-0 mb-6 w-full group">
+            <textarea
+              id="description"
+              v-model="signup.notes"
+              rows="6"
+              class="block mt-2 mb-2 p-2.5 w-full text-sm text-gray-900 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-black-light dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Comments and notes:"
+            ></textarea>
+          </div>
         </form>
       </div>
       <!-- Modal footer -->
@@ -137,7 +146,7 @@ const createSignup = async (): Promise<void> => {
         choice1: signup.value.choice1,
         choice2: signup.value.choice2,
         choice3: signup.value.choice3,
-        notes: "",
+        notes: signup.value.notes,
       });
       if (result.status === 200) {
         buttonState.value = ButtonStates.Idle;
