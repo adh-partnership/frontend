@@ -105,9 +105,10 @@ const createPosition = async (): Promise<void> => {
       if (result.status === 200) {
         buttonState.value = ButtonStates.Idle;
         eventStore
-          .fetchPositions(props.id)
+          .fetchEvent(props.id)
           .then(() => {
             isOpen.value = false;
+            position.value.position = "";
           })
           .catch(() => {
             buttonState.value = ButtonStates.Error;
