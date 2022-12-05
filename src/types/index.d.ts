@@ -118,7 +118,6 @@ export type TrainingNote = {
   controller: Controller | null;
   instructor_id: number;
   instructor: Controller | null;
-
   position: string;
   duration: string;
   session_date: string;
@@ -131,6 +130,19 @@ export type VisitorApplication = {
   user: Controller;
   created_at: string;
   updated_at: string;
+};
+
+export type Feedback = {
+  id: number;
+  callsign: string;
+  comments: string;
+  contact_email: string;
+  controller: Controller;
+  position: string;
+  rating: string;
+  status: string;
+  submitter: Controller;
+  created_at: string;
 };
 
 export type EventPosition = {

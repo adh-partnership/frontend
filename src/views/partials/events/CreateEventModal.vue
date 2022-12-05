@@ -153,7 +153,7 @@ const toggleModal = (): void => {
 };
 
 const canCreateEvent = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "ec"]);
+  return isAuthenticated() && hasRole(["atm", "datm", "ec", "wm"]);
 };
 
 enum ButtonStates {
