@@ -46,7 +46,7 @@ const Links: Link[] = [
         title: "Facility Map",
       },
       {
-        to: { name: "NotImplemented" },
+        to: { name: "Feedback" },
         title: "Feedback",
       },
     ],
