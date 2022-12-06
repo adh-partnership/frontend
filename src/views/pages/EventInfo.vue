@@ -42,6 +42,14 @@
         >
           <i class="fas fa-xmark mr-2"></i>Delete
         </button>
+        <button
+          v-if="canEditEvent()"
+          class="btn bg-violet-500 text-white font-bold py-2 px-4 ml-2 rounded"
+          type="button"
+          @click="toggleView()"
+        >
+          <i class="fas fa-eye mr-2"></i>View
+        </button>
         <alert v-if="error != null" type="error" class="m-2">
           <b>Error</b>: There was an error deleting the event. {{ error }}
         </alert>
@@ -136,7 +144,7 @@
       </div>
       <img class="max-w-10 h-auto mt-4 lg:mt-0" :src="event.banner" :alt="event.title" />
     </div>
-    <div v-if="!loading" class="grid grid-cols-1 lg:grid-cols-3 gap-x-5 w-full">
+    <div v-if="!loading && !viewSignups" class="grid grid-cols-1 lg:grid-cols-3 gap-x-5 w-full">
       <div>
         <h3 class="mb-1">Enroute Positions</h3>
         <Positions type="Enroute" :positions="event.positions" :signups="event.signups" :event-id="id" />
@@ -149,6 +157,33 @@
         <h3 class="mb-1">Local Positions</h3>
         <Positions type="Local" :positions="event.positions" :signups="event.signups" :event-id="id" />
       </div>
+    </div>
+    <div v-else-if="!loading && viewSignups" class="w-full">
+      <table class="w-full text-center">
+        <thead class="border-b-1">
+          <tr>
+            <th>Controller</th>
+            <th>CID - Rating</th>
+            <th>Choice 1</th>
+            <th>Choice 2</th>
+            <th>Choice 3</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="signup in event.signups" :key="signup.id">
+            <td>{{ signup.user.first_name }} {{ signup.user.last_name }}</td>
+            <td>{{ signup.user.cid }} - {{ signup.user.rating }}</td>
+            <td>{{ signup.choice1 }}</td>
+            <td>{{ signup.choice2 }}</td>
+            <td>{{ signup.choice3 }}</td>
+            <td>{{ signup.notes }}</td>
+          </tr>
+          <tr v-if="event.signups.length === 0">
+            <td colspan="7">There is no signups.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -179,6 +214,11 @@ const event = ref(eventStore.getEvent(id) as Event);
 const modifiedEvent = ref({} as Event);
 const editing = ref(false);
 const error = ref();
+
+const viewSignups = ref(false);
+const toggleView = (): void => {
+  viewSignups.value = !viewSignups.value;
+};
 
 const localDate = (s: string): string => {
   const dt = new Date(s);
