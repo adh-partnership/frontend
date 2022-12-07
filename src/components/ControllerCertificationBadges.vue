@@ -1,15 +1,15 @@
 <template>
   <div class="mr-2 overflow-hidden dark:mr-2" style="border-radius: 0.2rem">
-    <div v-if="props.showActive" class="badge" :class="genActiveClass(props.controller.status)">
+    <div v-if="props.showActive" class="controller-badge" :class="genActiveClass(props.controller.status)">
       <span class="badge-text">{{ props.controller.status || "unknown" }}</span>
     </div>
-    <div class="badge" :class="genClass(props.controller.certifications.ground)">GC</div>
-    <div class="badge" :class="genClass(props.controller.certifications.major_ground)">MAJ GC</div>
-    <div class="badge" :class="genClass(props.controller.certifications.local)">LC</div>
-    <div class="badge" :class="genClass(props.controller.certifications.major_local)">MAJ LC</div>
-    <div class="badge" :class="genClass(props.controller.certifications.approach)">APP</div>
-    <div class="badge" :class="genClass(props.controller.certifications.major_approach)">MAJ APP</div>
-    <div class="badge" :class="genClass(props.controller.certifications.enroute)">ENR</div>
+    <div class="controller-badge" :class="genClass(props.controller.certifications.ground)">GC</div>
+    <div class="controller-badge" :class="genClass(props.controller.certifications.major_ground)">MAJ GC</div>
+    <div class="controller-badge" :class="genClass(props.controller.certifications.local)">LC</div>
+    <div class="controller-badge" :class="genClass(props.controller.certifications.major_local)">MAJ LC</div>
+    <div class="controller-badge" :class="genClass(props.controller.certifications.approach)">APP</div>
+    <div class="controller-badge" :class="genClass(props.controller.certifications.major_approach)">MAJ APP</div>
+    <div class="controller-badge" :class="genClass(props.controller.certifications.enroute)">ENR</div>
   </div>
 </template>
 
@@ -61,7 +61,7 @@ function genActiveClass(status: string): string {
 </script>
 
 <style scoped>
-.badge {
+.controller-badge {
   display: inline-block;
   padding: 0.25rem 0.4rem;
   font-weight: 700;

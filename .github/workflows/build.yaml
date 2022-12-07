@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: yarn
-          cache-depedency-path: yarn.lock
+          cache-dependency-path: yarn.lock
       - name: Install dependencies
         run: yarn install --immutable
       - name: Run eslint
