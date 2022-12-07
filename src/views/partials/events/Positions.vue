@@ -253,11 +253,7 @@
               class="block px-2.5 pb-1 pt-2 w-full text-lg font-bold rounded-md text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:dark:bg-black-deep"
             >
               <option value="" selected>Select Controller</option>
-              <option
-                v-for="controller in rosterStore.getActiveRoster"
-                :key="controller.cid"
-                :value="controller.cid.toString()"
-              >
+              <option v-for="controller in rosterStore.getActiveRoster" :key="controller.cid" :value="controller.cid">
                 {{ controller.first_name }} {{ controller.last_name }}
               </option>
             </select>
