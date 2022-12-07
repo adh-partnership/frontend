@@ -34,6 +34,10 @@ const Links: Link[] = [
     to: { name: "Events" },
   },
   {
+    to: { name: "Feedback" },
+    title: "Feedback",
+  },
+  {
     title: "Pilots",
     to: "#",
     sublinks: [
@@ -44,10 +48,6 @@ const Links: Link[] = [
       {
         to: { name: "Map" },
         title: "Facility Map",
-      },
-      {
-        to: { name: "Feedback" },
-        title: "Feedback",
       },
     ],
   },
