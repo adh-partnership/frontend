@@ -9,12 +9,7 @@
 
 <script setup>
 // eslint-disable-next-line import/no-unresolved
-import { pwaInfo } from "virtual:pwa-info";
-// eslint-disable-next-line import/no-unresolved
 import { useRegisterSW } from "virtual:pwa-register/vue";
-
-// eslint-disable-next-line no-console
-console.log(pwaInfo);
 
 const { needRefresh, updateServiceWorker } = useRegisterSW({
   immediate: true,

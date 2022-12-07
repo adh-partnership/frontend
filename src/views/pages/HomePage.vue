@@ -79,7 +79,7 @@ onMounted(async () => {
   });
 
   ZDVAPI.get("/v1/events?limit=1").then((r) => {
-    if (r.data.len === 0) {
+    if (r.data.length === 0) {
       event.value = null;
     } else {
       event.value = r.data[0] as Event;
