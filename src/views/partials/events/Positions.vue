@@ -5,7 +5,11 @@
         <div v-for="position in enroutePositions" :key="position.id">
           <div class="grid grid-cols-8 gap-x-4 border border-0 border-b-1 border-black dark:border-white p-2">
             <p class="col-span-3 text-lg font-semibold m-0">{{ position.position }}</p>
-            <p v-if="position.user != null" class="col-span-3 text-lg mb-0">
+            <p
+              v-if="position.user != null"
+              class="text-lg mb-0 truncate"
+              :class="{ 'col-span-3': canModifyPosition(), 'col-span-5': !canModifyPosition() }"
+            >
               {{ position.user.first_name }} {{ position.user.last_name }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
@@ -80,7 +84,11 @@
         <div v-for="position in traconPositions" :key="position.id">
           <div class="grid grid-cols-8 gap-x-4 border border-0 border-b-1 border-black dark:border-white p-2">
             <p class="col-span-3 text-lg font-semibold m-0">{{ position.position }}</p>
-            <p v-if="position.user != null" class="col-span-3 text-lg mb-0">
+            <p
+              v-if="position.user != null"
+              class="text-lg mb-0 truncate"
+              :class="{ 'col-span-3': canModifyPosition(), 'col-span-5': !canModifyPosition() }"
+            >
               {{ position.user.first_name }} {{ position.user.last_name }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
@@ -155,7 +163,11 @@
         <div v-for="position in localPositions" :key="position.id">
           <div class="grid grid-cols-8 gap-x-4 border border-0 border-b-1 border-black dark:border-white p-2">
             <p class="col-span-3 text-lg font-semibold m-0">{{ position.position }}</p>
-            <p v-if="position.user != null" class="col-span-3 text-lg mb-0">
+            <p
+              v-if="position.user != null"
+              class="text-lg mb-0 truncate"
+              :class="{ 'col-span-3': canModifyPosition(), 'col-span-5': !canModifyPosition() }"
+            >
               {{ position.user.first_name }} {{ position.user.last_name }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
@@ -369,6 +381,8 @@ const assignPosition = async (cid: number, position: string): Promise<void> => {
           .fetchEvent(props.eventId)
           .then(() => {})
           .catch(() => {});
+        toggleModal("");
+        controllerId.value = null;
       }
     } catch (err) {
       error.value = err;
