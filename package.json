@@ -20,7 +20,7 @@
     "aewx-metar-parser": "^1.0.0",
     "axios": "^1.2.0",
     "core-js": "^3.26.1",
-    "flowbite": "^1.5.3",
+    "flowbite": "^1.5.5",
     "flowbite-datepicker": "^1.2.2",
     "leaflet": "^1.9.2",
     "pinia": "^2.0.22",
