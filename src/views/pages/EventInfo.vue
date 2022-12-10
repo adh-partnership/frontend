@@ -147,15 +147,27 @@
     <div v-if="!loading && !viewSignups" class="grid grid-cols-1 lg:grid-cols-3 gap-x-5 w-full">
       <div>
         <h3 class="mb-1">Enroute Positions</h3>
-        <Positions type="Enroute" :positions="event.positions" :signups="event.signups" :event-id="id" />
+        <Positions
+          type="Enroute"
+          :positions="event.positions"
+          :signups="event.signups"
+          :event-id="id"
+          @update="update"
+        />
       </div>
       <div>
         <h3 class="mb-1">TRACON Positions</h3>
-        <Positions type="TRACON" :positions="event.positions" :signups="event.signups" :event-id="id" />
+        <Positions
+          type="TRACON"
+          :positions="event.positions"
+          :signups="event.signups"
+          :event-id="id"
+          @update="update"
+        />
       </div>
       <div>
         <h3 class="mb-1">Local Positions</h3>
-        <Positions type="Local" :positions="event.positions" :signups="event.signups" :event-id="id" />
+        <Positions type="Local" :positions="event.positions" :signups="event.signups" :event-id="id" @update="update" />
       </div>
     </div>
     <div v-else-if="!loading && viewSignups" class="w-full">
@@ -292,6 +304,12 @@ const saveEvent = async (e: Event): Promise<void> => {
       error.value = err;
     }
   }
+};
+
+const update = (): void => {
+  eventStore.fetchEvent(id).then(() => {
+    event.value = eventStore.getEvent(id) as Event;
+  });
 };
 
 onMounted(() => {

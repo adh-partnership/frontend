@@ -5,7 +5,11 @@
         <div v-for="position in enroutePositions" :key="position.id">
           <div class="grid grid-cols-8 gap-x-4 border border-0 border-b-1 border-black dark:border-white p-2">
             <p class="col-span-3 text-lg font-semibold m-0">{{ position.position }}</p>
-            <p v-if="position.user != null" class="col-span-3 text-lg mb-0">
+            <p
+              v-if="position.user != null"
+              class="text-lg mb-0 truncate"
+              :class="{ 'col-span-3': canModifyPosition(), 'col-span-5': !canModifyPosition() }"
+            >
               {{ position.user.first_name }} {{ position.user.last_name }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
@@ -80,7 +84,11 @@
         <div v-for="position in traconPositions" :key="position.id">
           <div class="grid grid-cols-8 gap-x-4 border border-0 border-b-1 border-black dark:border-white p-2">
             <p class="col-span-3 text-lg font-semibold m-0">{{ position.position }}</p>
-            <p v-if="position.user != null" class="col-span-3 text-lg mb-0">
+            <p
+              v-if="position.user != null"
+              class="text-lg mb-0 truncate"
+              :class="{ 'col-span-3': canModifyPosition(), 'col-span-5': !canModifyPosition() }"
+            >
               {{ position.user.first_name }} {{ position.user.last_name }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
@@ -155,7 +163,11 @@
         <div v-for="position in localPositions" :key="position.id">
           <div class="grid grid-cols-8 gap-x-4 border border-0 border-b-1 border-black dark:border-white p-2">
             <p class="col-span-3 text-lg font-semibold m-0">{{ position.position }}</p>
-            <p v-if="position.user != null" class="col-span-3 text-lg mb-0">
+            <p
+              v-if="position.user != null"
+              class="text-lg mb-0 truncate"
+              :class="{ 'col-span-3': canModifyPosition(), 'col-span-5': !canModifyPosition() }"
+            >
               {{ position.user.first_name }} {{ position.user.last_name }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
@@ -245,23 +257,25 @@
       <!-- Modal body -->
       <div class="p-6 space-y-6">
         <form>
-          <div class="relative z-0 mb-6 w-full group">
-            <select
+          <div class="relative z-0 w-full group">
+            <input
               id="controller-id"
               v-model="controllerId"
               type="text"
               class="block px-2.5 pb-1 pt-2 w-full text-lg font-bold rounded-md text-gray-900 bg-transparent border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:dark:bg-black-deep"
-            >
-              <option value="" selected>Select Controller</option>
-              <option v-for="controller in rosterStore.getActiveRoster" :key="controller.cid" :value="controller.cid">
-                {{ controller.first_name }} {{ controller.last_name }}
-              </option>
-            </select>
+              placeholder=" "
+              list="controllers"
+            />
             <label
               for="controller-id"
               class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-black-light px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-focus:text-sm peer-placeholder-shown:text-lg peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
               >Controller ID</label
             >
+            <datalist id="controllers">
+              <option v-for="controller in rosterStore.getActiveRoster" :key="controller.cid" :value="controller.cid">
+                {{ controller.first_name }} {{ controller.last_name }}
+              </option>
+            </datalist>
           </div>
         </form>
       </div>
@@ -270,7 +284,7 @@
         <button
           type="button"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          @click="assignPosition(controllerId, assignPosSelected)"
+          @click="assignPosition(parseInt(controllerId), assignPosSelected)"
         >
           Assign
         </button>
@@ -295,16 +309,18 @@ import { computed, onMounted, ref } from "vue";
 import type { EventPosition, EventSignup } from "@/types";
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import Alert from "@/components/Alert.vue";
-import useEventStore from "@/stores/event";
 import useRosterStore from "@/stores/roster";
 import { ZDVAPI } from "@/utils/api";
 
-const eventStore = useEventStore();
 const rosterStore = useRosterStore();
 const isOpen = ref(false);
 const assignPosSelected = ref("");
 const controllerId = ref();
 const error = ref();
+
+const emit = defineEmits<{
+  (e: "update"): void;
+}>();
 
 type Props = {
   eventId: number;
@@ -364,11 +380,11 @@ const assignPosition = async (cid: number, position: string): Promise<void> => {
         cid,
       });
       if (result.status === 200) {
-        eventStore.updateEvent(props.eventId, result.data);
-        eventStore
-          .fetchEvent(props.eventId)
-          .then(() => {})
-          .catch(() => {});
+        emit("update");
+        if (cid !== 0) {
+          toggleModal("");
+          controllerId.value = null;
+        }
       }
     } catch (err) {
       error.value = err;
@@ -380,10 +396,7 @@ const deletePosition = async (position: string): Promise<void> => {
   try {
     const result = await ZDVAPI.delete(`/v1/events/${props.eventId}/positions/${position}`);
     if (result.status === 204) {
-      eventStore
-        .fetchEvent(props.eventId)
-        .then(() => {})
-        .catch(() => {});
+      emit("update");
     }
   } catch (err) {
     error.value = err;
