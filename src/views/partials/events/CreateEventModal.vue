@@ -98,7 +98,12 @@
                 >Banner URL</label
               >
             </div>
-            <img class="max-w-10 h-auto mt-4 lg:mt-0" :src="event.banner" :alt="event.title" />
+            <img
+              v-if="event.banner !== ''"
+              class="max-w-10 h-auto mt-4 lg:mt-0"
+              :src="event.banner"
+              :alt="event.title"
+            />
           </div>
         </form>
       </div>
