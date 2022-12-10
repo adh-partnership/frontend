@@ -3,11 +3,15 @@ import type { Facility } from "@/types";
 const fac: Facility = {
   id: "PHZH",
   name: "Honolulu Control Facility",
-  logo: "https://cdn.denartcc.org/assets/img/logo_150.png",
+  navbarName: "Honolulu CF",
+  logo: "https://cdn.vhcf.net/assets/logo/logo-no-text.png",
+  homeIntroText:
+    "The Honolulu Control Facility covers the airspace of the State of Hawaii. We are a group of controllers on the VATSIM Network who are dedicated to providing a safe and efficient flow of traffic in the Hawaiian skies.",
   minVisitorRating: "S1",
   domain: "vhcf.net",
   apiUrl: "https://api.vhcf.net",
   devApiUrl: "https://api.dev.vhcf.net",
+  navbarClasses: "bg-slate-800 text-white",
   boundaries: {
     center: [
       [20.000001, -150.000001],
@@ -59,8 +63,8 @@ const fac: Facility = {
     {
       icao: "PHJR",
       name: "Kalaeloa Airport",
-      latitude: 21.318681,
-      longitude: -157.922428,
+      latitude: 21.3073539,
+      longitude: -158.0703017,
     },
     {
       icao: "PHMK",

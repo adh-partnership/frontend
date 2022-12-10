@@ -8,6 +8,7 @@ declare interface MenuItem {
 export type Facility = {
   id: string;
   name: string;
+  navbarName?: string;
   logo: string;
   apiUrl: string;
   devApiUrl: string;
