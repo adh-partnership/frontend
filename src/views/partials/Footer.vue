@@ -14,7 +14,7 @@
     <div class="py-4">
       <div class="container text-sm">
         Copyright &copy; 2022 by {{ fac.name }}. <RouterLink to="/privacy">Privacy Policy</RouterLink>. Open Source at
-        <a href="https://github.com/adh-frontend/frontend">GitHub</a> (version: 1.0.0-{{ gitHash }}).
+        <a href="https://github.com/adh-partnership/frontend">GitHub</a> (version: 1.0.0-{{ gitHash }}).
         <div class="float-right text-right">
           <button @click="toggleDark()">
             <i v-if="isDark" class="fa-solid fa-sun"></i>
