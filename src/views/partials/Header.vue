@@ -15,7 +15,7 @@
           <div class="col-span-2 lg:col-span-1 logo">
             <router-link to="/">
               <img :src="fac.logo" class="h-[50px]" alt="logo" />
-              <h1 class="text-[20px] font-semibold inline align-middle pl-4">{{ fac.name }}</h1>
+              <h1 class="text-[20px] font-semibold inline align-middle pl-4">{{ fac.navbarName || fac.name }}</h1>
             </router-link>
           </div>
           <div class="col-span-2 lg:col-span-3 hidden lg:block ml-auto">
