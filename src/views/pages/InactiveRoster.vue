@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold mb-4">Inactives Roster</h1>
+    <h1 class="text-3xl font-bold mb-4">Non-Member Roster</h1>
 
     <div class="rounded-md w-full bg-white dark:bg-black-deep border-1 drop-shadow-md flex flex-col">
       <div v-if="!fetched" class="m-3">Getting roster...</div>
