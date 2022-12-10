@@ -65,7 +65,7 @@ const Links: Link[] = [
       },
       {
         to: { name: "InactiveRoster" },
-        title: "Inactive Roster",
+        title: "Non-Member Roster",
         auth: true,
         roles: ["atm", "datm", "wm"],
       },
