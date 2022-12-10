@@ -3,7 +3,7 @@
     <h1 class="text-2xl">Events</h1>
     <create-event-modal v-if="canCreateEvent()" />
   </div>
-  <div class="grid grid-cols-2 gap-x-10">
+  <div v-if="upcomingEvents.length > 0" class="grid grid-cols-2 gap-x-10">
     <EventCard
       v-for="event in upcomingEvents"
       :key="event.id"
@@ -11,6 +11,10 @@
       class="cursor-pointer"
       @click="goToEvent(event.id)"
     />
+  </div>
+  <div v-else>
+    <h2 class="text-xl">No events are currently scheduled</h2>
+    <p>Check back later for more information.</p>
   </div>
 </template>
 
