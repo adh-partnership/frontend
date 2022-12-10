@@ -12,6 +12,9 @@ module.exports = {
     {
       pattern: /colorado/,
     },
+    {
+      pattern: /hawaii/,
+    },
   ],
   theme: {
     extend: {
@@ -36,6 +39,7 @@ module.exports = {
         "colorado-yellow": "#ffd700",
         "alaska-blue": "#0f204b",
         "alaska-gold": "#ffb612",
+        "hawaii-blue": "#80d8ff",
         white: {
           DEFAULT: "#FFFFFF",
           light: "#f9f9f9",
