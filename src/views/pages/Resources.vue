@@ -44,7 +44,9 @@
           </thead>
           <tbody class="border-collapse w-full">
             <tr
-              v-for="(resource, ridx) in resources.filter((r) => r.category === cat)"
+              v-for="(resource, ridx) in resources
+                .filter((r) => r.category === cat)
+                .sort((a, b) => a.name.localeCompare(b.name))"
               :key="`${cat}-${ridx}`"
               class="cursor-pointer"
               :class="{ 'bg-slate-100 dark:bg-neutral-800': ridx % 2 }"
