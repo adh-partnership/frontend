@@ -2,7 +2,8 @@ name: Build and Deploy
 
 on:
   push:
-    branches: ["main", "dev"]
+    branches: ["dev"]
+    tags: ["v1.[0-9]+.[0-9]+"]
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -58,27 +59,21 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Install cosign
       uses: sigstore/cosign-installer@main
-    - name: Create ZDV env
-      if: ${{ matrix.facility == 'zdv' }}
-      run: |
-        SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
-        cat <<EOF > .env
-        VITE_GIT_HASH="$SHA_SHORT"
-        EOF
-    - name: Create ZAN env
-      if: ${{ matrix.facility == 'zan' }}
-      run: |
-        SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
-        cat <<EOF > .env
-        VITE_GIT_HASH="$SHA_SHORT"
-        EOF
     - name: Create HCF env
-      if: ${{ matrix.facility == 'hcf' }}
       run: |
         SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
         cat <<EOF > .env
         VITE_GIT_HASH="$SHA_SHORT"
         EOF
+    - name: Set base version from .version
+      if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+      run: |
+        VERSION=$(cat .version | tr -d '\n')
+        echo "VITE_BASE_VERSION=$VERSION" >> .env
+    - name: Set version as tag
+      if: startsWith(github.ref, 'refs/tags/v')
+      run: |
+        echo "VITE_BASE_VERSION=$GITHUB_REF_NAME" >> .env
     - name: Setup Facility file
       run: |
         cp src/facility-${{ matrix.facility }}.ts src/facility.ts
