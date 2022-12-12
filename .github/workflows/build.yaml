@@ -69,18 +69,18 @@ jobs:
       if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
       run: |
         VERSION=$(cat .version | tr -d '\n')
-        echo "VITE_BASE_VERSION=$VERSION" >> .env
+        echo "VITE_VERSION_BASE=$VERSION" >> .env
     - name: Set version as tag
       if: startsWith(github.ref, 'refs/tags/v')
       run: |
-        echo "VITE_BASE_VERSION=$GITHUB_REF_NAME" >> .env
+        echo "VITE_VERSION_BASE=$GITHUB_REF_NAME" >> .env
     - name: Setup Facility file
       run: |
         cp src/facility-${{ matrix.facility }}.ts src/facility.ts
     - name: Build Image
       if: ${{ env.branch == 'main' }}
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }} .
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ github.ref_name }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ github.ref_name }} .
     # If dev branch, we want to target the dev API... so we do this through an ARG that sets the mode to staging.
     - name: Build Staging Image
       if: ${{ env.branch == 'dev' }}
@@ -142,7 +142,7 @@ jobs:
       if: ${{ github.ref == 'refs/heads/main' }}
       run: |
         cd $GITHUB_WORKSPACE/gitops/overlays/prod
-        kustomize edit set image adhp/zdv-frontend=adhp/frontend:zdv-${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/zdv-frontend=adhp/frontend:zdv-${{ github.ref_name }}-${{ env.sha_short }}
     - name: Commit manifests
       run: |
         cd $GITHUB_WORKSPACE/gitops
@@ -195,7 +195,7 @@ jobs:
       run: |
         HASH=`echo ${GITHUB_SHA} | cut -c1-7`
         cd $GITHUB_WORKSPACE/gitops-paza/overlays/prod
-        kustomize edit set image adhp/zan-frontend=adhp/frontend:zan-${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/zan-frontend=adhp/frontend:zan-${{ github.ref_name }}-${{ env.sha_short }}
     - name: Commit manifests
       run: |
         cd $GITHUB_WORKSPACE/gitops-paza
@@ -248,7 +248,7 @@ jobs:
       if: ${{ github.ref == 'refs/heads/main' }}
       run: |
         cd $GITHUB_WORKSPACE/gitops-phzh/overlays/prod
-        kustomize edit set image adhp/hcf-frontend=adhp/frontend:hcf-${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/hcf-frontend=adhp/frontend:hcf-${{ github.ref_name }}-${{ env.sha_short }}
     - name: Commit manifests
       run: |
         cd $GITHUB_WORKSPACE/gitops-phzh
