@@ -59,7 +59,9 @@
                   >
                 </p>
               </td>
-              <td class="text-center">{{ resource.updated_at }}</td>
+              <td class="text-center">
+                {{ new Date(resource.updated_at).toLocaleString("en", { dateStyle: "medium", timeStyle: "short" }) }}
+              </td>
               <td class="text-center">
                 <a :href="resource.url" target="_blank" rel="noopener noreferrer">
                   <button class="btn bg-colorado-blue text-white font-bold py-2 px-4 rounded">
