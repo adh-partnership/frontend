@@ -87,27 +87,6 @@ const canCreatePosition = (): boolean => {
   return isAuthenticated() && hasRole(["atm", "datm", "ec", "wm"]);
 };
 
-const positionValid = (): boolean => {
-  if (position.value.position.length === 0) {
-    error.value = "Position cannot be empty";
-    return false;
-  }
-
-  let suffixMatch = false;
-  ["_CTR", "_APP", "_DEP", "_TWR", "_GND", "_DEL", "_FSS"].forEach((suffix) => {
-    if (position.value.position.endsWith(suffix)) {
-      suffixMatch = true;
-    }
-  });
-  if (!suffixMatch) {
-    error.value =
-      "Invalid position entered. Must end in one of the following: _CTR, _APP, _DEP, _TWR, _GND, _DEL, _FSS";
-    return false;
-  }
-
-  return true;
-};
-
 enum ButtonStates {
   Idle = 0,
   Saving = 1,
@@ -117,7 +96,7 @@ enum ButtonStates {
 const buttonState = ref(ButtonStates.Idle);
 
 const createPosition = async (): Promise<void> => {
-  if (canCreatePosition() && positionValid()) {
+  if (canCreatePosition()) {
     try {
       const result = await ZDVAPI.post(`/v1/events/${props.id}/positions`, {
         cid: 0,
