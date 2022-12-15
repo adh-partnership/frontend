@@ -24,7 +24,8 @@ jobs:
             if [[ $label == cherrypick/* ]]; then
               branch=${label#cherrypick/}
               git checkout -b cherrypick/release-$branch-pr${{ github.event.pull_request.number }} origin/release-$branch
-              git cherry-pick -m 1 --strategy=recursive --strategy-option=theirs ${{ github.event.pull_request.merge_commit_sha }}
+              gh pr diff ${{ github.event.pull_request.number }} | git apply --3way
+              git commit -m "${{ github.event.pull_request.title }} (#${{ github.event.pull_request.number }})"
               git push origin cherrypick/release-$branch-pr${{ github.event.pull_request.number }}
 
               gh pr create -t "[release-$branch] Cherrypick PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}" -B release-$branch -H cherrypick/release-$branch-pr${{ github.event.pull_request.number }} --body "Automated cherrypick PR for PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}"
