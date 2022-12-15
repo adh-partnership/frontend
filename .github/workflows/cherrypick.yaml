@@ -1,0 +1,43 @@
+name: Cherrypick
+
+on:
+  pull_request:
+    types: ["closed", "labeled"]
+
+jobs:
+  cherrypick:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Cherrypick(s)
+        id: cherrypick
+        run: |
+          git config --global user.name "adh-bot"
+          git config --global user.email "dhawton@gmail.com"
+          git remote update
+          git pull origin
+          git fetch --all
+          
+          labels=($(jq -r '.pull_request.labels | map(.name) | join(" ")' "$GITHUB_EVENT_PATH") )
+          for label in "${labels[@]}"; do
+            if [[ $label == cherrypick/* ]]; then
+              branch=${label#cherrypick/}
+              git checkout -b cherrypick/release-$branch-pr${{ github.event.pull_request.number }} origin/release-$branch
+              git cherry-pick -m 1 --strategy=recursive --strategy-option=theirs ${{ github.event.pull_request.merge_commit_sha }}
+              git push origin cherrypick/release-$branch-pr${{ github.event.pull_request.number }}
+
+              gh pr create -t "[release-$branch] Cherrypick PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}" -B release-$branch -H cherrypick/release-$branch-pr${{ github.event.pull_request.number }} --body "Automated cherrypick PR for PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}"
+            fi
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADH_BOT_TOKEN }}
+      - name: Create issue on failure
+        if: ${{ failure() }}
+        uses: actions-ecosystem/action-create-issue@v1
+        with:
+          github_token: ${{ secrets.ADH_BOT_TOKEN }}
+          assignees: ${{ github.event.pull_request.user.login }}
+          title: Cherrypick failed for PR ${{ github.event.pull_request.number }}
+          body: |
+            Cherrypick failed for PR #${{ github.event.pull_request.number }}! Please create a manual cherrypick PR. For more information, see the GitHub Action log at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}.
