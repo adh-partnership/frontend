@@ -25,7 +25,6 @@ jobs:
               branch=${label#cherrypick/}
               git checkout -b cherrypick/release-$branch-pr${{ github.event.pull_request.number }} origin/release-$branch
               gh pr diff ${{ github.event.pull_request.number }} --patch | git am --3way
-              git commit -m "${{ github.event.pull_request.title }} (#${{ github.event.pull_request.number }})"
               git push origin cherrypick/release-$branch-pr${{ github.event.pull_request.number }}
 
               gh pr create -t "[release-$branch] Cherrypick PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}" -B release-$branch -H cherrypick/release-$branch-pr${{ github.event.pull_request.number }} --body "Automated cherrypick PR for PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}"
