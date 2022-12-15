@@ -44,7 +44,9 @@
           </thead>
           <tbody class="border-collapse w-full">
             <tr
-              v-for="(resource, ridx) in resources.filter((r) => r.category === cat)"
+              v-for="(resource, ridx) in resources
+                .filter((r) => r.category === cat)
+                .sort((a, b) => a.name.localeCompare(b.name))"
               :key="`${cat}-${ridx}`"
               class="cursor-pointer"
               :class="{ 'bg-slate-100 dark:bg-neutral-800': ridx % 2 }"
@@ -59,7 +61,9 @@
                   >
                 </p>
               </td>
-              <td class="text-center">{{ resource.updated_at }}</td>
+              <td class="text-center">
+                {{ new Date(resource.updated_at).toLocaleString("en", { dateStyle: "medium", timeStyle: "short" }) }}
+              </td>
               <td class="text-center">
                 <a :href="resource.url" target="_blank" rel="noopener noreferrer">
                   <button class="btn bg-colorado-blue text-white font-bold py-2 px-4 rounded">

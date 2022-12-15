@@ -14,7 +14,7 @@
     <div class="py-4">
       <div class="container text-sm">
         Copyright &copy; 2022 by {{ fac.name }}. <RouterLink to="/privacy">Privacy Policy</RouterLink>. Open Source at
-        <a href="https://github.com/adh-frontend/frontend">GitHub</a> (version: 1.0.0-{{ gitHash }}).
+        <a href="https://github.com/adh-partnership/frontend">GitHub</a> (version: {{ version }}-{{ gitHash }}).
         <div class="float-right text-right">
           <button @click="toggleDark()">
             <i v-if="isDark" class="fa-solid fa-sun"></i>
@@ -35,6 +35,7 @@ import fac from "@/facility";
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 const gitHash = import.meta.env.VITE_GIT_HASH || "dirty";
+const version = import.meta.env.VITE_VERSION_BASE || "unknown";
 </script>
 
 <style scoped lang="postcss">

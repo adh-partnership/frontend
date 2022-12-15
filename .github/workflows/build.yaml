@@ -2,7 +2,8 @@ name: Build and Deploy
 
 on:
   push:
-    branches: ["main", "dev"]
+    branches: ["main"]
+    tags: ["v1.[0-9]+.[0-9]+"]
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -58,39 +59,37 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Install cosign
       uses: sigstore/cosign-installer@main
-    - name: Create ZDV env
-      if: ${{ matrix.facility == 'zdv' }}
-      run: |
-        SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
-        cat <<EOF > .env
-        VITE_GIT_HASH="$SHA_SHORT"
-        EOF
-    - name: Create ZAN env
-      if: ${{ matrix.facility == 'zan' }}
-      run: |
-        SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
-        cat <<EOF > .env
-        VITE_GIT_HASH="$SHA_SHORT"
-        EOF
     - name: Create HCF env
-      if: ${{ matrix.facility == 'hcf' }}
       run: |
         SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
         cat <<EOF > .env
         VITE_GIT_HASH="$SHA_SHORT"
         EOF
+    - name: Set base version from .version
+      if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+      run: |
+        VERSION=$(cat .version | tr -d '\n')
+        echo "VITE_VERSION_BASE=$VERSION" >> .env
+    - name: Set version as tag
+      if: startsWith(github.ref, 'refs/tags/v')
+      run: |
+        echo "VITE_VERSION_BASE=$GITHUB_REF_NAME" >> .env
     - name: Setup Facility file
       run: |
         cp src/facility-${{ matrix.facility }}.ts src/facility.ts
     - name: Build Image
-      if: ${{ env.branch == 'main' }}
+      if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }} .
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ github.ref_name }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ github.ref_name }} .
     # If dev branch, we want to target the dev API... so we do this through an ARG that sets the mode to staging.
     - name: Build Staging Image
-      if: ${{ env.branch == 'dev' }}
+      if: ${{ env.branch == 'main' }}
       run: |
         docker build --build-arg build_cmd="build-dev" -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }}-${{ env.sha_short }} -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ env.branch }} .
+    - name: Build test image
+      if: ${{ github.event_name == 'pull_request' }}
+      run: |
+        docker build --build-arg build_cmd="build-dev" -t ${{ secrets.DOCKER_USERNAME }}/frontend:trash .
     - name: Push Image
       if: ${{ github.event_name == 'push' }}
       run: |
@@ -109,7 +108,7 @@ jobs:
     name: Update KZDV GitOps Repo
     runs-on: ubuntu-latest
     needs: build
-    if : ${{ github.event_name == 'push' && contains(fromJson('["refs/heads/dev", "refs/heads/main"]'), github.ref) }}
+    if : ${{ github.event_name == 'push' && contains(fromJson('["refs/heads/main", "refs/tags/v"]'), github.ref) }}
 
     steps:
     - name: Set sha_short
@@ -139,15 +138,15 @@ jobs:
       with:
         kustomize-version: "4.4.1"
     - name: Update dev overlay
-      if: ${{ github.ref == 'refs/heads/dev' }}
+      if: ${{ github.ref == 'refs/heads/main' }}
       run: |
         cd $GITHUB_WORKSPACE/gitops/overlays/dev
         kustomize edit set image adhp/zdv-frontend=adhp/frontend:zdv-${{ env.branch }}-${{ env.sha_short }}
     - name: Update prod overlay
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       run: |
         cd $GITHUB_WORKSPACE/gitops/overlays/prod
-        kustomize edit set image adhp/zdv-frontend=adhp/frontend:zdv-${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/zdv-frontend=adhp/frontend:zdv-${{ github.ref_name }}-${{ env.sha_short }}
     - name: Commit manifests
       run: |
         cd $GITHUB_WORKSPACE/gitops
@@ -162,7 +161,7 @@ jobs:
     name: Update PAZA GitOps Repo
     runs-on: ubuntu-latest
     needs: build
-    if : ${{ github.event_name == 'push' && contains(fromJson('["refs/heads/dev", "refs/heads/main"]'), github.ref) }}
+    if : ${{ github.event_name == 'push' && contains(fromJson('["refs/heads/main", "refs/tags/v"]'), github.ref) }}
     steps:
     - name: Set sha_short
       id: vars
@@ -191,16 +190,16 @@ jobs:
       with:
         kustomize-version: "4.4.1"
     - name: Update dev overlay
-      if: ${{ github.ref == 'refs/heads/dev' }}
+      if: ${{ github.ref == 'refs/heads/main' }}
       run: |
         cd $GITHUB_WORKSPACE/gitops-paza/overlays/dev
         kustomize edit set image adhp/zan-frontend=adhp/frontend:zan-${{ env.branch }}-${{ env.sha_short }}
     - name: Update prod overlay
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       run: |
         HASH=`echo ${GITHUB_SHA} | cut -c1-7`
         cd $GITHUB_WORKSPACE/gitops-paza/overlays/prod
-        kustomize edit set image adhp/zan-frontend=adhp/frontend:zan-${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/zan-frontend=adhp/frontend:zan-${{ github.ref_name }}-${{ env.sha_short }}
     - name: Commit manifests
       run: |
         cd $GITHUB_WORKSPACE/gitops-paza
@@ -215,7 +214,7 @@ jobs:
     name: Update PHZH GitOps Repo
     runs-on: ubuntu-latest
     needs: build
-    if : ${{ github.event_name == 'push' && contains(fromJson('["refs/heads/dev", "refs/heads/main"]'), github.ref) }}
+    if : ${{ github.event_name == 'push' && contains(fromJson('["refs/heads/main", "refs/tags/v"]'), github.ref) }}
 
     steps:
     - name: Set sha_short
@@ -245,15 +244,15 @@ jobs:
       with:
         kustomize-version: "4.4.1"
     - name: Update dev overlay
-      if: ${{ github.ref == 'refs/heads/dev' }}
+      if: ${{ github.ref == 'refs/heads/main' }}
       run: |
         cd $GITHUB_WORKSPACE/gitops-phzh/overlays/dev
         kustomize edit set image adhp/hcf-frontend=adhp/frontend:hcf-${{ env.branch }}-${{ env.sha_short }}
     - name: Update prod overlay
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       run: |
         cd $GITHUB_WORKSPACE/gitops-phzh/overlays/prod
-        kustomize edit set image adhp/hcf-frontend=adhp/frontend:hcf-${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image adhp/hcf-frontend=adhp/frontend:hcf-${{ github.ref_name }}-${{ env.sha_short }}
     - name: Commit manifests
       run: |
         cd $GITHUB_WORKSPACE/gitops-phzh
