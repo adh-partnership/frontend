@@ -24,7 +24,7 @@ jobs:
             if [[ $label == cherrypick/* ]]; then
               branch=${label#cherrypick/}
               git checkout -b cherrypick/release-$branch-pr${{ github.event.pull_request.number }} origin/release-$branch
-              gh pr diff ${{ github.event.pull_request.number }} | git apply --3way
+              gh pr diff ${{ github.event.pull_request.number }} --patch | git am --3way
               git commit -m "${{ github.event.pull_request.title }} (#${{ github.event.pull_request.number }})"
               git push origin cherrypick/release-$branch-pr${{ github.event.pull_request.number }}
 
