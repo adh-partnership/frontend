@@ -14,7 +14,7 @@ jobs:
         id: cherrypick
         run: |
           git config --global user.name "adh-bot"
-          git config --global user.email "dhawton@gmail.com"
+          git config --global user.email "dhawton+adh@gmail.com"
           git remote update
           git pull origin
           git fetch --all
