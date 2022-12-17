@@ -10,6 +10,63 @@ const fac: Facility = {
   devApiUrl: "https://api.dev.denartcc.org",
   homeIntroText:
     "Welcome to Denver ARTCC! Denver ARTCC covers approximately 285,000 square miles of airspace over the all or part of the states of Colorado, Arizona, New Mexico, Utah, Kansas, Nebraska, South Dakota, Wyoming, and Montana. We are a division of VATSIM, the Virtual Air Traffic Simulation Network's VATUSA Division. We are a group of volunteers who enjoy the challenge of controlling air traffic in a realistic environment. We are always looking for new members to join our team.",
+  roles: [
+    {
+      name: "ATM",
+      role: "atm",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "DATM",
+      role: "datm",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "TA",
+      role: "ta",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "EC",
+      role: "ec",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "FE",
+      role: "fe",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "WM",
+      role: "wm",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "Instructor",
+      role: "ins",
+      canGrant: ["atm", "datm", "ta", "wm"],
+    },
+    {
+      name: "Mentor",
+      role: "mtr",
+      canGrant: ["atm", "datm", "ta", "wm"],
+    },
+    {
+      name: "Events Team",
+      role: "events",
+      canGrant: ["atm", "datm", "ec", "wm"],
+    },
+    {
+      name: "Facilities Team",
+      role: "facilities",
+      canGrant: ["atm", "datm", "fe", "wm"],
+    },
+    {
+      name: "Web Team",
+      role: "web",
+      canGrant: ["atm", "datm", "wm"],
+    },
+  ],
   boundaries: {
     center: [
       [44.958333, -103.166667],

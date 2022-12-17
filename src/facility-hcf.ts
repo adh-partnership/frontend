@@ -33,6 +33,58 @@ const fac: Facility = {
       [20.000001, -150.000001],
     ],
   },
+  roles: [
+    {
+      name: "ATM",
+      role: "atm",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "DATM",
+      role: "datm",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "TA",
+      role: "ta",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "EC",
+      role: "ec",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "FE",
+      role: "fe",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "WM",
+      role: "wm",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "Events Team",
+      role: "events",
+      canGrant: ["atm", "datm", "ec", "wm"],
+    },
+    {
+      name: "Facilities Team",
+      role: "facilities",
+      canGrant: ["atm", "datm", "fe", "wm"],
+    },
+    {
+      name: "Instructor",
+      role: "ins",
+      canGrant: ["atm", "datm", "ta", "wm"],
+    },
+    {
+      name: "Mentor",
+      role: "mtr",
+      canGrant: ["atm", "datm", "ta", "wm"],
+    },
+  ],
   center: [39.861667, -104.673056],
   defaultZoom: 6,
   airports: [

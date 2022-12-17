@@ -20,6 +20,11 @@ export type Facility = {
   defaultZoom: number;
   boundaries: { [key: string]: [number, number][] };
   airports: { icao: string; name: string; latitude: number; longitude: number }[];
+  roles: {
+    name: string;
+    role: string;
+    canGrant: string[];
+  }[];
 };
 
 export type ParsedMetar = {

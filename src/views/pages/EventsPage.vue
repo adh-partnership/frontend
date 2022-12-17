@@ -33,7 +33,7 @@ const error = ref("");
 const eventStore = useEventStore();
 
 const canCreateEvent = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ec", "wm"]);
+  return isAuthenticated() && hasRole(["atm", "datm", "ec", "events", "wm"]);
 };
 
 const goToEvent = (id: number): void => {
