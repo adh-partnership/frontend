@@ -6,4 +6,9 @@ export const StaffDescriptions: { [key: string]: string } = {
   fe: "Responsible for the creation of sector files, radar client files, and other facility resources.",
   ec: "Responsible for the planning, coordination and advertisement of facility events with neighboring facilities, virtual airlines, VATUSA and VATSIM.",
   wm: "Responsible for the management of the facility's website and technical infrastructure.",
+  et: "Assists the Events Coordinator in creating and propagating events.",
+  wt: "Assists the Webmaster.",
+  ft: "Assists the Facility Engineer.",
+  ins: "Under direction of the Training Administrator, leads training and handles OTS Examinations.",
+  mtr: "Under direction of the Training Administrator, helps train students and prepare them for OTS Examinations.",
 };
