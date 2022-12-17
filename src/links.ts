@@ -74,6 +74,10 @@ const Links: Link[] = [
         title: "Resources",
       },
       {
+        to: { name: "Activity" },
+        title: "Activity",
+      },
+      {
         to: { name: "VisitingApplication" },
         title: "Visitor Application",
       },

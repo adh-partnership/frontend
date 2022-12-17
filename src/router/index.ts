@@ -91,6 +91,11 @@ const routes = [
     component: () => import("@/views/pages/StaffPage.vue"),
   },
   {
+    path: "/activity",
+    name: "Activity",
+    component: () => import("@/views/pages/ActivityPage.vue"),
+  },
+  {
     path: "/training/:cid/:id",
     name: "TrainingNoteView",
     component: () => import("@/views/pages/training/TrainingNote.vue"),
