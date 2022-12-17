@@ -11,8 +11,7 @@
         <i class="fa fa-user" /> Login with VATSIM
       </a>
     </div>
-    <!--    TODO: Change to Else    -->
-    <div v-else-if="true" class="w-full">
+    <div v-else class="w-full">
       <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
@@ -191,7 +190,7 @@
               </div>
             </div>
             <div :class="{ hidden: openTab !== 3, block: openTab === 3 }">
-              <p>Hello there admin... here are the feedback submissions.</p>
+              <p>Hello there admin... here are the feedback submissions pending action.</p>
               <div v-if="!feedbacks" class="text-center">
                 <center><Spinner class="fill-colorado-blue" large /></center>
                 <p class="mt-4">Loading feedback...</p>
@@ -213,7 +212,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="feedback in feedbacks" :key="feedback.id">
+                    <tr v-for="feedback in feedbacks.filter((f) => f.status === 'pending')" :key="feedback.id">
                       <td>
                         {{ feedback.controller.first_name }} {{ feedback.controller.last_name }} <br />
                         <span>{{ feedback.controller.cid }}</span>
@@ -245,8 +244,8 @@
                         </button>
                       </td>
                     </tr>
-                    <tr v-if="feedbacks.length === 0">
-                      <td colspan="7">There is no feedback.</td>
+                    <tr v-if="feedbacks.filter((f) => f.status === 'pending').length === 0">
+                      <td colspan="7">There is no pending feedback.</td>
                     </tr>
                   </tbody>
                 </table>
