@@ -110,6 +110,18 @@ export type Controller = {
   updated_at: string;
 };
 
+export type ControllerStats = {
+  cid: number;
+  first_name: string;
+  last_name: string;
+  operating_initials: string;
+  controllerType: string;
+  rating: string;
+  cab: number;
+  terminal: number;
+  enroute: number;
+};
+
 export type OnlineController = {
   cid: number;
   controller: Controller;
