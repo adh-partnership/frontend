@@ -33,17 +33,17 @@ jobs:
           git fetch --all
 
           # Check if branch exists on origin
-          if ! git ls-remote --exit-code --heads origin cherrypick/$branch-pr${{ github.event.inputs.pr }}; then
-            echo "Branch cherrypick/$branch-pr${{ github.event.inputs.pr }} already exists on origin. Exiting."
+          if git ls-remote --exit-code --heads origin cherrypick/${{ github.event.inputs.branch }}-pr${{ github.event.inputs.pr }}; then
+            echo "Branch cherrypick/${{ github.event.inputs.branch }}-pr${{ github.event.inputs.pr }} already exists on origin. Exiting."
             exit 1
           fi
 
-          git checkout -b cherrypick/$branch-pr${{ github.event.inputs.pr }} origin/$branch
+          git checkout -b cherrypick/${{ github.event.inputs.branch }}-pr${{ github.event.inputs.pr }} origin/${{ github.event.inputs.branch }}
           gh pr diff ${{ github.event.inputs.pr }} --patch | git am --3way
-          git push origin cherrypick/$branch-pr${{ github.event.inputs.pr }}
+          git push origin cherrypick/${{ github.event.inputs.branch }}-pr${{ github.event.inputs.pr }}
 
-          gh pr create -t "[$branch] Cherrypick PR #${{ github.event.inputs.pr }}: ${{ github.event.inputs.title }}" -B $branch -H cherrypick/$branch-pr${{ github.event.inputs.pr }} --body "Automated cherrypick PR for PR #${{ github.event.inputs.pr }}: ${{ github.event.inputs.title }}"
-          pr_number=$(gh pr list --repo adh-partnership/frontend --json number,headRefName | jq -r '.[] | select(.headRefName == "cherrypick/$branch-pr${{ github.event.inputs.pr }}") | .number')
+          gh pr create -t "[${{ github.event.inputs.branch }}] Cherrypick PR #${{ github.event.inputs.pr }}: ${{ github.event.inputs.title }}" -B ${{ github.event.inputs.branch }} -H cherrypick/${{ github.event.inputs.branch }}-pr${{ github.event.inputs.pr }} --body "Automated cherrypick PR for PR #${{ github.event.inputs.pr }}: ${{ github.event.inputs.title }}"
+          pr_number=$(gh pr list --repo adh-partnership/frontend --json number,headRefName | jq -r '.[] | select(.headRefName == "cherrypick/${{ github.event.inputs.branch }}-pr${{ github.event.inputs.pr }}") | .number')
           echo "pr_number=$pr_number" >> $GITHUB_ENV
       - name: Create issue on failure
         if: ${{ failure() }}
