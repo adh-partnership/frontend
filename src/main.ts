@@ -10,7 +10,6 @@ import App from "./App.vue";
 import router from "./router";
 
 import "./assets/css/style.scss";
-import "flowbite";
 import "v-calendar/dist/style.css";
 
 const app = createApp(App);
