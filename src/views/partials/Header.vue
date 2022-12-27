@@ -12,7 +12,7 @@
     <div class="py-4 lg:py-1">
       <div class="container">
         <div class="grid grid-cols-4 items-center justify-between">
-          <div class="col-span-2 lg:col-span-1 logo">
+          <div class="col-span-3 lg:col-span-1 logo">
             <router-link to="/">
               <img :src="fac.logo" class="h-[50px]" alt="logo" />
               <h1 class="text-[20px] font-semibold inline align-middle pl-4">{{ fac.navbarName || fac.name }}</h1>
@@ -21,7 +21,7 @@
           <div class="col-span-2 lg:col-span-3 hidden lg:block ml-auto">
             <HeaderNav />
           </div>
-          <div class="col-span-2 text-right block lg:hidden">
+          <div class="col-span-1 text-right block lg:hidden">
             <button
               class="text-white text-xl w-11 h-11 leading-10 rounded-md border-[1px] border-white hover:bg-primary hover:text-white hover:border-white transition-all"
               @click="toggleNav()"
