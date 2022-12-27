@@ -217,6 +217,12 @@ const fac: Facility = {
       longitude: -106.8663017,
     },
   ],
+  links: [
+    {
+      title: "Book Training",
+      href: "https://www.picktime.com/vzdv",
+    },
+  ],
 };
 
 export default fac;

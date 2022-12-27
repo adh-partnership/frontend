@@ -25,6 +25,7 @@ export type Facility = {
     role: string;
     canGrant: string[];
   }[];
+  links: { title: string; href: string }[];
 };
 
 export type ParsedMetar = {
