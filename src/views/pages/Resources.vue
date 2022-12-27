@@ -267,16 +267,11 @@ const createResource = async (): Promise<void> => {
     name: newResource.value.name,
     category: openTab.value,
     description: "",
-  } as Resource).then(() => {
-    updateResources().then(() => {
-      resources.value.forEach((resource) => {
-        if (resource.name === newResource.value.name) {
-          editResource(resource);
-        }
-      });
-      newResource.value.name = "";
-      newResource.value.creating = false;
-    });
+  } as Resource).then((resource) => {
+    updateResources();
+    editResource(resource);
+    newResource.value.name = "";
+    newResource.value.creating = false;
   });
 };
 
