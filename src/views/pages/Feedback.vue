@@ -58,8 +58,8 @@
         <div class="px-4 py-5 flex-auto">
           <div class="tab-content tab-space">
             <div :class="{ hidden: openTab !== 1, block: openTab === 1 }">
-              <div class="grid grid-cols-3 space-x-10">
-                <div class="col-span-1">
+              <div class="grid grid-cols-3 gap-x-10">
+                <div class="col-span-3 md:col-span-1">
                   <div class="relative z-0 mb-4 w-full group">
                     <select
                       id="controller"
@@ -131,7 +131,7 @@
                     </label>
                   </div>
                 </div>
-                <div class="col-span-2">
+                <div class="col-span-3 md:col-span-2">
                   <textarea
                     id="description"
                     v-model="form.comments"
@@ -142,7 +142,7 @@
                 </div>
               </div>
               <div v-if="!submitting && !error">
-                <button class="btn bg-colorado-blue hover:bg-blue-900" type="button" @click="submit">
+                <button class="btn bg-colorado-blue hover:bg-blue-900 mt-2 md:mt-0" type="button" @click="submit">
                   <i class="fa fa-paper-plane" /> Submit
                 </button>
               </div>
