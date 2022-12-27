@@ -3,7 +3,7 @@
     <h1 class="text-2xl">Events</h1>
     <create-event-modal v-if="canCreateEvent()" />
   </div>
-  <div v-if="upcomingEvents.length > 0" class="grid grid-cols-2 gap-x-10">
+  <div v-if="upcomingEvents.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-x-10">
     <EventCard
       v-for="event in upcomingEvents"
       :key="event.id"
