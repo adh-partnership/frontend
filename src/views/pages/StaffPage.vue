@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-bold mb-0">Facility Staff</h1>
     <p class="italic">The following volunteers help make this a great place to be!</p>
   </div>
-  <div class="grid grid-cols-2 gap-2">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
     <StaffCard v-for="atm in staff.atm" :key="atm.cid" :controller="atm" position="atm" title="Air Traffic Manager" />
     <StaffCard
       v-for="datm in staff.datm"
@@ -27,7 +27,7 @@
     <StaffCard v-for="wm in staff.wm" :key="wm.cid" :controller="wm" position="wm" title="Webmaster" />
     <StaffCard v-for="wt in staff.web" :key="wt.cid" :controller="wt" position="wt" title="Web Team" email="wm" />
   </div>
-  <div class="grid grid-cols-2 gap-2">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
     <TeamCard :controllers="staff.instructor" position="ins" title="Instructors" />
     <TeamCard :controllers="staff.mentor" position="mtr" title="Mentors" />
   </div>
