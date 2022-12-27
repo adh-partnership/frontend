@@ -88,6 +88,8 @@
           id="controllerStatus"
           v-model="form.ControllerStatus"
           class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+          @focus="resetError()"
+          @change="resetError()"
         >
           <option value="none">None</option>
           <option value="active">Active</option>
@@ -112,6 +114,7 @@
           type="text"
           max-size="2"
           class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+          @focus="resetError()"
         />
       </div>
     </div>
@@ -280,6 +283,12 @@ const removeController = async (): Promise<void> => {
   }
 };
 
+const resetError = (): void => {
+  saveError.value = null;
+  clearTimeout(saveTimer);
+  buttonState.value = ButtonStates.Idle;
+};
+
 const save = async (): Promise<void> => {
   if (props.controller.controller_type !== form.value.ControllerType && props.controller.controller_type !== "none") {
     if (!form.value.RemovalReason) {
@@ -289,13 +298,12 @@ const save = async (): Promise<void> => {
 
   buttonState.value = ButtonStates.Saving;
   saveError.value = null;
-  try {
-    const result = await ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
-      controller_type: form.value.ControllerType,
-      status: form.value.ControllerStatus,
-      operating_initials: form.value.OperatingInitials,
-    });
-    if (result.status === 200) {
+  ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
+    controller_type: form.value.ControllerType,
+    status: form.value.ControllerStatus,
+    operating_initials: form.value.OperatingInitials,
+  })
+    .then(() => {
       buttonState.value = ButtonStates.Saved;
       saveTimer = setTimeout(() => {
         buttonState.value = ButtonStates.Idle;
@@ -306,23 +314,18 @@ const save = async (): Promise<void> => {
         status: form.value.ControllerStatus,
         operating_initials: form.value.OperatingInitials,
       });
-    } else {
-      if (result.status === 409) {
+    })
+    .catch((error) => {
+      if (error.response.status === 409) {
         saveError.value = "Those initials are already in use.";
       }
       buttonState.value = ButtonStates.Error;
       matchFormToProps();
       saveTimer = setTimeout(() => {
         buttonState.value = ButtonStates.Idle;
-      }, 4000);
-    }
-  } catch (error) {
-    buttonState.value = ButtonStates.Error;
-    matchFormToProps();
-    saveTimer = setTimeout(() => {
-      buttonState.value = ButtonStates.Idle;
-    }, 15000);
-  }
+        saveError.value = null;
+      }, 15000);
+    });
 };
 </script>
 
