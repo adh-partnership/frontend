@@ -149,7 +149,11 @@ const fac: Facility = {
       longitude: -155.048469,
     },
   ],
-  links: [],
+  links: {
+    controller: [],
+    pilot: [],
+    facility: [],
+  },
 };
 
 export default fac;

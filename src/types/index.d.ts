@@ -25,7 +25,11 @@ export type Facility = {
     role: string;
     canGrant: string[];
   }[];
-  links: { title: string; href: string }[];
+  links: {
+    controller: { title: string; href: string }[];
+    pilot: { title: string; href: string }[];
+    facility: { title: string; href: string }[];
+  };
 };
 
 export type ParsedMetar = {
