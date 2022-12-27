@@ -35,7 +35,7 @@
         days to review your application before contacting staff.
       </p>
       <div v-if="!applying && !error">
-        <button class="btn bg-colorado-blue hover:bg-blue-900" type="button" @type="apply">
+        <button class="btn bg-colorado-blue hover:bg-blue-900" type="button" @click="apply">
           <i class="fa fa-paper-plane" /> Apply
         </button>
       </div>
