@@ -26,15 +26,17 @@
       v-if="props.sublinks.length > 0"
       class="top-full left-0 absolute w-[200px] bg-white dark:bg-black-deep border-b-[3px] border-primary py-4 shadow-md shadow-black/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-[20px] group-hover:translate-y-0 z-30"
     >
-      <li v-for="link in Facility.links" :key="link.title" class="relative">
-        <a
-          :href="link.href"
-          target="_blank"
-          class="block text-heading-light dark:text-white-deep font-semibold py-1 px-4 hover:text-primary dark:hover:text-colorado-yellow hover:bg-gray-light dark:hover:bg-body"
-        >
-          {{ link.title }}
-        </a>
-      </li>
+      <span v-if="isUserDropdown">
+        <li v-for="link in Facility.links" :key="link.title" class="relative">
+          <a
+            :href="link.href"
+            target="_blank"
+            class="block text-heading-light dark:text-white-deep font-semibold py-1 px-4 hover:text-primary dark:hover:text-colorado-yellow hover:bg-gray-light dark:hover:bg-body"
+          >
+            {{ link.title }}
+          </a>
+        </li>
+      </span>
       <li v-for="(link, index) in props.sublinks" :key="index">
         <AuthLink
           v-if="link.to"
@@ -61,12 +63,17 @@
 
 <script setup lang="ts">
 import AuthLink from "@/components/AuthLink.vue";
+import { computed } from "vue";
 import Facility from "@/facility";
 import { Link } from "@/types";
 
 const props = withDefaults(defineProps<Link>(), {
   to: "#",
   sublinks: () => [],
+});
+
+const isUserDropdown = computed(() => {
+  return props.sublinks.find((link) => link.title === "Logout");
 });
 
 // @TODO Replace by extending RouteLink
