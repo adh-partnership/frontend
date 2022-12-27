@@ -6,11 +6,16 @@ import Alert from "@/components/Alert.vue";
 import AuthLink from "@/components/AuthLink.vue";
 import { SetupCalendar } from "v-calendar";
 
+import fac from "@/facility";
+import { MergeLinks } from "@/links";
+
 import App from "./App.vue";
 import router from "./router";
 
 import "./assets/css/style.scss";
 import "v-calendar/dist/style.css";
+
+MergeLinks(fac.links);
 
 const app = createApp(App);
 

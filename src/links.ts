@@ -1,16 +1,6 @@
 import apiUrl from "@/utils/api";
 import fac from "@/facility";
-import { RouteLocationRaw } from "vue-router";
-
-export interface Link {
-  title: string;
-  to?: string | RouteLocationRaw;
-  href?: string;
-  sublinks?: Link[];
-  auth?: boolean;
-  roles?: string[];
-  sameWindow?: boolean;
-}
+import type { Link } from "@/types";
 
 const ProfileLinks: Link[] = [
   {
@@ -85,5 +75,29 @@ const Links: Link[] = [
   },
 ];
 
+// Allow merging sublinks by title
+const MergeLinks = (incomingLinks: Link[]): void => {
+  incomingLinks.forEach((link) => {
+    // Check if title is Profile, if so, add to Profile links
+    if (link.title === "Profile") {
+      if (link.sublinks) {
+        ProfileLinks.push(link);
+      }
+    }
+    // Otherwise, find link based on title from existing links
+    const existingLink = Links.find((l) => l.title === link.title);
+    if (existingLink) {
+      // Merge arrays
+      if (link.sublinks && existingLink.sublinks) {
+        existingLink.sublinks = existingLink.sublinks.concat(link.sublinks);
+      } else {
+        existingLink.sublinks = link.sublinks;
+      }
+    } else {
+      Links.push(link);
+    }
+  });
+};
+
 export default Links;
-export { ProfileLinks };
+export { ProfileLinks, MergeLinks };

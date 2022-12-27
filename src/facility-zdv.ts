@@ -217,16 +217,18 @@ const fac: Facility = {
       longitude: -106.8663017,
     },
   ],
-  links: {
-    controller: [
-      {
-        title: "Book Training",
-        href: "https://www.picktime.com/vzdv",
-      },
-    ],
-    pilot: [],
-    facility: [],
-  },
+  // This merges with the links in src/facility.ts using title as the key
+  links: [
+    {
+      title: "Facility",
+      sublinks: [
+        {
+          title: "Schedule Training",
+          href: "https://www.picktime.com/vzdv",
+        },
+      ],
+    },
+  ],
 };
 
 export default fac;

@@ -42,16 +42,6 @@ const fac: Facility = {
       canGrant: ["atm", "datm", "wm"],
     },
     {
-      name: "Instructor",
-      role: "ins",
-      canGrant: ["atm", "datm", "ta", "wm"],
-    },
-    {
-      name: "Mentor",
-      role: "mtr",
-      canGrant: ["atm", "datm", "ta", "wm"],
-    },
-    {
       name: "Events Team",
       role: "events",
       canGrant: ["atm", "datm", "ec", "wm"],
@@ -62,9 +52,14 @@ const fac: Facility = {
       canGrant: ["atm", "datm", "fe", "wm"],
     },
     {
-      name: "Web Team",
-      role: "web",
-      canGrant: ["atm", "datm", "wm"],
+      name: "Instructor",
+      role: "ins",
+      canGrant: ["atm", "datm", "ta", "wm"],
+    },
+    {
+      name: "Mentor",
+      role: "mtr",
+      canGrant: ["atm", "datm", "ta", "wm"],
     },
   ],
   boundaries: {
@@ -220,6 +215,18 @@ const fac: Facility = {
       name: "Steamboat Springs Airport",
       latitude: 40.5162608,
       longitude: -106.8663017,
+    },
+  ],
+  // This merges with the links in src/facility.ts using title as the key
+  links: [
+    {
+      title: "Facility",
+      sublinks: [
+        {
+          title: "Schedule Training",
+          href: "https://www.picktime.com/vzdv",
+        },
+      ],
     },
   ],
 };
