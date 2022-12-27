@@ -31,3 +31,18 @@ jobs:
           title: Cherrypick failed for PR ${{ github.event.pull_request.number }}
           body: |
             Failed to run cherrypick workflows. For more information, see the GitHub Action log at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}.
+  # If a cherrypicked branch is merged, delete the branch
+  cleanup:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.head.ref, 'cherrypick/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Delete branch
+        run: |
+          git config --global user.name "adh-bot"
+          git config --global user.email "dhawton+adh@gmail.com"
+          git remote update
+
+          git push origin --delete ${{ github.event.pull_request.head.ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADH_BOT_TOKEN }}
