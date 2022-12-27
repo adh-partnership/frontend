@@ -148,7 +148,6 @@
 import { onMounted, onUnmounted, ref } from "vue";
 import type { Ref } from "vue";
 
-import { AxiosError, isAxiosError } from "axios";
 import type { Controller } from "@/types";
 import { hasRole } from "@/utils/auth";
 import useRosterStore from "@/stores/roster";
