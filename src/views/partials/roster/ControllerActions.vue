@@ -134,7 +134,7 @@
           Saved
         </button>
         <button v-if="buttonState === ButtonStates.Error" class="btn bg-red text-white font-bold py-2 px-4 rounded">
-          Error... try again later or contact the webmaster
+          {{ saveError !== null ? saveError : "Error... try again later or contact the webmaster" }}
         </button>
       </div>
     </div>
@@ -174,6 +174,7 @@ enum ButtonStates {
 const buttonState = ref(ButtonStates.Idle);
 const removalButtonState = ref(ButtonStates.Idle);
 const visitButtonState = ref(ButtonStates.Idle);
+const saveError: Ref<string | null> = ref(null);
 
 const props = defineProps<{
   controller: Controller;
@@ -287,6 +288,7 @@ const save = async (): Promise<void> => {
   }
 
   buttonState.value = ButtonStates.Saving;
+  saveError.value = null;
   try {
     const result = await ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
       controller_type: form.value.ControllerType,
@@ -305,6 +307,9 @@ const save = async (): Promise<void> => {
         operating_initials: form.value.OperatingInitials,
       });
     } else {
+      if (result.status === 409) {
+        saveError.value = "Those initials are already in use.";
+      }
       buttonState.value = ButtonStates.Error;
       matchFormToProps();
       saveTimer = setTimeout(() => {
