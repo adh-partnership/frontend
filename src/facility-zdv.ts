@@ -220,7 +220,7 @@ const fac: Facility = {
   // This merges with the links in src/facility.ts using title as the key
   links: [
     {
-      title: "Facility",
+      title: "Profile",
       sublinks: [
         {
           title: "Schedule Training",

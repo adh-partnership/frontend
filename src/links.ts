@@ -82,8 +82,8 @@ const MergeLinks = (incomingLinks: Link[]): void => {
     if (link.title === "Profile") {
       if (link.sublinks) {
         ProfileLinks.push(...link.sublinks);
-        return;
       }
+      return;
     }
     // Otherwise, find link based on title from existing links
     const existingLink = Links.find((l) => l.title === link.title);
