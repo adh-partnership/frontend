@@ -38,4 +38,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ADH_BOT_TOKEN }}
         run: |
-          gh pr create -t "Chore: Upgrade Dependencies" -B main -H chore/upgrade-dependencies-$(date +%Y-%m-%d) --body "Weekly automated PR to upgrade dependencies using `yarn upgrade --latest`. Please verify the changes and merge."
+          gh pr create -t "Chore: Upgrade Dependencies" -B main -H chore/upgrade-dependencies-$(date +%Y-%m-%d) --body "Weekly automated PR to upgrade dependencies using \`yarn upgrade --latest\`. Please verify the changes and merge."
