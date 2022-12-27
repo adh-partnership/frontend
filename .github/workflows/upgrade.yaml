@@ -24,7 +24,7 @@ jobs:
           git config --global user.email "dhawton+adh@gmail.com"
 
           git checkout -b chore/upgrade-dependencies-$(date +%Y-%m-%d)
-          git push --set-upstream origin upgrade-dependencies-$(date +%Y-%m-%d)
+          git push --set-upstream origin chore/upgrade-dependencies-$(date +%Y-%m-%d)
       - name: Upgrade dependencies
         run: yarn upgrade --latest
       - name: Commit and push changes
@@ -33,7 +33,7 @@ jobs:
         run: |
           git add .
           git commit -m "chore: upgrade dependencies"
-          git push origin chore/upgrade-dependencies-$(date +%Y-%m-%d)
+          git push
       - name: Create PR
         env:
           GITHUB_TOKEN: ${{ secrets.ADH_BOT_TOKEN }}
