@@ -70,8 +70,12 @@
                     <i class="fas fa-external-link-alt"></i>
                   </button>
                 </a>
-                <button v-if="canEditResources()" class="btn bg-yellow-400 text-white font-bold py-2 px-4 ml-2 rounded">
-                  <i class="fas fa-edit" @click="editResource(resource)"></i>
+                <button
+                  v-if="canEditResources()"
+                  class="btn bg-yellow-400 text-white font-bold py-2 px-4 ml-2 rounded"
+                  @click="editResource(resource)"
+                >
+                  <i class="fas fa-edit"></i>
                 </button>
               </td>
             </tr>
@@ -263,11 +267,11 @@ const createResource = async (): Promise<void> => {
     name: newResource.value.name,
     category: openTab.value,
     description: "",
-  } as Resource).then(() => {
+  } as Resource).then((resource) => {
+    updateResources();
+    editResource(resource);
     newResource.value.name = "";
     newResource.value.creating = false;
-
-    updateResources();
   });
 };
 
