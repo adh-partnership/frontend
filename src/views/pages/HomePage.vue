@@ -1,8 +1,8 @@
 <template>
   <h1 class="text-2xl">Welcome to the {{ fac.name }}</h1>
   <p v-html="fac.homeIntroText"></p>
-  <div class="flex">
-    <div class="card w-3/4">
+  <div class="grid grid-cols-4 gap-4">
+    <div class="card col-span-4 md:col-span-3">
       <div v-if="event === null">
         <h2 class="text-xl">No event is currently scheduled</h2>
         <p>Check back later for more information.</p>
@@ -24,7 +24,7 @@
         <img :src="event.banner" class="w-full" alt="event image" />
       </div>
     </div>
-    <div class="card w-1/4 ml-4 h-min">
+    <div class="card col-span-4 md:col-span-1 h-min">
       <h2 class="text-xl">Who's Online?</h2>
       <div v-if="online === null || online.length === 0" class="flex flex-1">
         <i>No one is online right now.</i>

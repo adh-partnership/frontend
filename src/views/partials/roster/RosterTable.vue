@@ -18,7 +18,7 @@
             <h5 class="mb-0 text-xl">{{ `${controller.first_name} ${controller.last_name}` }}</h5>
             <p class="mb-0">{{ getControllerTitle(controller) }} ({{ controller.rating }})</p>
           </td>
-          <td class="w-1/2 pl-3 py-2">
+          <td class="w-1/2 pl-3 py-2 hidden md:inline">
             <ControllerCertificationBadges :controller="controller" :show-active="true" />
           </td>
         </tr>

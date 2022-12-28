@@ -5,9 +5,9 @@
     <div class="flex-auto p-2">
       <div>
         <h2 class="mb-0">{{ props.event.title }}</h2>
-        <div class="flex">
+        <div class="grid md:grid-cols-3">
           <p class="m-0 mr-3"><i class="fa-solid fa-calendar"></i> {{ localDate(props.event.start_date) }}</p>
-          <p class="m-0">
+          <p class="m-0 md:col-span-2">
             <i class="fa-solid fa-clock mr-2"></i
             >{{
               new Date(props.event.start_date).toLocaleTimeString("en-US", {

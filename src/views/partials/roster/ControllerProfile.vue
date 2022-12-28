@@ -17,19 +17,21 @@
     <strong>Discord ID:</strong>
     <span class="capitalize"> {{ controller.discord_id !== "NULL" ? controller.discord_id : " Not Connected" }} </span>
   </p>
+
   <h2 class="text-3xl mt-4">Certifications</h2>
-  <div class="flex items-center mb-4">
-    <div class="w-1/5">
-      <label class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4" for="ground-cert">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 mx-5">
+    <div class="flex items-center">
+      <label
+        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        for="ground-cert"
+      >
         Ground
       </label>
-    </div>
-    <div class="w-1/5">
       <select
         id="ground-cert"
         v-model="certs.ground"
         data-position="ground"
-        class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -37,19 +39,17 @@
         <option value="certified">Certified</option>
       </select>
     </div>
-    <div class="w-1/5">
+    <div class="flex items-center">
       <label
-        class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
         for="major-ground-cert"
       >
         Major Ground
       </label>
-    </div>
-    <div class="w-1/5">
       <select
         id="major-ground-cert"
         v-model="certs.major_ground"
-        class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -57,18 +57,17 @@
         <option value="certified">Certified</option>
       </select>
     </div>
-  </div>
-  <div class="flex items-center mb-4">
-    <div class="w-1/5">
-      <label class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4" for="local-cert">
+    <div class="flex items-center">
+      <label
+        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        for="local-cert"
+      >
         Local
       </label>
-    </div>
-    <div class="w-1/5">
       <select
         id="local-cert"
         v-model="certs.local"
-        class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -76,19 +75,17 @@
         <option value="certified">Certified</option>
       </select>
     </div>
-    <div class="w-1/5">
+    <div class="flex items-center">
       <label
-        class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
         for="major-local-cert"
       >
         Major Local
       </label>
-    </div>
-    <div class="w-1/5">
       <select
         id="major-local-cert"
         v-model="certs.major_local"
-        class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -96,21 +93,17 @@
         <option value="certified">Certified</option>
       </select>
     </div>
-  </div>
-  <div class="flex items-center mb-4">
-    <div class="w-1/5">
+    <div class="flex items-center">
       <label
-        class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
         for="approach-cert"
       >
         Approach
       </label>
-    </div>
-    <div class="w-1/5">
       <select
         id="approach-cert"
         v-model="certs.approach"
-        class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -118,19 +111,17 @@
         <option value="certified">Certified</option>
       </select>
     </div>
-    <div class="w-1/5">
+    <div class="flex items-center">
       <label
-        class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
         for="major-approach-cert"
       >
         Major Approach
       </label>
-    </div>
-    <div class="w-1/5">
       <select
         id="major-approach-cert"
         v-model="certs.major_approach"
-        class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -138,21 +129,17 @@
         <option value="certified">Certified</option>
       </select>
     </div>
-  </div>
-  <div class="flex items-center mb-4">
-    <div class="w-1/5">
+    <div class="flex items-center">
       <label
-        class="block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
         for="enroute-cert"
       >
         Enroute
       </label>
-    </div>
-    <div class="w-1/5">
       <select
         id="enroute-cert"
         v-model="certs.enroute"
-        class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -160,26 +147,28 @@
         <option value="certified">Certified</option>
       </select>
     </div>
-    <div v-if="hasRole(['atm', 'datm', 'ta', 'wm', 'ins'])" class="w-3/5 text-center">
-      <button
-        v-if="buttonState === ButtonStates.Idle"
-        class="btn bg-colorado-blue text-white font-bold py-2 px-4 rounded"
-        @click="save"
-      >
-        Save
-      </button>
-      <button
-        v-if="buttonState === ButtonStates.Saving"
-        class="btn bg-colorado-yellow text-black font-bold py-2 px-4 rounded"
-      >
-        Saving
-      </button>
-      <button v-if="buttonState === ButtonStates.Saved" class="btn bg-green text-white font-bold py-2 px-4 rounded">
-        Saved
-      </button>
-      <button v-if="buttonState === ButtonStates.Error" class="btn bg-red text-white font-bold py-2 px-4 rounded">
-        Error... try again later or contact the webmaster
-      </button>
+    <div class="flex items-center">
+      <div v-if="hasRole(['atm', 'datm', 'ta', 'wm', 'ins'])" class="w-full text-center">
+        <button
+          v-if="buttonState === ButtonStates.Idle"
+          class="btn bg-colorado-blue text-white font-bold py-2 px-4 rounded"
+          @click="save"
+        >
+          Save
+        </button>
+        <button
+          v-if="buttonState === ButtonStates.Saving"
+          class="btn bg-colorado-yellow text-black font-bold py-2 px-4 rounded"
+        >
+          Saving
+        </button>
+        <button v-if="buttonState === ButtonStates.Saved" class="btn bg-green text-white font-bold py-2 px-4 rounded">
+          Saved
+        </button>
+        <button v-if="buttonState === ButtonStates.Error" class="btn bg-red text-white font-bold py-2 px-4 rounded">
+          Error... try again later or contact the webmaster
+        </button>
+      </div>
     </div>
   </div>
 </template>
