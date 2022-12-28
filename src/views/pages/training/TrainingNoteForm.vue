@@ -190,7 +190,7 @@ onMounted(() => {
 
 const durationValid = computed(() => {
   const { duration } = form.value;
-  if (duration.match(/^[0-9]{1,2}\+[0-9]{2}$/) || duration === "") {
+  if (duration.match(/^[0-9]{1,2}:[0-9]{2}$/) || duration === "") {
     return true;
   }
 
@@ -202,6 +202,10 @@ const reset = (): void => {
 };
 
 const submit = async (): Promise<void> => {
+  if (!durationValid.value) {
+    return;
+  }
+
   saveButtonState.value = ButtonStates.Saving;
   const data = {
     comments: form.value.comments,
@@ -217,6 +221,7 @@ const submit = async (): Promise<void> => {
       await ZDVAPI.post(`/v1/training/${trainingStore.student?.cid}`, data);
     }
     saveButtonState.value = ButtonStates.Saved;
+    router.push({ name: "RosterController", params: { cid }, hash: "#tab2" });
   } catch (e) {
     saveButtonState.value = ButtonStates.Error;
   } finally {
