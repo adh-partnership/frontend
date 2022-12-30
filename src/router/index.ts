@@ -68,6 +68,16 @@ const routes = [
     },
   },
   {
+    path: "/airports",
+    name: "Airports",
+    component: () => import("@/views/pages/Airports.vue"),
+  },
+  {
+    path: "/airports/:id",
+    name: "AirportInfo",
+    component: () => import("@/views/pages/AirportInfo.vue"),
+  },
+  {
     path: "/roster/:cid",
     name: "RosterController",
     component: () => import("@/views/pages/RosterControllerPage.vue"),

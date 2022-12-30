@@ -7,6 +7,38 @@ declare interface MenuItem {
   href?: string;
 }
 
+export interface Airport {
+  arpt_id: string;
+  arpt_name: string;
+  arpt_status: string;
+  city: string;
+  state_code: string;
+  elevation: number;
+  icao_id: string;
+  latitude: number;
+  longitude: number;
+  resp_artcc_id: string;
+  twr_type_code: string;
+}
+
+export interface AirportATC {
+  apch_p_provider: string;
+  twr_hrs: string;
+}
+
+export interface AirportCharts {
+  arpt_id: string;
+  chart_code: string;
+  chart_name: string;
+  chart_url: string;
+}
+
+export interface AirportWeather {
+  arpt_id: string;
+  metar: string;
+  taf: string;
+}
+
 export interface Link {
   title: string;
   to?: string | RouteLocationRaw;
@@ -17,8 +49,18 @@ export interface Link {
   sameWindow?: boolean;
 }
 
+export type FacilityAirport = {
+  faa?: string;
+  icao: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  displayHome?: boolean;
+};
+
 export type Facility = {
   id: string;
+  faa_id: string;
   name: string;
   navbarName?: string;
   logo: string;
@@ -31,7 +73,7 @@ export type Facility = {
   domain: string;
   defaultZoom: number;
   boundaries: { [key: string]: [number, number][] };
-  airports: { icao: string; name: string; latitude: number; longitude: number }[];
+  airports: FacilityAirport[];
   roles: {
     name: string;
     role: string;
