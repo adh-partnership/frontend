@@ -3,8 +3,8 @@
     <table
       v-for="(controller, index) in props.roster"
       :key="controller.cid"
-      class="w-full dark:bg-slate-900 bg-slate-50"
-      :class="{ 'bg-slate-100 dark:bg-slate-800': (index - 1) % 2, 'cursor-pointer': canGoToController() }"
+      class="w-full dark:bg-slate-900 bg-slate-50 cursor-pointer"
+      :class="{ 'bg-slate-100 dark:bg-slate-800': (index - 1) % 2 }"
       @click="goToController(controller.cid)"
     >
       <tbody class="border-collapse text-center w-full">
@@ -30,7 +30,6 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 
-import { hasRole, isAuthenticated } from "@/utils/auth";
 import type { Controller } from "@/types";
 import ControllerCertificationBadges from "@/components/ControllerCertificationBadges.vue";
 import { getControllerTitle } from "@/utils/helpers";
@@ -40,14 +39,8 @@ const props = defineProps<{
   roster: Controller[];
 }>();
 
-const canGoToController = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
-};
-
 const goToController = (cid: number): void => {
-  if (canGoToController()) {
-    router.push(`/roster/${cid}`);
-  }
+  router.push(`/roster/${cid}`);
 };
 </script>
 

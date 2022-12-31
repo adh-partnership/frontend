@@ -13,7 +13,7 @@
     <strong>Status:</strong> <span class="capitalize">{{ controller.status }}</span>
   </p>
 
-  <p class="mb-0">
+  <p v-if="canWorkController()" class="mb-0">
     <strong>Discord ID:</strong>
     <span class="capitalize"> {{ controller.discord_id !== "NULL" ? controller.discord_id : " Not Connected" }} </span>
   </p>
@@ -27,7 +27,9 @@
       >
         Ground
       </label>
+      <span v-if="!canWorkController()" class="capitalize">{{ certs.ground }}</span>
       <select
+        v-else
         id="ground-cert"
         v-model="certs.ground"
         data-position="ground"
@@ -46,7 +48,9 @@
       >
         Major Ground
       </label>
+      <span v-if="!canWorkController()" class="capitalize">{{ certs.major_ground }}</span>
       <select
+        v-else
         id="major-ground-cert"
         v-model="certs.major_ground"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
@@ -64,7 +68,9 @@
       >
         Local
       </label>
+      <span v-if="!canWorkController()" class="capitalize">{{ certs.local }}</span>
       <select
+        v-else
         id="local-cert"
         v-model="certs.local"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
@@ -82,7 +88,9 @@
       >
         Major Local
       </label>
+      <span v-if="!canWorkController()" class="capitalize">{{ certs.major_local }}</span>
       <select
+        v-else
         id="major-local-cert"
         v-model="certs.major_local"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
@@ -100,7 +108,9 @@
       >
         Approach
       </label>
+      <span v-if="!canWorkController()" class="capitalize">{{ certs.approach }}</span>
       <select
+        v-else
         id="approach-cert"
         v-model="certs.approach"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
@@ -118,7 +128,9 @@
       >
         Major Approach
       </label>
+      <span v-if="!canWorkController()" class="capitalize">{{ certs.major_approach }}</span>
       <select
+        v-else
         id="major-approach-cert"
         v-model="certs.major_approach"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
@@ -136,7 +148,9 @@
       >
         Enroute
       </label>
+      <span v-if="!canWorkController()" class="capitalize">{{ certs.enroute }}</span>
       <select
+        v-else
         id="enroute-cert"
         v-model="certs.enroute"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
@@ -174,14 +188,18 @@
 </template>
 
 <script setup lang="ts">
+import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onUnmounted, ref } from "vue";
 
 import type { Controller } from "@/types";
-import { hasRole } from "@/utils/auth";
 import useRosterStore from "@/stores/roster";
 import { ZDVAPI } from "@/utils/api";
 
 let saveTimer: ReturnType<typeof setTimeout>;
+
+const canWorkController = (): boolean => {
+  return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
+};
 
 enum ButtonStates {
   Idle = 0,

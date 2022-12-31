@@ -8,6 +8,11 @@ const ProfileLinks: Link[] = [
     href: `https://discord.${fac.domain}/`,
   },
   {
+    title: "My Training Notes",
+    href: `/roster/me#tab2`,
+    sameWindow: true,
+  },
+  {
     title: "Logout",
     href: `${apiUrl}/v1/user/logout?redirect=${window.location.href}`,
     sameWindow: true,
