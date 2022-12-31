@@ -5,8 +5,7 @@
     <table class="w-full dark:bg-slate-900 bg-slate-50 cursor-pointer">
       <thead>
         <tr>
-          <th class="bg-gray-300 dark:bg-gray-900 text-white text-right pr-2 py-2" colspan="1">&nbsp;</th>
-          <th class="bg-gray-300 dark:bg-gray-900 dark:text-white text-right pr-2 py-2" colspan="1">
+          <th class="bg-gray-300 dark:bg-gray-900 dark:text-white text-right pr-2 py-2 text-right" colspan="2">
             <label for="searchTowered" class="pr-2 text-sm font-medium text-gray-700 dark:text-white"
               >Towered Only?</label
             >
