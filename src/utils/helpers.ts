@@ -34,7 +34,12 @@ export const getControllerTitle = (controller: Controller): string => {
 };
 
 export const toTitleCase = (str: string): string => {
-  return str.replace(/\w\S*/g, (txt) => {
+  let r = str.replace(/\w\S*/g, (txt) => {
     return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
   });
+  // Special cases
+  ["Lrrs", "Afb", "Arb", "Aaf", "Nas", "Cgs", "Cgas", "Mcas"].forEach((a) => {
+    r = r.replace(a, a.toUpperCase());
+  });
+  return r;
 };

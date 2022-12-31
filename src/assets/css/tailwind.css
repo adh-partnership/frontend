@@ -5,6 +5,7 @@
 @layer base {
     body {
         @apply text-body text-base font-base dark:bg-black-deep;
+        font-family: Roboto, sans;
     }
     img {
         @apply inline-block;

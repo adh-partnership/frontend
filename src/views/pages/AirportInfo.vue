@@ -67,101 +67,30 @@
         </tr>
       </tbody>
     </table>
-    <div class="flex pt-4">
-      <div class="w-full md:w-1/2">
+    <div class="grid grid-cols-2 w-full">
+      <div v-for="grp in chartGroups" :key="grp.code" class="w-full pt-4">
         <table class="w-full text-center border-separate">
           <thead>
             <tr>
-              <th class="bg-colorado-blue text-white">Departure Procedures</th>
+              <th class="bg-colorado-blue text-white">{{ grp.name }}</th>
             </tr>
           </thead>
           <tbody>
             <tr
               v-for="chart in charts
-                .filter((c) => c.chart_code === 'DP')
+                .filter((c) => c.chart_code === grp.code)
                 .sort((a, b) => a.chart_name.localeCompare(b.chart_name))"
               :key="`${chart.arpt_id}-${chart.chart_url}`"
+              class="hover:bg-gray-100 hover:dark:bg-zinc-800"
             >
               <td>
-                <a :href="chart.chart_url" target="_blank" rel="noopener noreferrer">{{ chart.chart_name }}</a>
+                <a :href="chart.chart_url" target="_blank" rel="noopener noreferrer" class="block">{{
+                  chart.chart_name
+                }}</a>
               </td>
             </tr>
-            <tr v-if="charts.filter((c) => c.chart_code === 'DP').length === 0">
-              <td>No Departure Charts Available</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="w-full md:w-1/2">
-        <table class="w-full text-center border-separate">
-          <thead>
-            <tr>
-              <th class="bg-colorado-blue text-white">Standard Terminal Arrival Procedures</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="chart in charts
-                .filter((c) => c.chart_code === 'STAR')
-                .sort((a, b) => a.chart_name.localeCompare(b.chart_name))"
-              :key="`${chart.arpt_id}-${chart.chart_url}`"
-            >
-              <td>
-                <a :href="chart.chart_url" target="_blank" rel="noopener noreferrer">{{ chart.chart_name }}</a>
-              </td>
-            </tr>
-            <tr v-if="charts.filter((c) => c.chart_code === 'STAR').length === 0">
-              <td>No STAR Charts Available</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="flex pt-4">
-      <div class="w-full md:w-1/2">
-        <table class="w-full text-center border-separate">
-          <thead>
-            <tr>
-              <th class="bg-colorado-blue text-white">Approach Procedures</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="chart in charts
-                .filter((c) => c.chart_code === 'IAP')
-                .sort((a, b) => a.chart_name.localeCompare(b.chart_name))"
-              :key="`${chart.arpt_id}-${chart.chart_url}`"
-            >
-              <td>
-                <a :href="chart.chart_url" target="_blank" rel="noopener noreferrer">{{ chart.chart_name }}</a>
-              </td>
-            </tr>
-            <tr v-if="charts.filter((c) => c.chart_code === 'IAP').length === 0">
-              <td>No Approach Charts Available</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="w-full md:w-1/2">
-        <table class="w-full text-center border-separate">
-          <thead>
-            <tr>
-              <th class="bg-colorado-blue text-white">Other</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="chart in charts
-                .filter((c) => c.chart_code === 'OTHER')
-                .sort((a, b) => a.chart_name.localeCompare(b.chart_name))"
-              :key="`${chart.arpt_id}-${chart.chart_url}`"
-            >
-              <td>
-                <a :href="chart.chart_url" target="_blank" rel="noopener noreferrer">{{ chart.chart_name }}</a>
-              </td>
-            </tr>
-            <tr v-if="charts.filter((c) => c.chart_code === 'OTHER').length === 0">
-              <td>No Other Charts Available</td>
+            <tr v-if="charts.filter((c) => c.chart_code === grp.code).length === 0">
+              <td>No {{ grp.name }} Charts Available</td>
             </tr>
           </tbody>
         </table>
@@ -191,6 +120,12 @@ const airportATC = ref({
 } as AirportATC);
 const charts: Ref<AirportCharts[]> = ref([]);
 const airportWeather = ref({} as AirportWeather);
+const chartGroups = ref([
+  { name: "Departure", code: "DP" },
+  { name: "Standard Terminal Arrival Procedures", code: "STAR" },
+  { name: "Approach Procedures", code: "IAP" },
+  { name: "Other", code: "OTHER" },
+]);
 
 onMounted(() => {
   ZDVAPI.get(`/v1/airports/${fac.faa_id}/${id.value}`)
