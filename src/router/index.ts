@@ -81,10 +81,6 @@ const routes = [
     path: "/roster/:cid",
     name: "RosterController",
     component: () => import("@/views/pages/RosterControllerPage.vue"),
-    meta: {
-      requiresAuth: true,
-      requiresRole: ["atm", "datm", "ta", "wm", "ins", "mtr"],
-    },
   },
   {
     path: "/roster/:cid/training/:id",

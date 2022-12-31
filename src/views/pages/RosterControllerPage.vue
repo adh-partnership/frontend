@@ -22,7 +22,7 @@
             Profile
           </a>
         </li>
-        <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+        <li v-if="canWorkController()" class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
             :class="{
@@ -34,7 +34,7 @@
             Training Notes
           </a>
         </li>
-        <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+        <li v-if="canWorkController()" class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
             :class="{
@@ -69,6 +69,7 @@
 </template>
 
 <script setup lang="ts">
+import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
@@ -89,6 +90,10 @@ const rosterStore = useRosterStore();
 const { controllers, lastRoster } = storeToRefs(rosterStore);
 const cid = parseInt(route.params.cid as string, 10);
 const controller = ref(rosterStore.getController(cid) as Controller);
+
+const canWorkController = (): boolean => {
+  return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
+};
 
 onMounted(() => {
   if (controller.value) {
