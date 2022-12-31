@@ -30,7 +30,6 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 
-import { hasRole, isAuthenticated } from "@/utils/auth";
 import type { Controller } from "@/types";
 import ControllerCertificationBadges from "@/components/ControllerCertificationBadges.vue";
 import { getControllerTitle } from "@/utils/helpers";
@@ -39,10 +38,6 @@ const router = useRouter();
 const props = defineProps<{
   roster: Controller[];
 }>();
-
-const canGoToController = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
-};
 
 const goToController = (cid: number): void => {
   router.push(`/roster/${cid}`);

@@ -145,11 +145,11 @@
 </template>
 
 <script setup lang="ts">
-import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onMounted, onUnmounted, ref } from "vue";
 import type { Ref } from "vue";
 
 import type { Controller } from "@/types";
+import { hasRole } from "@/utils/auth";
 import useRosterStore from "@/stores/roster";
 import { ZDVAPI } from "@/utils/api";
 

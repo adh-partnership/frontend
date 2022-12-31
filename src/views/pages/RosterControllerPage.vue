@@ -22,7 +22,7 @@
             Profile
           </a>
         </li>
-        <li v-if="canWorkController()" class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+        <li v-if="canWorkController() || isMe()" class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
             :class="{
@@ -70,7 +70,7 @@
 
 <script setup lang="ts">
 import { hasRole, isAuthenticated } from "@/utils/auth";
-import { onMounted, ref, watch } from "vue";
+import { onBeforeMount, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 
@@ -81,6 +81,7 @@ import ControllerProfile from "@/views/partials/roster/ControllerProfile.vue";
 import ControllerRoles from "@/views/partials/roster/ControllerRoles.vue";
 import TrainingNotes from "@/views/partials/training/TrainingNotes.vue";
 import useRosterStore from "@/stores/roster";
+import useUserStore from "@/stores/users";
 
 const loading = ref(true);
 const openTab = ref(1);
@@ -90,10 +91,21 @@ const rosterStore = useRosterStore();
 const { controllers, lastRoster } = storeToRefs(rosterStore);
 const cid = parseInt(route.params.cid as string, 10);
 const controller = ref(rosterStore.getController(cid) as Controller);
+const userStore = useUserStore();
+
+const isMe = (): boolean => {
+  return isAuthenticated() && cid === userStore.user?.cid;
+};
 
 const canWorkController = (): boolean => {
   return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
 };
+
+onBeforeMount(() => {
+  if (route.params.cid === "me") {
+    router.push(`/roster/${userStore.user?.cid}${window.location.hash}`);
+  }
+});
 
 onMounted(() => {
   if (controller.value) {
