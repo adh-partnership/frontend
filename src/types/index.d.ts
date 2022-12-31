@@ -7,6 +7,22 @@ declare interface MenuItem {
   href?: string;
 }
 
+export interface Overflight {
+  alt: number;
+  arr: string;
+  callsign: string;
+  cid: number;
+  dep: string;
+  facility: string;
+  hdg: number;
+  lastSeen: string;
+  lat: number;
+  lon: number;
+  route: string;
+  spd: number;
+  type: string;
+}
+
 export interface Airport {
   arpt_id: string;
   arpt_name: string;
