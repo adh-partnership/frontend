@@ -2,6 +2,7 @@ import type { Facility } from "@/types";
 
 const fac: Facility = {
   id: "PHZH",
+  faa_id: "ZHN",
   name: "Honolulu Control Facility",
   navbarName: "Honolulu CF",
   logo: "https://cdn.vhcf.net/assets/logo/hibiscus/logo_solid.png",
