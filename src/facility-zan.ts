@@ -2,6 +2,7 @@ import type { Facility } from "@/types";
 
 const fac: Facility = {
   id: "PAZA",
+  faa_id: "ZAN",
   name: "Anchorage ARTCC",
   logo: "https://cdn.vzanartcc.net/assets/img/logo-no-text.png",
   minVisitorRating: "S2",

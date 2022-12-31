@@ -32,6 +32,10 @@ const Links: Link[] = [
     to: "#",
     sublinks: [
       {
+        to: { name: "Airports" },
+        title: "Airports",
+      },
+      {
         href: "https://www.skyvector.com",
         title: "SkyVector",
       },
