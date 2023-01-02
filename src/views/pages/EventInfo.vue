@@ -34,7 +34,15 @@
             <i class="fas fa-edit mr-2"></i>Edit
           </button>
           <create-position-modal v-if="canEditEvent()" :id="id" />
-          <signup-modal v-if="canSignup()" :id="id" :positions="event.positions" />
+          <signup-modal v-if="canSignup() && !hasSignedUp()" :id="id" :positions="event.positions" />
+          <button
+            v-if="canSignup() && hasSignedUp()"
+            class="btn bg-orange-400 text-white font-bold py-2 px-4 ml-2 rounded"
+            type="button"
+            @click="unsignup()"
+          >
+            <i class="fas fa-user-xmark mr-2"></i>Cancel Signup
+          </button>
           <button
             v-if="canDeleteEvent()"
             class="btn bg-red-500 text-white font-bold py-2 px-4 ml-2 rounded"
@@ -235,6 +243,7 @@ import { Event } from "@/types";
 
 import { useDark } from "@vueuse/core";
 import useEventStore from "@/stores/event";
+import useUserStore from "@/stores/users";
 import { ZDVAPI } from "@/utils/api";
 
 const isDark = useDark();
@@ -242,6 +251,7 @@ const loading = ref(true);
 const route = useRoute();
 const router = useRouter();
 const eventStore = useEventStore();
+const userStore = useUserStore();
 const id = parseInt(route.params.id as string, 10);
 const event = ref(eventStore.getEvent(id) as Event);
 const modifiedEvent = ref({} as Event);
@@ -266,6 +276,13 @@ const canDeleteEvent = (): boolean => {
   return isAuthenticated() && hasRole(["atm", "datm", "ec", "events", "wm"]);
 };
 
+const hasSignedUp = (): boolean => {
+  if (event.value.signups != null) {
+    return isAuthenticated() && event.value.signups.some((s) => s.user.cid === userStore.user?.cid);
+  }
+  return false;
+};
+
 const canSignup = (): boolean => {
   return isAuthenticated();
 };
@@ -287,6 +304,21 @@ const editEvent = (): void => {
     modifiedEvent.value.end_date = event.value.end_date;
     modifiedEvent.value.banner = event.value.banner;
     editing.value = true;
+  }
+};
+
+const unsignup = async (): Promise<void> => {
+  if (hasSignedUp()) {
+    try {
+      const result = await ZDVAPI.delete(`/v1/events/${id}/signup`);
+      if (result.status === 204) {
+        eventStore.fetchEvent(id).then(() => {
+          event.value = eventStore.getEvent(id) as Event;
+        });
+      }
+    } catch (e) {
+      error.value = e;
+    }
   }
 };
 
