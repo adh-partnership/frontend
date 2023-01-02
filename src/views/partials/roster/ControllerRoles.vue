@@ -24,7 +24,7 @@
     </div>
     <div class="flex items-center mt-4">
       <div class="w-1/2 md:w-1/5">
-        <label class="block text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4" for="role"> Add Role: </label>
+        <label class="block dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4" for="role"> Add Role: </label>
       </div>
       <div class="w-full md:w-1/5">
         <select
