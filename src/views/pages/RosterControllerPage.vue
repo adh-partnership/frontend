@@ -34,7 +34,7 @@
             Training Notes
           </a>
         </li>
-        <li v-if="canWorkController()" class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+        <li v-if="canActionController()" class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
             :class="{
@@ -54,10 +54,10 @@
             <div :class="{ hidden: openTab !== 1, block: openTab === 1 }">
               <ControllerProfile :controller="controller" />
             </div>
-            <div :class="{ hidden: openTab !== 2, block: openTab === 2 }">
+            <div v-if="canWorkController() || isMe()" :class="{ hidden: openTab !== 2, block: openTab === 2 }">
               <TrainingNotes :controller="controller" />
             </div>
-            <div :class="{ hidden: openTab !== 3, block: openTab === 3 }">
+            <div v-if="canActionController()" :class="{ hidden: openTab !== 3, block: openTab === 3 }">
               <ControllerActions :controller="controller" />
               <ControllerRoles :controller="controller" />
             </div>
@@ -99,6 +99,10 @@ const isMe = (): boolean => {
 
 const canWorkController = (): boolean => {
   return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
+};
+
+const canActionController = (): boolean => {
+  return canWorkController() || hasRole(["fe", "ec"]);
 };
 
 onBeforeMount(() => {
