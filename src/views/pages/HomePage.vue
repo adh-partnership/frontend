@@ -2,7 +2,7 @@
   <h1 class="text-2xl">Welcome to the {{ fac.name }}</h1>
   <p v-html="fac.homeIntroText"></p>
   <div class="grid grid-cols-4 gap-4">
-    <div class="card col-span-4 lg:col-span-3">
+    <div class="card col-span-4 lg:col-span-3 h-min">
       <div v-if="event === null">
         <h2 class="text-xl">No event is currently scheduled</h2>
         <p>Check back later for more information.</p>
@@ -67,20 +67,20 @@
       <h2 class="text-xl text-center">
         Top Controllers for {{ months[new Date().getMonth()] }}, {{ new Date().getFullYear() }}
       </h2>
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid lg:grid-cols-3 gap-4">
         <div v-if="stats[0] === undefined" class="flex flex-col items-center col-span-3 italic">
           There are no stats available or the data is loading...
         </div>
-        <div v-if="stats[0] !== undefined" class="flex flex-col items-center border-r-1">
-          <div class="text-xl">{{ stats[0].name }}</div>
+        <div v-if="stats[0] !== undefined" class="flex flex-col items-center lg:border-r-1">
+          <div class="text-xl"><i class="fa-solid fa-trophy text-alaska-gold"></i> {{ stats[0].name }}</div>
           <div class="text-lg">{{ stats[0].time }}</div>
         </div>
-        <div v-if="stats[1] !== undefined" class="flex flex-col items-center border-r-1">
-          <div class="text-xl">{{ stats[1].name }}</div>
+        <div v-if="stats[1] !== undefined" class="flex flex-col items-center lg:border-r-1">
+          <div class="text-xl"><i class="fa-solid fa-trophy text-zinc-500"></i> {{ stats[1].name }}</div>
           <div class="text-lg">{{ stats[1].time }}</div>
         </div>
         <div v-if="stats[2] !== undefined" class="flex flex-col items-center">
-          <div class="text-xl">{{ stats[2].name }}</div>
+          <div class="text-xl"><i class="fa-solid fa-trophy text-amber-700"></i> {{ stats[2].name }}</div>
           <div class="text-lg">{{ stats[2].time }}</div>
         </div>
       </div>
