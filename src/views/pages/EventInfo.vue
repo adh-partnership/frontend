@@ -307,7 +307,7 @@ const editEvent = (): void => {
   }
 };
 
-const unsignup = async (): Promise<void> => {
+const cancelSignup = async (): Promise<void> => {
   if (hasSignedUp()) {
     try {
       const result = await ZDVAPI.delete(`/v1/events/${id}/signup`);
