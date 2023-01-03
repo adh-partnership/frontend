@@ -39,7 +39,7 @@
             v-if="canSignup() && hasSignedUp()"
             class="btn bg-orange-400 text-white font-bold py-2 px-4 ml-2 rounded"
             type="button"
-            @click="unsignup()"
+            @click="cancelSignup()"
           >
             <i class="fas fa-user-xmark mr-2"></i>Cancel Signup
           </button>
