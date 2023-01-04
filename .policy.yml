@@ -1,0 +1,20 @@
+policy:
+  approval:
+  - or:
+    - the frontend team has approved
+    - an admin has approved
+
+approval_rules:
+  - name: the frontend team has approved
+    requires:
+      count: 1
+      teams:
+      - "adh-partnership/frontend"
+  - name: an admin has approved
+    options:
+      allow_author: true
+      allow_contributor: true
+    requires:
+      count: 1
+      teams:
+      - "adh-partnership/admins"
