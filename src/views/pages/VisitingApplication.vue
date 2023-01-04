@@ -162,7 +162,7 @@ const apply = async (): Promise<void> => {
 const handle = async (action: "accept" | "deny", id: number): Promise<void> => {
   try {
     applying.value = true;
-    const result = await ZDVAPI.put(`/v1/user/visitor/${id}`, action);
+    const result = await ZDVAPI.put(`/v1/user/visitor/${id}`, { action });
     if (result.status === 200) {
       applications.value = applications.value?.filter((a) => a.id !== id) as VisitorApplication[] | null;
     }
