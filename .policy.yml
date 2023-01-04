@@ -17,4 +17,4 @@ approval_rules:
     requires:
       count: 1
       teams:
-      - "adh-partnership/admins"
+      - "adh-partnership/admin"
