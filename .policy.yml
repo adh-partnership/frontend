@@ -3,9 +3,18 @@ policy:
   - or:
     - the frontend team has approved
     - an admin has approved
+    - has auto-merge label
 
 approval_rules:
   - name: the frontend team has approved
+    options:
+      request_review:
+        enabled: true
+        mode: teams
+      methods:
+        comments:
+          - "LGTM"
+          - "/lgtm"
     requires:
       count: 1
       teams:
@@ -14,7 +23,15 @@ approval_rules:
     options:
       allow_author: true
       allow_contributor: true
+      methods:
+        comments:
+          - "LGTM"
+          - "/lgtm"
     requires:
       count: 1
       teams:
       - "adh-partnership/admin"
+  - name: has auto-merge label
+    if:
+      has_labels:
+      - "auto-merge"
