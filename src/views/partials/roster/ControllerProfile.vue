@@ -34,6 +34,7 @@
         v-model="certs.ground"
         data-position="ground"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        @change="checkMtr('ground')"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -54,6 +55,7 @@
         id="major-ground-cert"
         v-model="certs.major_ground"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        @change="checkMtr('major_ground')"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -74,6 +76,7 @@
         id="local-cert"
         v-model="certs.local"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        @change="checkMtr('local')"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -94,6 +97,7 @@
         id="major-local-cert"
         v-model="certs.major_local"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        @change="checkMtr('major_local')"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -114,6 +118,7 @@
         id="approach-cert"
         v-model="certs.approach"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        @change="checkMtr('approach')"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -134,6 +139,7 @@
         id="major-approach-cert"
         v-model="certs.major_approach"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        @change="checkMtr('major_approach')"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -154,6 +160,7 @@
         id="enroute-cert"
         v-model="certs.enroute"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        @change="checkMtr('enroute')"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -162,7 +169,7 @@
       </select>
     </div>
     <div class="flex items-center">
-      <div v-if="hasRole(['atm', 'datm', 'ta', 'wm', 'ins'])" class="w-full text-center">
+      <div v-if="canModifycerts()" class="w-full text-center">
         <button
           v-if="buttonState === ButtonStates.Idle"
           class="btn bg-colorado-blue text-white font-bold py-2 px-4 rounded"
@@ -201,6 +208,10 @@ const canWorkController = (): boolean => {
   return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
 };
 
+const canModifycerts = (): boolean => {
+  return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
+};
+
 enum ButtonStates {
   Idle = 0,
   Saving = 1,
@@ -216,14 +227,46 @@ const props = withDefaults(
   {}
 );
 
-const certs = { ...props.controller.certifications }; // Dereference
+const certs = ref({ ...props.controller.certifications }); // Dereference
 const store = useRosterStore();
 
+const checkMtr = (
+  field: "ground" | "major_ground" | "local" | "major_local" | "approach" | "major_approach" | "enroute"
+): void => {
+  if (hasRole(["mtr"]) && !field.startsWith("major_")) {
+    if (certs.value[field] !== props.controller.certifications[field] && certs.value[field] === "certified") {
+      certs.value[field] = props.controller.certifications[field];
+    }
+  }
+};
+
 const save = async (): Promise<void> => {
+  // This is going to be complicated...
+  if (hasRole(["mtr"])) {
+    // MTRs can only change minor certs.value. between none, training, solo.... major up to and incl. certified
+
+    // Check if minor ground is changing... we're just going to change it back silently
+    if (certs.value.ground !== props.controller.certifications.ground && certs.value.ground === "certified") {
+      certs.value.ground = props.controller.certifications.ground;
+    }
+    // Now minor local
+    if (certs.value.local !== props.controller.certifications.local && certs.value.local === "certified") {
+      certs.value.local = props.controller.certifications.local;
+    }
+    // Now minor approach
+    if (certs.value.approach !== props.controller.certifications.approach && certs.value.approach === "certified") {
+      certs.value.approach = props.controller.certifications.approach;
+    }
+    // Now enroute
+    if (certs.value.enroute !== props.controller.certifications.enroute && certs.value.enroute === "certified") {
+      certs.value.enroute = props.controller.certifications.enroute;
+    }
+  }
+
   buttonState.value = ButtonStates.Saving;
   try {
     const result = await ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
-      certifications: certs,
+      certifications: certs.value,
     });
     if (result.status === 200) {
       buttonState.value = ButtonStates.Saved;
@@ -232,7 +275,7 @@ const save = async (): Promise<void> => {
       }, 4000);
       store.updateController(props.controller.cid, {
         ...props.controller,
-        certifications: certs,
+        certifications: certs.value,
       });
     } else {
       buttonState.value = ButtonStates.Error;
