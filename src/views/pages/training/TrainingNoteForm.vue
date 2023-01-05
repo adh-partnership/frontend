@@ -14,10 +14,11 @@
           </div>
         </div>
         <div v-if="saveButtonState === ButtonStates.Error" class="flex pb-4">
-          <Alert type="error">
+          <Alert v-if="errorMsg === ''" type="error">
             <b>Uh-oh!</b> We were unable to save this form. Please try again later. If this continues, please alert the
             Webmaster.
           </Alert>
+          <Alert v-else type="error"><b>Error</b> {{ errorMsg }}</Alert>
         </div>
         <div class="flex items-center">
           <div class="w-1/5">
@@ -62,8 +63,8 @@
               v-model="form.duration"
               type="string"
               class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-              placeholder="Duration (hh+mm)"
-              :class="{ 'border-red-500': !durationValid }"
+              placeholder="Duration (hh:mm)"
+              :class="{ 'border-red-500 bg-red-300 dark:bg-darkred': !durationValid }"
             />
           </div>
         </div>
@@ -170,6 +171,7 @@ const tStore = storeToRefs(trainingStore);
 const { form } = tStore;
 const cid = parseInt(route.params.cid as string, 10);
 const controller = ref(rosterStore.getController(cid));
+const errorMsg = ref("");
 
 enum ButtonStates {
   Idle = 0,
@@ -203,6 +205,13 @@ const reset = (): void => {
 
 const submit = async (): Promise<void> => {
   if (!durationValid.value) {
+    errorMsg.value = "Invalid duration format (hh:mm expected).";
+    saveButtonState.value = ButtonStates.Error;
+    document.getElementById("duration")?.focus();
+    setTimeout(() => {
+      errorMsg.value = "";
+      saveButtonState.value = ButtonStates.Idle;
+    }, 3000);
     return;
   }
 
@@ -232,4 +241,8 @@ const submit = async (): Promise<void> => {
 };
 </script>
 
-<style scoped></style>
+<style scoped type="postcss">
+.dark .dark\:bg-darkred {
+  background: rgba(255, 0, 0, 0.05);
+}
+</style>
