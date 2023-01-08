@@ -163,7 +163,7 @@ const handle = async (action: "accept" | "deny", id: number): Promise<void> => {
   try {
     applying.value = true;
     const result = await ZDVAPI.put(`/v1/user/visitor/${id}`, { action });
-    if (result.status === 200) {
+    if (result.status === 204) {
       applications.value = applications.value?.filter((a) => a.id !== id) as VisitorApplication[] | null;
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
