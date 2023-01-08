@@ -79,8 +79,10 @@ const getHours = (controller: ControllerStats | undefined): string => {
 onMounted(() => {
   const today = new Date();
   for (let i = 0; i < 3; i += 1) {
-    const month = today.getMonth() - i;
-    const year = today.getFullYear();
+    const nd = new Date();
+    nd.setMonth(today.getMonth() - i);
+    const month = nd.getMonth();
+    const year = nd.getFullYear();
     months.value.push(`${monthNames[month]} ${year}`);
     endpointMonths.push(`${year}/${month}`);
   }
