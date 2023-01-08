@@ -16,9 +16,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="c in curMonth" :key="c.cid">
+        <tr
+          v-for="c in curMonth"
+          :key="c.cid"
+          class="hover:dark:bg-zinc-800 hover:bg-zinc-300 hover:cursor-pointer"
+          @click="goToUser(c.cid)"
+        >
           <td class="py-2 border-b-1 dark:border-gray-900">
-            {{ c.first_name }} {{ c.last_name }} ({{ c.operating_initials }})
+            {{ c.first_name }} {{ c.last_name }} ({{ c.operating_initials || "none" }})
           </td>
           <td class="text-center py-2 border-b-1 dark:border-gray-900">{{ c.cid }}</td>
           <td class="text-center py-2 border-b-1 dark:border-gray-900">{{ c.rating }}</td>
@@ -50,6 +55,7 @@ const endpointMonths: string[] = [];
 const router = useRouter();
 
 const monthNames = [
+  "",
   "January",
   "February",
   "March",
@@ -76,12 +82,16 @@ const getHours = (controller: ControllerStats | undefined): string => {
   return `${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m`;
 };
 
+const goToUser = (cid: string | number): void => {
+  router.push({ name: "RosterController", params: { cid: String(cid) } });
+};
+
 onMounted(() => {
   const today = new Date();
   for (let i = 0; i < 3; i += 1) {
     const nd = new Date();
     nd.setMonth(today.getMonth() - i);
-    const month = nd.getMonth();
+    const month = nd.getMonth() + 1;
     const year = nd.getFullYear();
     months.value.push(`${monthNames[month]} ${year}`);
     endpointMonths.push(`${year}/${month}`);
