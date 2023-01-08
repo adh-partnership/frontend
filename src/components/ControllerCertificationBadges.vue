@@ -18,7 +18,7 @@ import type { Controller } from "@/types";
 
 interface Props {
   controller: Controller;
-  showActive: boolean;
+  showActive?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
