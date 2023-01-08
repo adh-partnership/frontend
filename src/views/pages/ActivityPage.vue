@@ -50,6 +50,7 @@ const endpointMonths: string[] = [];
 const router = useRouter();
 
 const monthNames = [
+  "",
   "January",
   "February",
   "March",
@@ -81,7 +82,7 @@ onMounted(() => {
   for (let i = 0; i < 3; i += 1) {
     const nd = new Date();
     nd.setMonth(today.getMonth() - i);
-    const month = nd.getMonth();
+    const month = nd.getMonth() + 1;
     const year = nd.getFullYear();
     months.value.push(`${monthNames[month]} ${year}`);
     endpointMonths.push(`${year}/${month}`);
