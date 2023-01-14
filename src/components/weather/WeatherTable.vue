@@ -1,6 +1,6 @@
 <template>
   <h2 v-if="props.title" class="text-xl">Weather</h2>
-  <div :class="classObject">
+  <div :class="`${!props.table ? gridClasses : ''}`">
     <WeatherRow
       v-for="station in Object.keys(weather).sort((a, b) => {
         if (!sort) return 0;
@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, Ref, ref } from "vue";
+import { onBeforeUnmount, onMounted, Ref, ref } from "vue";
 import Weather from "@/utils/weather";
 import WeatherRow from "./WeatherRow.vue";
 
@@ -86,15 +86,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const cols = ref(1);
 const lastUpdated = ref(new Date());
-
-const classObject = computed(() => {
-  const gridClasses = `grid grid-cols-1 ${props.gridBreakpoint}:grid-cols-${props.gridSize} gap-x-4 gap-y-2`;
-
-  const classes: { [key: string]: boolean } = {};
-  classes[gridClasses] = !props.table;
-
-  return classes;
-});
+const gridClasses = `grid grid-cols-1 ${props.gridBreakpoint}:grid-cols-${props.gridSize} gap-x-4 gap-y-2`;
 
 const calculateCols = (): void => {
   cols.value = 1;
