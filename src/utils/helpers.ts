@@ -1,6 +1,36 @@
 /* eslint-disable import/prefer-default-export */
 import type { Controller } from "@/types";
 
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+export const convertTime = (since: string): string => {
+  const now = new Date();
+  const then = new Date(since);
+  const dur = now.getTime() - then.getTime();
+
+  const hours = Math.floor(dur / (1000 * 60 * 60));
+  const minutes = Math.floor((dur % (1000 * 60 * 60)) / (1000 * 60));
+
+  if (minutes < 10) {
+    return `${hours}+0${minutes}`;
+  }
+
+  return `${hours}+${minutes}`;
+};
+
 export const getControllerTitle = (controller: Controller): string => {
   if (controller.roles.includes("atm")) {
     return "Air Traffic Manager";

@@ -6,8 +6,13 @@ const fac: Facility = {
   name: "Honolulu Control Facility",
   navbarName: "Honolulu CF",
   logo: "https://cdn.vhcf.net/assets/logo/hibiscus/logo_solid.png",
-  homeIntroText:
-    "The Honolulu Control Facility covers the airspace of the State of Hawaii. We are a group of controllers on the VATSIM Network who are dedicated to providing a safe and efficient flow of traffic in the Hawaiian skies.",
+  customRoutes: [
+    {
+      path: "/",
+      name: "Home",
+      component: () => import("@/facilities/hcf/views/pages/Homepage.vue"),
+    },
+  ],
   minVisitorRating: "S1",
   domain: "vhcf.net",
   apiUrl: "https://api.vhcf.net",

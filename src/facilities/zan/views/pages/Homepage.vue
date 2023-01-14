@@ -1,13 +1,19 @@
 <template>
-  <h1 class="text-2xl">Welcome to the {{ fac.name }}</h1>
-  <p v-html="fac.homeIntroText"></p>
+  <h1 class="text-2xl">Welcome to the Anchorage ARTCC</h1>
+  <p>
+    Alaska, the Last Frontier! We cover 2,500,000 square miles of airspace over the state of Alaska, including the
+    Aleutians and the oceanic airspace north of the state to the North Pole (for reference, Houston ARTCC covers 280,000
+    square miles of airspace and Boston ARTCC covers 165,000 square miles of airspace). We are a division of VATSIM, the
+    Virtual Air Traffic Simulation Network's VATUSA Division. We are a group of volunteers who enjoy the challenge of
+    controlling air traffic in a realistic environment. We are always looking for new members to join our team.
+  </p>
   <div class="grid grid-cols-4 gap-4">
     <div class="card col-span-4 lg:col-span-3 h-min">
       <div v-if="event === null">
         <h2 class="text-xl">No event is currently scheduled</h2>
         <p>Check back later for more information.</p>
       </div>
-      <div v-else @click="goTo(`/events/${event?.id || 0}`)">
+      <div v-else class="cursor-pointer" @click="goTo(`/events/${event?.id || 0}`)">
         <h2 class="text-xl mb-0 text-alaska-gold">{{ event.title }}</h2>
         <p>
           {{
@@ -28,9 +34,10 @@
       <div class="card">
         <OnlineControllers />
       </div>
-      <div class="card mt-4">
-        <OnlineFlights />
-      </div>
+      <div class="card mt-4"><OnlineFlights /></div>
+    </div>
+    <div class="card col-span-4 h-min flex flex-col">
+      <WeatherTable :stations="['PAFA', 'PANC', 'PABE', 'PADQ', 'PAEN']" rules show-updated sort title grid-size="5" />
     </div>
     <div class="card col-span-4 h-min">
       <TopControllers />
@@ -41,11 +48,12 @@
 <script setup lang="ts">
 import { onMounted, ref, Ref } from "vue";
 import { Event } from "@/types";
-import fac from "@/facility";
 import OnlineControllers from "@/components/home/OnlineControllers.vue";
 import OnlineFlights from "@/components/home/OnlineFlights.vue";
 import TopControllers from "@/components/home/TopControllers.vue";
 import { useRouter } from "vue-router";
+import WeatherTable from "@/components/weather/WeatherTable.vue";
+// eslint-disable-next-line import/no-cycle
 import { ZDVAPI } from "@/utils/api";
 
 const event: Ref<Event | null> = ref(null);

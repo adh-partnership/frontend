@@ -15,6 +15,9 @@ module.exports = {
     {
       pattern: /hawaii/,
     },
+    {
+      pattern: /grid-cols/,
+    },
   ],
   theme: {
     extend: {

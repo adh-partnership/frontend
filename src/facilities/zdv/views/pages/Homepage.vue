@@ -1,13 +1,16 @@
 <template>
-  <h1 class="text-2xl">Welcome to the {{ fac.name }}</h1>
-  <p v-html="fac.homeIntroText"></p>
+  <h1 class="text-2xl">Welcome to the Denver ARTCC</h1>
+  <p>
+    Welcome to Denver ARTCC! Denver ARTCC covers approximately 285,000 square miles of airspace over all or part of the
+    states of Colorado, Arizona, New Mexico, Utah, Kansas, Nebraska, South Dakota, Wyoming, and Montana.
+  </p>
   <div class="grid grid-cols-4 gap-4">
     <div class="card col-span-4 lg:col-span-3 h-min">
       <div v-if="event === null">
         <h2 class="text-xl">No event is currently scheduled</h2>
         <p>Check back later for more information.</p>
       </div>
-      <div v-else @click="goTo(`/events/${event?.id || 0}`)">
+      <div v-else class="cursor-pointer" @click="goTo(`/events/${event?.id || 0}`)">
         <h2 class="text-xl mb-0 text-alaska-gold">{{ event.title }}</h2>
         <p>
           {{
@@ -32,6 +35,9 @@
         <OnlineFlights />
       </div>
     </div>
+    <div class="card col-span-4 h-min flex flex-col">
+      <WeatherTable :stations="['KASE', 'KPUB', 'KCOS', 'KDEN', 'KAPA']" rules show-updated sort title grid-size="5" />
+    </div>
     <div class="card col-span-4 h-min">
       <TopControllers />
     </div>
@@ -41,11 +47,12 @@
 <script setup lang="ts">
 import { onMounted, ref, Ref } from "vue";
 import { Event } from "@/types";
-import fac from "@/facility";
 import OnlineControllers from "@/components/home/OnlineControllers.vue";
 import OnlineFlights from "@/components/home/OnlineFlights.vue";
 import TopControllers from "@/components/home/TopControllers.vue";
 import { useRouter } from "vue-router";
+import WeatherTable from "@/components/weather/WeatherTable.vue";
+// eslint-disable-next-line import/no-cycle
 import { ZDVAPI } from "@/utils/api";
 
 const event: Ref<Event | null> = ref(null);

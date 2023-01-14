@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, NavigationGuard } from "vue-router";
+import { createRouter, createWebHistory, NavigationGuard, Router, RouteRecordRaw } from "vue-router";
 import fac from "@/facility";
 import Home from "@/views/pages/HomePage.vue";
 import { nextTick } from "vue";
@@ -143,10 +143,28 @@ const routes = [
   },
 ];
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
+const buildRouter = (): Router => {
+  let r;
+  if (fac.customRoutes !== undefined) {
+    // We need to filter out the routes by name if they are being overriden
+    r = routes.filter((route) => {
+      return !(fac.customRoutes as RouteRecordRaw[]).some((customRoute) => {
+        return customRoute.name === route.name;
+      });
+    });
+    // Merge the two arrays
+    r = [...r, ...fac.customRoutes];
+  } else {
+    r = routes;
+  }
+
+  return createRouter({
+    history: createWebHistory(),
+    routes: r,
+  });
+};
+
+const router = buildRouter();
 
 const check: NavigationGuard = (to, from, next): void => {
   const userStore = useUserStore();
