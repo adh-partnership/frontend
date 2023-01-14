@@ -33,7 +33,7 @@
       </div>
       <div class="card mt-4"><OnlineFlights /></div>
     </div>
-    <div class="card col-span-4 h-min flex flex-col">
+    <div class="card col-span-4 h-min">
       <WeatherTable :stations="['PHNL', 'PHOG', 'PHMK', 'PHTO', 'PHLI']" rules show-updated sort title grid-size="5" />
     </div>
     <div class="card col-span-4 h-min">
