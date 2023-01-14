@@ -18,6 +18,10 @@
     <span class="capitalize"> {{ controller.discord_id !== "NULL" ? controller.discord_id : " Not Connected" }} </span>
   </p>
 
+  <p v-if="controller.controller_type !== 'none'" class="mb-0">
+    <strong>Joined:</strong> {{ new Date(controller.roster_join_date).toLocaleString() }}
+  </p>
+
   <h2 class="text-3xl mt-4">Certifications</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 mx-5">
     <div class="flex items-center">
