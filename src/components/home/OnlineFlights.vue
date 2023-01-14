@@ -6,9 +6,10 @@
     </div>
     <div v-else>
       <div class="flex border-b-1">
-        <div class="w-1/2">Callsign</div>
-        <div class="w-1/4 text-center">Dep.</div>
-        <div class="w-1/4 text-center">Arr.</div>
+        <div :class="{ 'w-2/5': props.showType, 'w-3/5': !props.showType }">Callsign</div>
+        <div v-if="props.showType" class="w-1/5 text-center invisible sm:visible">Type</div>
+        <div class="w-1/5 text-center">Dep.</div>
+        <div class="w-1/5 text-center">Arr.</div>
       </div>
       <!-- Sort by callsign -->
       <div
@@ -16,11 +17,14 @@
         :key="flight.cid"
         class="flex items-center"
       >
-        <div class="w-1/2">{{ flight.callsign }}</div>
-        <div class="w-1/4 text-center">
+        <div :class="{ 'w-2/5': props.showType, 'w-3/5': !props.showType }">{{ flight.callsign }}</div>
+        <div v-if="props.showType" class="w-1/5 text-center invisible sm:visible">
+          {{ flight.type !== "" ? flight.type : "??" }}
+        </div>
+        <div class="w-1/5 text-center">
           {{ flight.dep !== "" ? flight.dep : "??" }}
         </div>
-        <div class="w-1/4 text-center">
+        <div class="w-1/5 text-center">
           {{ flight.arr !== "" ? flight.arr : "??" }}
         </div>
       </div>
@@ -34,6 +38,10 @@ import { onBeforeUnmount, onMounted, ref, Ref } from "vue";
 import fac from "@/facility";
 import { Overflight } from "@/types";
 import { ZDVAPI } from "@/utils/api";
+
+const props = defineProps<{
+  showType?: boolean;
+}>();
 
 const overflights: Ref<Overflight[]> = ref([]);
 let refreshTimer: ReturnType<typeof setTimeout> | null = null;

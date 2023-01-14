@@ -10,7 +10,7 @@
         <h2 class="text-xl">No event is currently scheduled</h2>
         <p>Check back later for more information.</p>
       </div>
-      <div v-else @click="goTo(`/events/${event?.id || 0}`)">
+      <div v-else class="cursor-pointer" @click="goTo(`/events/${event?.id || 0}`)">
         <h2 class="text-xl mb-0 text-alaska-gold">{{ event.title }}</h2>
         <p>
           {{

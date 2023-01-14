@@ -21,7 +21,8 @@
       :precipitation="props.precipitation"
       :rules="props.rules"
       :class="{
-        'pr-4 border-r border-neutral-300 dark:border-neutral-700 last:border-r-0 last:pr-0': !props.table,
+        'md:pr-4 md:border-r md:border-neutral-300 md:dark:border-neutral-700 md:last:border-r-0 md:last:pr-0':
+          !props.table,
         'border-b border-neutral-300 dark:border-neutral-700 py-2': props.table,
       }"
     />
@@ -62,6 +63,7 @@ interface Props {
   title?: boolean;
   table?: boolean;
   gridSize?: string;
+  gridBreakpoint?: string;
 }
 
 const weather: Ref<{ [key: string]: WeatherType }> = ref({});
@@ -80,12 +82,13 @@ const props = withDefaults(defineProps<Props>(), {
   title: false,
   table: false,
   gridSize: "5",
+  gridBreakpoint: "md",
 });
 const cols = ref(1);
 const lastUpdated = ref(new Date());
 
 const classObject = computed(() => {
-  const gridClasses = `grid grid-cols-${props.gridSize} gap-x-4 gap-y-2`;
+  const gridClasses = `grid grid-cols-1 ${props.gridBreakpoint}:grid-cols-${props.gridSize} gap-x-4 gap-y-2`;
 
   const classes: { [key: string]: boolean } = {};
   classes[gridClasses] = !props.table;
