@@ -219,7 +219,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="feedback in feedbacks.filter((f) => f.status === 'pending')" :key="feedback.id">
+                    <tr
+                      v-for="feedback in feedbacks.filter((f) => f.status === 'pending')"
+                      :key="feedback.id"
+                      class="cursor-pointer"
+                      @click="goTo(feedback.id)"
+                    >
                       <td>
                         {{ feedback.controller.first_name }} {{ feedback.controller.last_name }} <br />
                         <span>{{ feedback.controller.cid }}</span>
@@ -265,8 +270,8 @@ import { AxiosResponse } from "axios";
 import type { Feedback } from "@/types";
 import { hasRole } from "@/utils/auth";
 import Spinner from "@/components/Spinner.vue";
-import { useRouter } from "vue-router";
 import useRosterStore from "@/stores/roster";
+import { useRouter } from "vue-router";
 import useUserStore from "@/stores/users";
 
 enum ButtonStates {
@@ -346,32 +351,6 @@ const submit = async (): Promise<void> => {
   }
 };
 
-const handle = async (action: "approved" | "rejected", id: number): Promise<void> => {
-  try {
-    submitting.value = true;
-    const result = await ZDVAPI.patch(`/v1/feedback/${id}`, { status: action });
-    if (result.status === 204) {
-      feedbacks.value = feedbacks.value?.filter((a) => a.id !== id) as Feedback[] | null;
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    switch (e.response.status) {
-      case 403:
-        error.value = "The feedback you are trying to action returned forbidden.";
-        break;
-      case 404:
-        error.value = "The feedback you are trying to action does not exist.";
-        break;
-      case 500:
-      default:
-        error.value = "There was an error processing your feedback.";
-        break;
-    }
-  } finally {
-    submitting.value = false;
-  }
-};
-
 const goTo = (id: number): void => {
   router.push(`/feedback/${id}`);
 };
@@ -409,6 +388,15 @@ onMounted(async (): Promise<void> => {
       }
     } catch (e) {
       feedbacks.value = [];
+    }
+  }
+
+  // Allow navigation direct to tab
+  const { hash } = window.location;
+  if (hash && hash.startsWith("#tab")) {
+    const tab = parseInt(hash.replace("#tab", ""), 10);
+    if (tab) {
+      openTab.value = tab;
     }
   }
 });
