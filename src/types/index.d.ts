@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { RouteLocationRaw } from "vue-router";
+import { RouteLocationRaw, RouteRecordRaw } from "vue-router";
 
 declare interface MenuItem {
   title: string;
@@ -83,11 +83,11 @@ export type Facility = {
   apiUrl: string;
   devApiUrl: string;
   navbarClasses?: string;
-  homeIntroText?: string;
   minVisitorRating: string;
   center: [number, number];
   domain: string;
   defaultZoom: number;
+  customRoutes?: RouteRecordRaw[];
   boundaries: { [key: string]: [number, number][] };
   airports: FacilityAirport[];
   roles: {

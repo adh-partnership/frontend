@@ -9,8 +9,13 @@ const fac: Facility = {
   domain: "denartcc.org",
   apiUrl: "https://api.denartcc.org",
   devApiUrl: "https://api.dev.denartcc.org",
-  homeIntroText:
-    "Welcome to Denver ARTCC! Denver ARTCC covers approximately 285,000 square miles of airspace over the all or part of the states of Colorado, Arizona, New Mexico, Utah, Kansas, Nebraska, South Dakota, Wyoming, and Montana. We are a division of VATSIM, the Virtual Air Traffic Simulation Network's VATUSA Division. We are a group of volunteers who enjoy the challenge of controlling air traffic in a realistic environment. We are always looking for new members to join our team.",
+  customRoutes: [
+    {
+      path: "/",
+      name: "Home",
+      component: () => import("@/facilities/zdv/views/pages/Homepage.vue"),
+    },
+  ],
   roles: [
     {
       name: "ATM",
