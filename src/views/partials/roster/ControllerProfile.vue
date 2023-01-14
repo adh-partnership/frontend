@@ -168,6 +168,27 @@
         <option value="certified">Certified</option>
       </select>
     </div>
+    <div v-if="fac.hasOceanicCert" class="flex items-center">
+      <label
+        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
+        for="oceanic-cert"
+      >
+        Oceanic
+      </label>
+      <span v-if="!canWorkController()" class="capitalize">{{ certs.oceanic }}</span>
+      <select
+        v-else
+        id="oceanic-cert"
+        v-model="certs.oceanic"
+        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+        @change="checkMtr('oceanic')"
+      >
+        <option value="none">None</option>
+        <option value="training">Training</option>
+        <option value="solo">Solo</option>
+        <option value="certified">Certified</option>
+      </select>
+    </div>
     <div class="flex items-center">
       <div v-if="canModifycerts()" class="w-full text-center">
         <button
@@ -199,6 +220,7 @@ import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onUnmounted, ref } from "vue";
 
 import type { Controller } from "@/types";
+import fac from "@/facility";
 import useRosterStore from "@/stores/roster";
 import { ZDVAPI } from "@/utils/api";
 
@@ -231,7 +253,7 @@ const certs = ref({ ...props.controller.certifications }); // Dereference
 const store = useRosterStore();
 
 const checkMtr = (
-  field: "ground" | "major_ground" | "local" | "major_local" | "approach" | "major_approach" | "enroute"
+  field: "ground" | "major_ground" | "local" | "major_local" | "approach" | "major_approach" | "enroute" | "oceanic"
 ): void => {
   if (hasRole(["mtr"]) && !field.startsWith("major_")) {
     if (certs.value[field] !== props.controller.certifications[field] && certs.value[field] === "certified") {
@@ -260,6 +282,14 @@ const save = async (): Promise<void> => {
     // Now enroute
     if (certs.value.enroute !== props.controller.certifications.enroute && certs.value.enroute === "certified") {
       certs.value.enroute = props.controller.certifications.enroute;
+    }
+    // Now oceanic
+    if (
+      fac.hasOceanicCert &&
+      certs.value.oceanic !== props.controller.certifications.oceanic &&
+      certs.value.oceanic === "certified"
+    ) {
+      certs.value.oceanic = props.controller.certifications.oceanic;
     }
   }
 
