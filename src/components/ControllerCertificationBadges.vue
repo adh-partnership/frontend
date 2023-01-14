@@ -10,11 +10,16 @@
     <div class="controller-badge" :class="genClass(props.controller.certifications.approach)">APP</div>
     <div class="controller-badge" :class="genClass(props.controller.certifications.major_approach)">MAJ APP</div>
     <div class="controller-badge" :class="genClass(props.controller.certifications.enroute)">ENR</div>
+    <div v-if="fac.hasOceanicCert" class="controller-badge" :class="genClass(props.controller.certifications.oceanic)">
+      OCA
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Controller } from "@/types";
+import fac from "@/facility";
+import { ref } from "vue";
 
 interface Props {
   controller: Controller;
@@ -24,38 +29,38 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   showActive: false,
 });
+const width = ref(7);
+
+if (props.showActive) {
+  width.value += 1;
+}
+if (fac.hasOceanicCert) {
+  width.value += 1;
+}
 
 function genClass(cert: string): string {
-  let c = `w-1/7`;
-  if (props.showActive) {
-    c = `w-1/8`;
-  }
   switch (cert) {
     case "cantrain":
     case "certified":
     case "solo":
     case "training":
     case "none":
-      return `${c} color-${cert} dark:color-${cert}`;
+      return `w-1/${width.value} color-${cert} dark:color-${cert}`;
     default:
-      return `${c} color-none dark:color-none`;
+      return `w-1/${width.value} color-none dark:color-none`;
   }
 }
 
 function genActiveClass(status: string): string {
-  let c = `w-1/7`;
-  if (props.showActive) {
-    c = `w-1/8`;
-  }
   switch (status) {
     case "active":
-      return `${c} color-certified dark:color-certified capitalize`;
+      return `w-1/${width.value} color-certified dark:color-certified capitalize`;
     case "inactive":
-      return `${c} color-training dark:color-training capitalize`;
+      return `w-1/${width.value} color-training dark:color-training capitalize`;
     case "loa":
-      return `${c} color-cantrain dark:color-cantrain uppercase`;
+      return `w-1/${width.value} color-cantrain dark:color-cantrain uppercase`;
     default:
-      return `${c} color-none dark:color-none capitalize`;
+      return `w-1/${width.value} color-none dark:color-none capitalize`;
   }
 }
 </script>

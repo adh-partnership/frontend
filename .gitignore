@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Ignore this... used locally just during dev
+# CI will create this on its own
+src/facility.ts

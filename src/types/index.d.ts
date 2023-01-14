@@ -96,6 +96,7 @@ export type Facility = {
     canGrant: string[];
   }[];
   links: Link[];
+  hasOceanicCert?: boolean;
 };
 
 export type ParsedMetar = {
@@ -169,6 +170,7 @@ export type Controller = {
     approach: string;
     major_approach: string;
     enroute: string;
+    oceanic: string;
   };
   rating: string;
   status: string;
@@ -259,5 +261,3 @@ export type Event = {
   positions: EventPosition[] | null;
   signups: EventSignup[] | null;
 };
-
-export type { Link } from "@/links";
