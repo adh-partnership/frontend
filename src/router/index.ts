@@ -158,8 +158,6 @@ const buildRouter = (): Router => {
     r = routes;
   }
 
-  console.log("Routes: ", r);
-
   return createRouter({
     history: createWebHistory(),
     routes: r,
