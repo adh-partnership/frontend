@@ -179,6 +179,7 @@ export type Controller = {
   division: string;
   subdivision: string;
   discord_id: string;
+  roster_join_date: string;
   created_at: string;
   updated_at: string;
 };
