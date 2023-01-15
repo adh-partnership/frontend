@@ -141,18 +141,26 @@
                   ></textarea>
                 </div>
               </div>
-              <div v-if="!submitting && !error">
+              <div v-if="submitButtonState === ButtonStates.Idle">
                 <button class="btn bg-colorado-blue hover:bg-blue-900 mt-2 md:mt-0" type="button" @click="submit">
                   <i class="fa fa-paper-plane" /> Submit
                 </button>
               </div>
-              <div v-else-if="submitting && !error">
-                <p>Submitting feedback...</p>
+              <div v-else-if="submitButtonState === ButtonStates.Saving">
+                <button class="btn bg-neutral-500 mt-2 md:mt-0" type="button" disable>
+                  <i class="fa fa-save" /> Submitting...
+                </button>
               </div>
-              <div v-else-if="error">
-                <p>There was an error submitting your feedback.</p>
-                <p>The error we got from the backend was: {{ error }}</p>
-                <p>If you believe this is an error, please contact the facility staff for guidance.</p>
+              <div v-else-if="submitButtonState === ButtonStates.Saved">
+                <button class="btn bg-green-800 mt-2 md:mt-0" type="button" disable>
+                  <i class="fa fa-check" /> Submitted!
+                </button>
+              </div>
+              <div v-else-if="submitButtonState === ButtonStates.Error">
+                <Alert type="error">
+                  <p>There was an error submitting your feedback. Error message: {{ error }}</p>
+                  <p>If you believe this is an error, please contact the facility staff for guidance.</p>
+                </Alert>
               </div>
             </div>
             <div :class="{ hidden: openTab !== 2, block: openTab === 2 }">
@@ -206,13 +214,17 @@
                       <th>Position</th>
                       <th>Pilot</th>
                       <th>Rating</th>
-                      <th>Comment</th>
                       <th>Feedback Date</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="feedback in feedbacks.filter((f) => f.status === 'pending')" :key="feedback.id">
+                    <tr
+                      v-for="feedback in feedbacks.filter((f) => f.status === 'pending')"
+                      :key="feedback.id"
+                      class="cursor-pointer"
+                      @click="goTo(feedback.id)"
+                    >
                       <td>
                         {{ feedback.controller.first_name }} {{ feedback.controller.last_name }} <br />
                         <span>{{ feedback.controller.cid }}</span>
@@ -222,25 +234,17 @@
                         {{ feedback.submitter.first_name }} {{ feedback.submitter.last_name }} <br />
                         <span>{{ feedback.submitter.cid }}</span>
                       </td>
-                      <td>{{ feedback.rating.charAt(0).toUpperCase() + feedback.rating.slice(1) }}</td>
-                      <td>{{ feedback.comments }}</td>
+                      <td class="capitalize">{{ feedback.rating }}</td>
                       <td>{{ new Date(feedback.created_at).toLocaleDateString() }}</td>
                       <td v-if="feedback.status === 'approved'">Approved</td>
                       <td v-else-if="submitting" class="text-center">Saving...</td>
                       <td v-else-if="!submitting">
                         <button
-                          class="btn bg-green-800 hover:bg-green-900 text-white mr-2"
+                          class="btn bg-blue-800 hover:bg-blue-900 text-white"
                           type="button"
-                          @click="handle('approved', feedback.id)"
+                          @click="goTo(feedback.id)"
                         >
-                          <i class="fa fa-check" />
-                        </button>
-                        <button
-                          class="btn bg-red-800 hover:bg-red-900 text-white"
-                          type="button"
-                          @click="handle('rejected', feedback.id)"
-                        >
-                          <i class="fa fa-times w-[15px]" />
+                          <i class="fa fa-envelope-open w-[15px]" />
                         </button>
                       </td>
                     </tr>
@@ -267,13 +271,23 @@ import type { Feedback } from "@/types";
 import { hasRole } from "@/utils/auth";
 import Spinner from "@/components/Spinner.vue";
 import useRosterStore from "@/stores/roster";
+import { useRouter } from "vue-router";
 import useUserStore from "@/stores/users";
+
+enum ButtonStates {
+  Idle = 0,
+  Saving = 1,
+  Error = 2,
+  Saved = 3,
+}
 
 const userStore = useUserStore();
 const rosterStore = useRosterStore();
 const skipControllerTypeCheck = false; // This is used for testing only
 const submitting = ref(false);
 const error = ref("");
+const router = useRouter();
+const submitButtonState: Ref<ButtonStates> = ref(ButtonStates.Idle);
 const feedbacks: Ref<Feedback[] | null> = ref(null);
 const userFeedbacks = computed(() => {
   if (feedbacks.value == null) {
@@ -306,15 +320,19 @@ const isAdmin = (): boolean => {
 const submit = async (): Promise<void> => {
   let result: AxiosResponse<never, never>;
   try {
-    submitting.value = true;
+    submitButtonState.value = ButtonStates.Saving;
     result = await ZDVAPI.post(`/v1/feedback`, form.value);
-    submitting.value = false;
     if (result.status === 204) {
+      submitButtonState.value = ButtonStates.Saved;
+      setTimeout(() => {
+        submitButtonState.value = ButtonStates.Idle;
+      }, 6000);
       error.value = "";
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     submitting.value = false;
+    submitButtonState.value = ButtonStates.Error;
     switch (e.response.status) {
       case 400:
         error.value = "Bad Request, check your form values (400)";
@@ -327,35 +345,14 @@ const submit = async (): Promise<void> => {
         error.value = "There was an error processing your application (500)";
         break;
     }
-  } finally {
-    submitting.value = false;
+    setTimeout(() => {
+      submitButtonState.value = ButtonStates.Idle;
+    }, 6000);
   }
 };
 
-const handle = async (action: "approved" | "rejected", id: number): Promise<void> => {
-  try {
-    submitting.value = true;
-    const result = await ZDVAPI.patch(`/v1/feedback/${id}`, { status: action });
-    if (result.status === 204) {
-      feedbacks.value = feedbacks.value?.filter((a) => a.id !== id) as Feedback[] | null;
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    switch (e.response.status) {
-      case 403:
-        error.value = "The feedback you are trying to action returned forbidden.";
-        break;
-      case 404:
-        error.value = "The feedback you are trying to action does not exist.";
-        break;
-      case 500:
-      default:
-        error.value = "There was an error processing your feedback.";
-        break;
-    }
-  } finally {
-    submitting.value = false;
-  }
+const goTo = (id: number): void => {
+  router.push(`/feedback/${id}`);
 };
 
 onMounted(async (): Promise<void> => {
@@ -372,7 +369,7 @@ onMounted(async (): Promise<void> => {
         result = await ZDVAPI.get(`/v1/feedback?status=approved`);
         if (result.status === 200) {
           if (result.data !== null) {
-            feedbacks.value = feedbacks.value.concat(result.data);
+            feedbacks.value = (feedbacks.value as Feedback[]).concat(result.data);
           }
         }
       }
@@ -391,6 +388,15 @@ onMounted(async (): Promise<void> => {
       }
     } catch (e) {
       feedbacks.value = [];
+    }
+  }
+
+  // Allow navigation direct to tab
+  const { hash } = window.location;
+  if (hash && hash.startsWith("#tab")) {
+    const tab = parseInt(hash.replace("#tab", ""), 10);
+    if (tab) {
+      openTab.value = tab;
     }
   }
 });

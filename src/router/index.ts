@@ -117,6 +117,15 @@ const routes = [
     component: () => import("@/views/pages/Feedback.vue"),
   },
   {
+    path: "/feedback/:id",
+    name: "FeedbackView",
+    component: () => import("@/views/pages/FeedbackView.vue"),
+    meta: {
+      requiresAuth: true,
+      requiresRole: ["atm", "datm", "ta", "wm"],
+    },
+  },
+  {
     path: "/visit",
     name: "VisitingApplication",
     component: () => import("@/views/pages/VisitingApplication.vue"),
