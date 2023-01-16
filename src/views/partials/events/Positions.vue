@@ -242,7 +242,7 @@
   </div>
 
   <div v-show="isOpen" class="absolute inset-0 flex items-center justify-center bg-black-deep bg-opacity-70">
-    <div class="relative bg-white rounded-lg shadow dark:bg-black-light w-1/3">
+    <div class="relative bg-white rounded-lg shadow dark:bg-black-light w-5/6 md:w-1/3">
       <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white m-0">Assign Position</h3>
         <button
@@ -383,6 +383,7 @@ const assignPosition = async (cid: number, position: string): Promise<void> => {
         emit("update");
         if (cid !== 0) {
           toggleModal("");
+          isOpen.value = false;
           controllerId.value = null;
         }
       }
