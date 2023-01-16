@@ -169,26 +169,35 @@
                 <p class="mt-4">Loading feedback...</p>
               </div>
               <div v-else>
-                <table class="w-full text-center">
+                <table class="w-full text-center table table-fixed">
                   <thead class="border-b-1">
                     <tr>
-                      <th>Controller</th>
-                      <th>Position</th>
-                      <th>Rating</th>
-                      <th>Comment</th>
-                      <th>Feedback Date</th>
+                      <th class="w-24">Position</th>
+                      <th class="w-24">Rating</th>
+                      <th class="hidden md:block">Comment</th>
+                      <th class="w-24">Feedback Date</th>
+                      <th class="w-24 md:hidden">View</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="feedback in userFeedbacks" :key="feedback.id">
-                      <td>
-                        {{ feedback.controller.first_name }} {{ feedback.controller.last_name }} <br />
-                        <span>{{ feedback.controller.cid }}</span>
-                      </td>
+                    <tr
+                      v-for="feedback in userFeedbacks"
+                      :key="feedback.id"
+                      class="border-b-8 border-white dark:border-black-light"
+                    >
                       <td>{{ feedback.position }}</td>
                       <td>{{ feedback.rating.charAt(0).toUpperCase() + feedback.rating.slice(1) }}</td>
-                      <td>{{ feedback.comments }}</td>
+                      <td class="hidden md:block">{{ feedback.comments }}</td>
                       <td>{{ new Date(feedback.created_at).toLocaleDateString() }}</td>
+                      <td class="md:hidden">
+                        <button
+                          class="btn bg-blue-800 hover:bg-blue-900 text-white"
+                          type="button"
+                          @click="goTo(feedback.id)"
+                        >
+                          <i class="fa fa-envelope-open w-[15px]" />
+                        </button>
+                      </td>
                     </tr>
                     <tr v-if="userFeedbacks.length === 0">
                       <td colspan="7">There is no feedback.</td>

@@ -22,7 +22,7 @@
         }})
       </div>
       <div class="font-bold">Contact Email:</div>
-      <div>{{ feedback.contact_email }}</div>
+      <div class="truncate">{{ feedback.contact_email }}</div>
       <div class="font-bold col-span-4">Comments:</div>
       <div class="col-span-4">
         <textarea
@@ -31,10 +31,12 @@
           rows="7"
           class="block rounded-md p-2.5 w-full text-sm text-gray-900 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-black-light dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Comments..."
+          :disabled="!isAdmin"
+          :readonly="!isAdmin"
         ></textarea>
       </div>
-      <div class="font-bold align-middle">Status:</div>
-      <div class="col-span-3">
+      <div class="font-bold align-middle" :class="{ hidden: !isAdmin }">Status:</div>
+      <div class="col-span-3" :class="{ hidden: !isAdmin }">
         <select
           v-model="form.status"
           class="block rounded-md p-2.5 w-full text-sm text-gray-900 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-black-light dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -44,28 +46,28 @@
           <option value="rejected">Rejected</option>
         </select>
       </div>
-      <div v-if="submitButtonState === ButtonStates.Idle">
+      <div v-if="submitButtonState === ButtonStates.Idle" :class="{ hidden: !isAdmin }">
         <button class="btn bg-colorado-blue hover:bg-blue-900 mt-2 md:mt-0" type="button" @click="handle()">
           <i class="fa fa-paper-plane" /> Submit
         </button>
       </div>
-      <div v-else-if="submitButtonState === ButtonStates.Saving">
+      <div v-else-if="submitButtonState === ButtonStates.Saving" :class="{ hidden: !isAdmin }">
         <button class="btn bg-neutral-500 mt-2 md:mt-0" type="button" disable>
           <i class="fa fa-save" /> Submitting...
         </button>
       </div>
-      <div v-else-if="submitButtonState === ButtonStates.Saved">
+      <div v-else-if="submitButtonState === ButtonStates.Saved" :class="{ hidden: !isAdmin }">
         <button class="btn bg-green-800 mt-2 md:mt-0" type="button" disable>
           <i class="fa fa-check" /> Submitted!
         </button>
       </div>
-      <div v-else-if="submitButtonState === ButtonStates.Error">
+      <div v-else-if="submitButtonState === ButtonStates.Error" :class="{ hidden: !isAdmin }">
         <Alert type="error">
           <p>There was an error submitting your feedback. Error message: {{ error }}</p>
           <p>If you believe this is an error, please contact the facility staff for guidance.</p>
         </Alert>
       </div>
-      <div class="col-span-3 text-right">
+      <div class="col-span-3 text-right" :class="{ hidden: !isAdmin }">
         <button class="btn bg-red-800 hover:bg-red-900 text-white mt-2 md:mt-0" type="button" @click="goBack()">
           <i class="fa fa-arrow-left" /> Back
         </button>
