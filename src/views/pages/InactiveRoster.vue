@@ -13,7 +13,7 @@
           <input
             v-model="search"
             type="text"
-            class="w-1/5 bg-white dark:bg-black-deep border border-gray-500 dark:border-gray-100 text-gray-700 dark:text-white py-2 my-2 px-4 pr-8 rounded leading-tight"
+            class="w-3/5 lg:w-1/5 bg-white dark:bg-black-deep border border-gray-500 dark:border-gray-100 text-gray-700 dark:text-white py-2 my-2 px-4 pr-8 rounded leading-tight"
           />
         </div>
         <RosterTable :roster="filteredControllers"></RosterTable>

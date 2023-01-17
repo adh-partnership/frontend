@@ -45,9 +45,9 @@ function genClass(cert: string): string {
     case "solo":
     case "training":
     case "none":
-      return `w-1/${width.value} color-${cert} dark:color-${cert}`;
+      return `w-1/${width.value} color-${cert} dark:color-${cert} truncate`;
     default:
-      return `w-1/${width.value} color-none dark:color-none`;
+      return `w-1/${width.value} color-none dark:color-none truncate`;
   }
 }
 

@@ -1,5 +1,8 @@
 <template>
-  <button :class="`wx-badge wx-badge-${props.flightCategory} ${props.slim ? 'wx-badge-slim' : ''}`" disabled>
+  <button
+    :class="`wx-badge wx-badge-${props.flightCategory.toLowerCase()} ${props.slim ? 'wx-badge-slim' : ''}`"
+    disabled
+  >
     {{ props.flightCategory }}
   </button>
 </template>
