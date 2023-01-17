@@ -3,7 +3,7 @@
   <div v-else class="flex flex-wrap">
     <div class="mb-5 w-full">
       <div v-if="!editing" class="grid grid-cols-1 lg:grid-cols-2 gap-x-5">
-        <div>
+        <div class="space-y-2">
           <h1 class="text-3xl font-bold">{{ event.title }}</h1>
 
           <p class="font-medium text-lg m-0">
