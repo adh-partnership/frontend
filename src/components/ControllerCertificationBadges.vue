@@ -54,13 +54,13 @@ function genClass(cert: string): string {
 function genActiveClass(status: string): string {
   switch (status) {
     case "active":
-      return `w-1/${width.value} color-certified dark:color-certified capitalize`;
+      return `w-1/${width.value} color-certified dark:color-certified capitalize truncate`;
     case "inactive":
-      return `w-1/${width.value} color-training dark:color-training capitalize`;
+      return `w-1/${width.value} color-training dark:color-training capitalize truncate`;
     case "loa":
-      return `w-1/${width.value} color-cantrain dark:color-cantrain uppercase`;
+      return `w-1/${width.value} color-cantrain dark:color-cantrain uppercase truncate`;
     default:
-      return `w-1/${width.value} color-none dark:color-none capitalize`;
+      return `w-1/${width.value} color-none dark:color-none capitalize truncate`;
   }
 }
 </script>
