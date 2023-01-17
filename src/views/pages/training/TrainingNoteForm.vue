@@ -215,6 +215,26 @@ const submit = async (): Promise<void> => {
     return;
   }
 
+  // Check if position has one of the following suffixes: _DEL, _GND, _TWR, _APP, _CTR, _FSS
+  const { position } = form.value;
+  if (
+    !position.endsWith("_DEL") &&
+    !position.endsWith("_GND") &&
+    !position.endsWith("_TWR") &&
+    !position.endsWith("_APP") &&
+    !position.endsWith("_CTR") &&
+    !position.endsWith("_FSS")
+  ) {
+    errorMsg.value = "Invalid position format. Must be a control or operating position.";
+    saveButtonState.value = ButtonStates.Error;
+    document.getElementById("position")?.focus();
+    setTimeout(() => {
+      errorMsg.value = "";
+      saveButtonState.value = ButtonStates.Idle;
+    }, 3000);
+    return;
+  }
+
   saveButtonState.value = ButtonStates.Saving;
   const data = {
     comments: form.value.comments,

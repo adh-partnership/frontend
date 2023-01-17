@@ -337,6 +337,12 @@ const submit = async (): Promise<void> => {
         submitButtonState.value = ButtonStates.Idle;
       }, 6000);
       error.value = "";
+      // Reset form
+      form.value.callsign = "";
+      form.value.comments = "";
+      form.value.controller = "";
+      form.value.position = "";
+      form.value.rating = "excellent";
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
