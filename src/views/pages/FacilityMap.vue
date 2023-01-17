@@ -72,7 +72,7 @@ const updateWeather = (): void => {
 
 const updateTAFs = (): void => {
   Facility.airports.forEach((airport) => {
-    Weather.getTAF(airport.icao).then((taf: string) => {
+    Weather.getTAF(airport.icao).then((taf: string | null): void => {
       tafs.value[airport.icao] = taf;
       updatePopups();
     });
