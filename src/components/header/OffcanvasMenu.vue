@@ -22,6 +22,12 @@
                 :to="link.to"
                 :sublinks="link.sublinks"
               ></OffcanvasMenuItem>
+              <OffcanvasMenuItem
+                v-if="!userStore.isLoggedIn"
+                title="Login"
+                :href="`${apiUrl}/v1/user/login?redirect=${loc}`"
+              />
+              <OffcanvasMenuItem v-else :title="getName()" to="#" :sublinks="profilelinks" />
             </ul>
           </div>
         </div>
@@ -31,8 +37,20 @@
 </template>
 
 <script setup lang="ts">
-import links from "@/links";
+import links, { ProfileLinks as profilelinks } from "@/links";
+import apiUrl from "@/utils/api";
+import useUserStore from "@/stores/users";
+
 import OffcanvasMenuItem from "./OffcanvasMenuItem.vue";
+
+const userStore = useUserStore();
+
+const getName = (): string => {
+  return `${userStore.user?.first_name} ${userStore.user?.last_name}`;
+};
+
+// eslint-disable-next-line no-restricted-globals
+const loc = location.href;
 
 defineEmits(["toggle"]);
 </script>

@@ -1,8 +1,11 @@
 <template>
-  <div>
+  <div class="hidden md:block mb-4">
     <h1 class="text-2xl">Facility Map</h1>
 
     <div id="map" style="width: 100%; min-height: 600px" class="z-20"></div>
+  </div>
+  <div>
+    <FacilityWeather />
   </div>
 </template>
 
@@ -12,6 +15,7 @@ import "leaflet/dist/leaflet.css";
 import { onMounted, onUnmounted, ref, Ref } from "vue";
 import axios from "axios";
 import Facility from "@/facility";
+import FacilityWeather from "@/views/pages/FacilityWeather.vue";
 import leaflet from "leaflet";
 import type { ParsedMetar } from "@/types";
 import Weather from "@/utils/weather";
@@ -20,9 +24,11 @@ let map: leaflet.Map;
 let metarLayer: leaflet.LayerGroup;
 let nexradLayer: leaflet.Layer;
 let updateTimer: ReturnType<typeof setInterval>;
+let weatherUpdateTimer: ReturnType<typeof setInterval>;
 const weather: Ref<{ [key: string]: ParsedMetar | null }> = ref({});
 const tafs: Ref<{ [key: string]: string | null }> = ref({});
 const airportMarkers: Ref<{ [key: string]: leaflet.Marker }> = ref({});
+const stations: Ref<string[]> = ref([]);
 
 const updatePopups = (): void => {
   Facility.airports.forEach((airport) => {
@@ -50,7 +56,8 @@ const updatePopups = (): void => {
 const updateWeather = (): void => {
   Facility.airports.forEach((airport) => {
     Weather.getMetars(airport.icao).then((metar) => {
-      weather.value[airport.icao] = Weather.parseMetar(metar);
+      const w = Weather.parseMetar(metar);
+      weather.value[airport.icao] = w;
       airportMarkers.value[airport.icao].setIcon(
         leaflet.icon({
           iconUrl: `/assets/images/map/${weather.value[airport.icao]?.flight_category?.toLowerCase() || "unknown"}.png`,
@@ -90,6 +97,10 @@ const updateNexrad = async (): Promise<void> => {
     .addTo(map);
 };
 
+Facility.airports.forEach((airport) => {
+  stations.value.push(airport.icao);
+});
+
 onMounted(() => {
   map = leaflet.map("map").setView(Facility.center, Facility.defaultZoom);
   leaflet
@@ -124,18 +135,22 @@ onMounted(() => {
   });
 
   updateNexrad();
-  updateWeather();
   updateTAFs();
+  updateWeather();
 
   updateTimer = setInterval(() => {
     updateNexrad();
-    updateWeather();
     updateTAFs();
   }, 5 * 60000); // every 5 minutes
+
+  weatherUpdateTimer = setInterval(() => {
+    updateWeather();
+  }, 2 * 60000); // every 2 minutes
 });
 
 onUnmounted(() => {
   clearInterval(updateTimer);
+  clearInterval(weatherUpdateTimer);
 });
 </script>
 

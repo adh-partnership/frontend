@@ -289,8 +289,13 @@ const getMetars = async (stations: string | string[]): Promise<string> => {
   return metars.data;
 };
 
-const getTAF = async (station: string): Promise<string> => {
-  const taf = await ZDVAPI.get(`/v1/proxy/taf/${station}`);
+const getTAF = async (station: string): Promise<string | null> => {
+  let taf;
+  try {
+    taf = await ZDVAPI.get(`/v1/proxy/taf/${station}`);
+  } catch (e) {
+    return null;
+  }
   return taf.data;
 };
 

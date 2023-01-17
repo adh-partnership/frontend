@@ -46,7 +46,7 @@ const Links: Link[] = [
       },
       {
         to: { name: "Map" },
-        title: "Facility Map",
+        title: "Facility Map & Weather",
       },
     ],
   },
