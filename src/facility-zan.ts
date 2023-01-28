@@ -825,7 +825,7 @@ const fac: Facility = {
       sublinks: [
         {
           title: "Oceanic Information",
-          to: "Oceanic",
+          to: { name: "Oceanic" },
         },
       ],
     },
