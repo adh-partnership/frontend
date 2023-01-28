@@ -1,8 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-const flowbite = require("flowbite/plugin");
 
 module.exports = {
-  content: ["./index.html", "./src/**/*.vue", "./node_modules/flowbite/**/*.js"],
+  content: ["./index.html", "./src/**/*.vue"],
   darkMode: "class",
   jit: true,
   safelist: [
@@ -11,14 +10,30 @@ module.exports = {
     },
     {
       pattern: /colorado/,
+      variants: ["dark", "light", "text", "border", "bg", "fill"],
     },
     {
       pattern: /hawaii/,
     },
     {
       pattern: /grid-cols/,
-      variants: ['sm', 'md', 'lg'],
+      variants: ["sm", "md", "lg"],
     },
+    {
+      pattern: /max-h/,
+    },
+    {
+      pattern: /bg-gray/,
+    },
+    "duration-500",
+    "transition-transform",
+    "transform",
+    "rotate-180",
+    "h-6",
+    "w-6",
+    "border-l-2",
+    "border-colorado-yellow",
+    "list-inside",
   ],
   theme: {
     extend: {
@@ -135,5 +150,5 @@ module.exports = {
       xl: "1200px",
     },
   },
-  plugins: [flowbite],
+  plugins: [],
 };
