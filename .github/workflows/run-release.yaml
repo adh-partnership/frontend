@@ -37,7 +37,7 @@ jobs:
 
           # Increment version in .env
           new_version=$(echo $version | awk -F. -v OFS=. '{$2++;print $1,$2}')
-          echo "${new_version}.0" > .version
+          echo "${new_version}.0-dev" > .version
           git add .version
           git commit -m "Increment dev version to $new_version"
           git push origin main
