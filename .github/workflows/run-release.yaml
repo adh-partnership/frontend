@@ -42,7 +42,7 @@ jobs:
           new_version=$(echo $version | awk -F. -v OFS=. '{$2++;print $1,$2}')
           git checkout -b "bump-version-$new_version"
           # Check if .version already has new_version (strip newline)
-          if [ "$(cat .version | tr -d '\n')" == "${new_version}.0-dev*" ]; then
+          if [ "$(cat .version | tr -d '\n')" == "${new_version}.0-dev" ]; then
             echo "Version already bumped to $new_version"
             exit 0
           fi
