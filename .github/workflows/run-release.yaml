@@ -34,7 +34,7 @@ jobs:
           echo "Version: $version"
 
           # Tag the release
-          git tag -a "$version" -m "Release $version"
+          git tag "$version"
           git push origin "$version"
 
           # Increment version in .env
