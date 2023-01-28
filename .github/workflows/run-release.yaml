@@ -1,0 +1,44 @@
+name: Create Cherrypick PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to tag (blank will auto-generate)'
+        required: false
+
+jobs:
+  cherrypick:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: "main"
+      - name: Tag Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADH_BOT_TOKEN }}
+        run: |
+          git config --global user.name "adh-bot"
+          git config --global user.email "dhawton+adh@gmail.com"
+
+          version=${{ github.event.inputs.version }}
+          if [ -z "$version" ]; then
+            previous_tag=$(git tag --sort=-creatordate | head -n 1)
+            version=$(echo $previous_tag | awk -F. -v OFS=. '{$2++;print $1,$2}')
+          fi
+          # Append build number to version
+          version="$version.${{ github.run_number }}"
+
+          echo "Version: $version"
+
+          # Tag the release
+          git tag -a "$version" -m "Release $version"
+          git push origin "$version"
+
+          # Increment version in .env
+          new_version=$(echo $version | awk -F. -v OFS=. '{$2++;print $1,$2}')
+          echo "${new_version}.0" > .version
+          git add .version
+          git commit -m "Increment dev version to $new_version"
+          git push origin main
+

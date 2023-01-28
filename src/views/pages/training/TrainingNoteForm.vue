@@ -215,12 +215,13 @@ const submit = async (): Promise<void> => {
     return;
   }
 
-  // Check if position has one of the following suffixes: _DEL, _GND, _TWR, _APP, _CTR, _FSS
+  // Check if position has one of the following suffixes: _DEL, _GND, _TWR, _DEP, _APP, _CTR, _FSS
   const { position } = form.value;
   if (
     !position.endsWith("_DEL") &&
     !position.endsWith("_GND") &&
     !position.endsWith("_TWR") &&
+    !position.endsWith("_DEP") &&
     !position.endsWith("_APP") &&
     !position.endsWith("_CTR") &&
     !position.endsWith("_FSS")
