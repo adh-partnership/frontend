@@ -26,12 +26,10 @@ jobs:
           version=${{ github.event.inputs.version }}
           if [ -z "$version" ]; then
             previous_tag=$(git tag --sort=-creatordate | head -n 1)
-            echo "Previous tag: $previous_tag"
             version=$(echo $previous_tag | awk -F. -v OFS=. '{$2++;print $1,$2}')
-            echo "New version: $version"
           fi
-          # Append build number to version
-          version="$version.${{ github.run_number }}"
+          # Append epoch and build number to version
+          version="${version}.$(date +%s).${{ github.run_number }}"
 
           echo "Version: $version"
 
