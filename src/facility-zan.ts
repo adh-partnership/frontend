@@ -17,6 +17,11 @@ const fac: Facility = {
       name: "Home",
       component: () => import("@/facilities/zan/views/pages/Homepage.vue"),
     },
+    {
+      path: "/oceanic",
+      name: "Oceanic",
+      component: () => import("@/facilities/zan/views/pages/Oceanic.vue"),
+    },
   ],
   roles: [
     {
@@ -814,7 +819,17 @@ const fac: Facility = {
       longitude: -162.8993,
     },
   ],
-  links: [],
+  links: [
+    {
+      title: "Pilots",
+      sublinks: [
+        {
+          title: "Oceanic Information",
+          to: "Oceanic",
+        },
+      ],
+    },
+  ],
 };
 
 export default fac;
