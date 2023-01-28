@@ -1,4 +1,4 @@
-name: Create Cherrypick PR
+name: Trigger Release
 
 on:
   workflow_dispatch:
