@@ -86,7 +86,7 @@
               <option value="classroom">Classroom</option>
               <option value="live">Live</option>
               <option value="simulation">Simulation</option>
-              <option value="Live OTS">Live OTS</option>
+              <option value="live-ots">Live OTS</option>
               <option value="simulation-ots">Simulation OTS</option>
               <option value="no-show">No Show</option>
               <option value="other">Other</option>
