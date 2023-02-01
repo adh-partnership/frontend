@@ -90,13 +90,14 @@ onMounted(() => {
   const today = new Date();
   for (let i = 0; i < 3; i += 1) {
     const nd = new Date();
+    nd.setDate(1);
     nd.setMonth(today.getMonth() - i);
     const month = nd.getMonth() + 1;
     const year = nd.getFullYear();
     months.value.push(`${monthNames[month]} ${year}`);
     endpointMonths.push(`${year}/${month}`);
   }
-  ZDVAPI.get("/v1/stats/historical")
+  ZDVAPI.get(`/v1/stats/historical/${endpointMonths[0]}`)
     .then((res) => {
       curMonth.value = res.data.sort((a: ControllerStats, b: ControllerStats) => {
         if (a.last_name < b.last_name) return -1;
