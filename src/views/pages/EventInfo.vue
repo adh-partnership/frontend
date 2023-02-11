@@ -201,6 +201,7 @@
             <th>Choice 1</th>
             <th>Choice 2</th>
             <th>Choice 3</th>
+            <th>Assignment</th>
             <th>Notes</th>
           </tr>
         </thead>
@@ -211,6 +212,7 @@
             <td>{{ signup.choice1 }}</td>
             <td>{{ signup.choice2 }}</td>
             <td>{{ signup.choice3 }}</td>
+            <td>{{ assignment(signup.user.cid) }}</td>
             <td>{{ signup.notes }}</td>
           </tr>
           <tr v-if="event.signups.length === 0">
@@ -288,6 +290,17 @@ const canUnassign = (): boolean => {
 
 const canSignup = (): boolean => {
   return isAuthenticated();
+};
+
+const assignment = (cid: number): string => {
+  if (event.value.positions != null) {
+    const selectedPos = event.value.positions.find((s) => s.cid === cid);
+    if (selectedPos === undefined) {
+      return "";
+    }
+    return selectedPos.position;
+  }
+  return "";
 };
 
 enum ButtonStates {
