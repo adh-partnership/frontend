@@ -36,21 +36,14 @@
           <create-position-modal v-if="canEditEvent()" :id="id" />
           <signup-modal v-if="canSignup() && !hasSignedUp()" :id="id" :positions="event.positions" />
           <button
-            v-if="canSignup() && hasSignedUp()"
+            v-if="canUnassign()"
             class="btn bg-orange-400 text-white font-bold py-2 px-4 ml-2 rounded"
             type="button"
             @click="cancelSignup()"
           >
             <i class="fas fa-user-xmark mr-2"></i>Cancel Signup
           </button>
-          <button
-            v-if="canDeleteEvent()"
-            class="btn bg-red-500 text-white font-bold py-2 px-4 ml-2 rounded"
-            type="button"
-            @click="deleteEvent()"
-          >
-            <i class="fas fa-xmark mr-2"></i>Delete
-          </button>
+          <DeleteEventModal v-if="canDeleteEvent()" :id="id" />
           <button
             v-if="canEditEvent()"
             class="btn bg-violet-500 text-white font-bold py-2 px-4 ml-2 rounded"
@@ -236,6 +229,7 @@ import { useRoute, useRouter } from "vue-router";
 
 import CreatePositionModal from "@/views/partials/events/CreatePositionModal.vue";
 import { DatePicker } from "v-calendar";
+import DeleteEventModal from "@/views/partials/events/DeleteEventModal.vue";
 import Positions from "@/views/partials/events/Positions.vue";
 import SignupModal from "@/views/partials/events/SignupModal.vue";
 
@@ -283,6 +277,15 @@ const hasSignedUp = (): boolean => {
   return false;
 };
 
+const canUnassign = (): boolean => {
+  // Check if its within 24hrs of the event:
+  const now = new Date();
+  const eventDate = new Date(event.value.start_date);
+  const diff = eventDate.getTime() - now.getTime();
+  const diffHours = diff / (1000 * 3600);
+  return diffHours > 24 && hasSignedUp();
+};
+
 const canSignup = (): boolean => {
   return isAuthenticated();
 };
@@ -318,20 +321,6 @@ const cancelSignup = async (): Promise<void> => {
       }
     } catch (e) {
       error.value = e;
-    }
-  }
-};
-
-const deleteEvent = async (): Promise<void> => {
-  if (canEditEvent()) {
-    try {
-      const result = await ZDVAPI.delete(`/v1/events/${id}`);
-      if (result.status === 204) {
-        await eventStore.fetchEvents();
-        await router.push(`/events/`);
-      }
-    } catch (err) {
-      error.value = err;
     }
   }
 };
