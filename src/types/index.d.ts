@@ -241,6 +241,7 @@ export type EventPosition = {
   id: number;
   position: string;
   user: Controller | null;
+  cid: number | null;
 };
 
 export type EventSignup = {
