@@ -17,7 +17,7 @@
     "@heroicons/vue": "^2.0.16",
     "@types/leaflet": "^1.9.0",
     "@vueuse/core": "^9.13.0",
-    "aewx-metar-parser": "^1.0.0",
+    "adh-metar-parser": "^1.0.0",
     "axios": "^1.3.3",
     "core-js": "^3.28.0",
     "flowbite-datepicker": "^1.2.2",
