@@ -257,12 +257,17 @@ const parseMetar = (metarString: string): ParsedMetar => {
   metarObject.visibility.meters = String(privateFunctions.round(metarObject.visibility.meters));
 
   if (metarObject.clouds) {
-    const highestCloud = metarObject.clouds[metarObject.clouds.length - 1];
-    metarObject.ceiling = {
-      code: highestCloud.code,
-      feet_agl: highestCloud.base_feet_agl,
-      meters_agl: highestCloud.base_meters_agl,
-    };
+    metarObject.clouds.every((layer) => {
+      if (layer.code === 'BKN' || layer.code === 'OVC') {
+        metarObject.ceiling = {
+          code: layer.code,
+          feet_agl: layer.base_feet_agl,
+          meters_agl: layer.base_meters_agl,
+        };
+
+        return false;
+      }
+    });
   }
 
   metarObject.flight_category = "";
