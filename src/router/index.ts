@@ -168,6 +168,9 @@ const buildRouter = (): Router => {
   }
 
   return createRouter({
+    scrollBehavior() {
+      return { top: 0 };
+    },
     history: createWebHistory(),
     routes: r,
   });
