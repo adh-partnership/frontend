@@ -258,7 +258,7 @@ const parseMetar = (metarString: string): ParsedMetar => {
 
   if (metarObject.clouds) {
     metarObject.clouds.every((layer) => {
-      if (layer.code === 'BKN' || layer.code === 'OVC') {
+      if (layer.code === "BKN" || layer.code === "OVC") {
         metarObject.ceiling = {
           code: layer.code,
           feet_agl: layer.base_feet_agl,
@@ -267,6 +267,8 @@ const parseMetar = (metarString: string): ParsedMetar => {
 
         return false;
       }
+
+      return true;
     });
   }
 
