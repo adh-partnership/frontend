@@ -15,17 +15,17 @@
       <div
         v-for="flight in overflights.sort((a, b) => (a.callsign > b.callsign ? 1 : -1))"
         :key="flight.cid"
-        class="flex items-center"
+        class="flex items-center dark:hover:bg-neutral-700 hover:bg-neutral-300"
       >
         <div :class="{ 'w-2/5': props.showType, 'w-3/5': !props.showType }">{{ flight.callsign }}</div>
         <div v-if="props.showType" class="w-1/5 text-center invisible sm:visible">
-          {{ flight.type !== "" ? flight.type : "??" }}
+          {{ flight.type !== "" ? flight.type : "-" }}
         </div>
         <div class="w-1/5 text-center">
-          {{ flight.dep !== "" ? flight.dep : "??" }}
+          {{ flight.dep !== "" ? flight.dep : "-" }}
         </div>
         <div class="w-1/5 text-center">
-          {{ flight.arr !== "" ? flight.arr : "??" }}
+          {{ flight.arr !== "" ? flight.arr : "-" }}
         </div>
       </div>
     </div>
