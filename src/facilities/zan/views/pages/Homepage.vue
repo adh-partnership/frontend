@@ -34,10 +34,12 @@
       <div class="card">
         <OnlineControllers />
       </div>
-      <div class="card mt-4"><OnlineFlights /></div>
     </div>
     <div class="card col-span-4 h-min flex flex-col">
       <WeatherTable :stations="['PAFA', 'PANC', 'PABE', 'PADQ', 'PAEN']" rules show-updated sort title grid-size="5" />
+    </div>
+    <div class="card col-span-4 h-min">
+      <OnlineFlights show-type />
     </div>
     <div class="card col-span-4 h-min">
       <TopControllers />
