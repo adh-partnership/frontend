@@ -33,7 +33,12 @@
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "prefer-destructuring": "off",
     "import/extensions": [
       "error",
