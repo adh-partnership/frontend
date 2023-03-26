@@ -4,7 +4,7 @@ import piniaPluginPersistedState from "pinia-plugin-persistedstate";
 
 import Alert from "@/components/Alert.vue";
 import AuthLink from "@/components/AuthLink.vue";
-import { SetupCalendar } from "v-calendar";
+import { setupCalendar } from "v-calendar";
 
 import fac from "@/facility";
 import { MergeLinks } from "@/links";
@@ -22,4 +22,4 @@ const app = createApp(App);
 app.component("Alert", Alert);
 app.component("AuthLink", AuthLink);
 
-app.use(router).use(createPinia().use(piniaPluginPersistedState)).use(SetupCalendar, {}).mount("#app");
+app.use(router).use(createPinia().use(piniaPluginPersistedState)).use(setupCalendar, {}).mount("#app");
