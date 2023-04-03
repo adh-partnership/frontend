@@ -59,6 +59,8 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Install cosign
       uses: sigstore/cosign-installer@main
+      with:
+        cosign-release: 'v1.13.1'
     - name: Create HCF env
       run: |
         SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
