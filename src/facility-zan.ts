@@ -830,7 +830,7 @@ const fac: Facility = {
       ],
     },
     {
-      title: "Controllers",
+      title: "Facility",
       sublinks: [
         {
           title: "Oceanic Information",
