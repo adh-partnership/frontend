@@ -829,6 +829,15 @@ const fac: Facility = {
         },
       ],
     },
+    {
+      title: "Controllers",
+      sublinks: [
+        {
+          title: "Oceanic Information",
+          href: "https://sops.vzanartcc.net",
+        },
+      ],
+    },
   ],
 };
 
