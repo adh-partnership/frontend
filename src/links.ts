@@ -6,6 +6,7 @@ const ProfileLinks: Link[] = [
   {
     title: "Discord Dashboard",
     href: `https://discord.${fac.domain}/`,
+    weight: -1,
   },
   {
     title: "My Training Notes",
@@ -16,6 +17,7 @@ const ProfileLinks: Link[] = [
     title: "Logout",
     href: `${apiUrl}/v1/user/logout?redirect=${window.location.href}`,
     sameWindow: true,
+    weight: 999,
   },
 ];
 

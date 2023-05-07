@@ -175,6 +175,7 @@
 import { API, ZDVAPI } from "@/utils/api";
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onMounted, ref, Ref } from "vue";
+import fac from "@/facility";
 import type { Resource } from "@/types";
 import Spinner from "@/components/Spinner.vue";
 import { useRouter } from "vue-router";
@@ -189,7 +190,8 @@ const editingResource = ref({
   saving: false,
 });
 const loaded = ref(true);
-const categories = ["SOPs", "LOAs", "VRC", "vSTARS", "vERAM", "vATIS", "Misc"];
+
+const categories = fac.resources || ["SOPs", "LOAs", "VRC", "vSTARS", "vERAM", "vATIS", "Misc"];
 const openTab: Ref<string | null> = ref(categories[0]);
 const router = useRouter();
 const resources: Ref<Resource[]> = ref([]);

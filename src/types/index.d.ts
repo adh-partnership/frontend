@@ -63,6 +63,7 @@ export interface Link {
   auth?: boolean;
   roles?: string[];
   sameWindow?: boolean;
+  weight?: number;
 }
 
 export type FacilityAirport = {
@@ -87,6 +88,7 @@ export type Facility = {
   center: [number, number];
   domain: string;
   defaultZoom: number;
+  resources?: string[];
   customRoutes?: RouteRecordRaw[];
   boundaries: { [key: string]: [number, number][] };
   airports: FacilityAirport[];
