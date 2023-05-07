@@ -833,7 +833,7 @@ const fac: Facility = {
       title: "Facility",
       sublinks: [
         {
-          title: "Oceanic Information",
+          title: "SOPs",
           href: "https://sops.vzanartcc.net",
         },
       ],
