@@ -11,6 +11,7 @@ const fac: Facility = {
   devApiUrl: "https://api.dev.vzanartcc.net",
   hasOceanicCert: true,
   navbarClasses: "bg-alaska-blue dark:bg-alaska-blue text-white",
+  resources: ["Policies", "LOAs", "VRC", "vSTARS", "vERAM", "vATIS", "Misc"],
   customRoutes: [
     {
       path: "/",
@@ -833,7 +834,7 @@ const fac: Facility = {
       title: "Facility",
       sublinks: [
         {
-          title: "SOPs",
+          title: "Facility SOPs",
           href: "https://sops.vzanartcc.net",
         },
       ],

@@ -26,7 +26,7 @@
       v-if="props.sublinks.length > 0"
       class="top-full left-0 absolute w-[200px] bg-white dark:bg-black-deep border-b-[3px] border-primary py-4 shadow-md shadow-black/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-[20px] group-hover:translate-y-0 z-30"
     >
-      <li v-for="(link, index) in props.sublinks" :key="index">
+      <li v-for="(link, index) in sublinkcomputed" :key="index">
         <AuthLink
           v-if="link.to"
           :to="link.to"
@@ -52,6 +52,7 @@
 
 <script setup lang="ts">
 import AuthLink from "@/components/AuthLink.vue";
+import { computed } from "vue";
 import { Link } from "@/types";
 
 const props = withDefaults(defineProps<Link>(), {
@@ -68,6 +69,18 @@ const checkClick = (): boolean => {
   }
   return true;
 };
+
+const sublinkcomputed = computed(() => {
+  const sublinks = props.sublinks;
+  return sublinks.sort((a, b) => {
+    // Sort by weight, then title
+    if ((a.weight || 0) < (b.weight || 0)) return -1;
+    if ((a.weight || 0) > (b.weight || 0)) return 1;
+    if (a.title < b.title) return -1;
+    if (a.title > b.title) return 1;
+    return 0;
+  });
+});
 </script>
 
 <style scoped></style>
