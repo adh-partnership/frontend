@@ -3,7 +3,7 @@
     <div class="w-full h-full table-row">
       <h1 class="text-colorado-red text-center">500</h1>
       <h2>
-        Something just isn't right... this is an inrecoverable error. Please try again later or contact the Webmaster
+        Something just isn't right... this is an unrecoverable error. Please try again later or contact the Webmaster
         for guidance.
       </h2>
     </div>
