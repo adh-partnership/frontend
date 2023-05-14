@@ -258,6 +258,13 @@ const submit = async (): Promise<void> => {
     setTimeout(() => {
       saveButtonState.value = ButtonStates.Idle;
     }, 4000);
+
+    // Reset form
+    form.value.comments = "";
+    form.value.duration = "";
+    form.value.session_date = "";
+    form.value.position = "";
+    form.value.type = "";
   }
 };
 </script>
