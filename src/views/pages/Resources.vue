@@ -71,7 +71,7 @@
                   </button>
                 </a>
                 <button
-                  v-if="canEditResources()"
+                  v-if="canEditResources() && !isStaticResource(resource.name)"
                   class="btn bg-yellow-400 text-white font-bold py-2 px-4 ml-2 rounded"
                   @click="editResource(resource)"
                 >
@@ -192,6 +192,7 @@ const editingResource = ref({
 const loaded = ref(true);
 
 const categories = fac.resources || ["SOPs", "LOAs", "VRC", "vSTARS", "vERAM", "vATIS", "Misc"];
+const staticResources = fac.staticResources || [];
 const openTab: Ref<string | null> = ref(categories[0]);
 const router = useRouter();
 const resources: Ref<Resource[]> = ref([]);
@@ -199,7 +200,7 @@ const resources: Ref<Resource[]> = ref([]);
 const updateResources = async (): Promise<void> => {
   try {
     const { data } = await ZDVAPI.get("/v1/storage/");
-    resources.value = data;
+    resources.value = data.concat(staticResources);
   } catch (err) {
     // I can't really be asked to try and recover from this...
     router.push({ name: "ErrorCrash" });
@@ -275,6 +276,10 @@ const createResource = async (): Promise<void> => {
     newResource.value.name = "";
     newResource.value.creating = false;
   });
+};
+
+const isStaticResource = (resourceName: string): boolean => {
+  return staticResources.some((resource) => resource.name === resourceName);
 };
 
 const canEditResources = (): boolean => {

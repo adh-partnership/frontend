@@ -89,6 +89,7 @@ export type Facility = {
   domain: string;
   defaultZoom: number;
   resources?: string[];
+  staticResources?: Resource[];
   customRoutes?: RouteRecordRaw[];
   boundaries: { [key: string]: [number, number][] };
   airports: FacilityAirport[];
@@ -146,16 +147,16 @@ export type ParsedMetar = {
 };
 
 export type Resource = {
-  id: number;
+  id?: number;
   category: string;
   description: string;
   name: string;
   url: string;
 
   created_at: string;
-  created_by: Controller;
+  created_by?: Controller;
   updated_at: string;
-  updated_by: Controller;
+  updated_by?: Controller;
 };
 
 export type Controller = {
