@@ -235,6 +235,26 @@ const fac: Facility = {
       ],
     },
   ],
+  staticResources: [
+    {
+      id: 9999,
+      category: "Misc",
+      description: "Denver Training Academy Material",
+      name: "Denver Training Academy",
+      url: "https://vats.im/dta",
+      created_at: "2023-05-14T18:51:57.177Z",
+      updated_at: "2023-05-14T18:51:57.177Z",
+    },
+    {
+      id: 9998,
+      category: "Misc",
+      description: "ZDV Cheatsheet",
+      name: "ZDV Cheatsheet",
+      url: "https://vats.im/zdvcheatsheet",
+      created_at: "2023-05-14T18:51:57.177Z",
+      updated_at: "2023-05-14T18:51:57.177Z",
+    },
+  ],
 };
 
 export default fac;
