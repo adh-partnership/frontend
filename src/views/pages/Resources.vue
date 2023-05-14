@@ -71,7 +71,7 @@
                   </button>
                 </a>
                 <button
-                  v-if="canEditResources() && !isStaticResource(resource.id)"
+                  v-if="canEditResources() && !isStaticResource(resource.name)"
                   class="btn bg-yellow-400 text-white font-bold py-2 px-4 ml-2 rounded"
                   @click="editResource(resource)"
                 >
@@ -278,8 +278,8 @@ const createResource = async (): Promise<void> => {
   });
 };
 
-const isStaticResource = (id: number): boolean => {
-  return staticResources.some((resource) => resource.id === id);
+const isStaticResource = (resourceName: string): boolean => {
+  return staticResources.some((resource) => resource.name === resourceName);
 };
 
 const canEditResources = (): boolean => {

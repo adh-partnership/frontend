@@ -147,7 +147,7 @@ export type ParsedMetar = {
 };
 
 export type Resource = {
-  id: number;
+  id?: number;
   category: string;
   description: string;
   name: string;
