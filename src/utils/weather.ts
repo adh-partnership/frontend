@@ -1,4 +1,5 @@
 import type { ParsedMetar } from "@/types";
+import { meta } from "@typescript-eslint/parser";
 import { ZDVAPI } from "./api";
 
 const convert = {
@@ -273,14 +274,14 @@ const parseMetar = (metarString: string): ParsedMetar => {
   }
 
   metarObject.flight_category = "";
-  if (metarObject.visibility.miles_float > 5 && (!metarObject.ceiling || metarObject.ceiling.feet_agl > 3000)) {
-    metarObject.flight_category = "VFR";
-  } else if (metarObject.visibility.miles_float >= 3 || (metarObject.ceiling && metarObject.ceiling.feet_agl >= 1000)) {
-    metarObject.flight_category = "MVFR";
-  } else if (metarObject.visibility.miles_float >= 1 || (metarObject.ceiling && metarObject.ceiling.feet_agl >= 500)) {
-    metarObject.flight_category = "IFR";
-  } else {
+  if (metarObject.visibility.miles_float < 1 || (metarObject.ceiling && metarObject.ceiling.feet_agl < 500)) {
     metarObject.flight_category = "LIFR";
+  } else if (metarObject.visibility.miles_float < 3 || (metarObject.ceiling && metarObject.ceiling.feet_agl < 1000)) {
+    metarObject.flight_category = "IFR";
+  } else if (metarObject.visibility.miles_float < 5 || (metarObject.ceiling && metarObject.ceiling.feet_agl < 3000)) {
+    metarObject.flight_category = "MVFR";
+  } else {
+    metarObject.flight_category = "VFR";
   }
 
   return metarObject;
