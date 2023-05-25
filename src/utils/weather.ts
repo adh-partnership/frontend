@@ -1,5 +1,4 @@
 import type { ParsedMetar } from "@/types";
-import { meta } from "@typescript-eslint/parser";
 import { ZDVAPI } from "./api";
 
 const convert = {
