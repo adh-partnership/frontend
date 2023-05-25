@@ -27,13 +27,21 @@
         <img :src="event.banner" class="w-full" alt="event image" />
       </div>
     </div>
-    <div class="col-span-4 lg:col-span-1 h-min">
+    <div class="col-span-4 lg:col-span-1 h-min space-y-4">
       <div class="card">
         <OnlineControllers />
       </div>
-    </div>
-    <div class="card col-span-4 h-min flex flex-col">
-      <WeatherTable :stations="['KASE', 'KPUB', 'KCOS', 'KDEN', 'KAPA']" rules show-updated sort title grid-size="5" />
+      <div class="card">
+        <WeatherTable
+          :stations="['KASE', 'KPUB', 'KCOS', 'KDEN', 'KAPA']"
+          rules
+          show-updated
+          sort
+          title
+          table
+          grid-size="5"
+        />
+      </div>
     </div>
     <div class="card col-span-4 h-min">
       <OnlineFlights />
