@@ -286,17 +286,15 @@ const parseMetar = (metarString: string): ParsedMetar => {
   return metarObject;
 };
 
-const getMetars = async (stations: string | string[]): Promise<string> => {
-  const s: string[] = typeof stations === "string" ? [stations] : stations;
-
-  const metars = await ZDVAPI.get(`/v1/proxy/metar/${s.join(",")}`);
+const getMetars = async (station: string): Promise<string> => {
+  const metars = await ZDVAPI.get(`/v1/weather/metar/${station}`);
   return metars.data;
 };
 
 const getTAF = async (station: string): Promise<string | null> => {
   let taf;
   try {
-    taf = await ZDVAPI.get(`/v1/proxy/taf/${station}`);
+    taf = await ZDVAPI.get(`/v1/weather/taf/${station}`);
   } catch (e) {
     return null;
   }

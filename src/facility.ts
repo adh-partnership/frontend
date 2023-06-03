@@ -4,18 +4,24 @@ const fac: Facility = {
   id: "PAZA",
   faa_id: "ZAN",
   name: "Anchorage ARTCC",
-  logo: "https://cdn.vzanartcc.net/assets/img/logo-no-text.png",
+  logo: "https://cdn.zanartcc.org/assets/img/logo-no-text.png",
   minVisitorRating: "S2",
-  domain: "vzanartcc.net",
-  apiUrl: "https://api.vzanartcc.net",
-  devApiUrl: "https://api.dev.vzanartcc.net",
+  domain: "zanartcc.org",
+  apiUrl: "https://api.zanartcc.org",
+  devApiUrl: "https://api.zanartcc.org",
   hasOceanicCert: true,
   navbarClasses: "bg-alaska-blue dark:bg-alaska-blue text-white",
+  resources: ["Policies", "LOAs", "VRC", "vSTARS", "vERAM", "vATIS", "Misc"],
   customRoutes: [
     {
       path: "/",
       name: "Home",
       component: () => import("@/facilities/zan/views/pages/Homepage.vue"),
+    },
+    {
+      path: "/oceanic",
+      name: "Oceanic",
+      component: () => import("@/facilities/zan/views/pages/Oceanic.vue"),
     },
   ],
   roles: [
@@ -814,7 +820,26 @@ const fac: Facility = {
       longitude: -162.8993,
     },
   ],
-  links: [],
+  links: [
+    {
+      title: "Pilots",
+      sublinks: [
+        {
+          title: "Oceanic Information",
+          to: { name: "Oceanic" },
+        },
+      ],
+    },
+    {
+      title: "Facility",
+      sublinks: [
+        {
+          title: "Facility SOPs",
+          href: "https://sops.zanartcc.org",
+        },
+      ],
+    },
+  ],
 };
 
 export default fac;

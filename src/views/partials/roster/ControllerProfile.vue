@@ -16,6 +16,33 @@
   <p v-if="canWorkController()" class="mb-0">
     <strong>Discord ID:</strong>
     <span class="capitalize"> {{ controller.discord_id !== "NULL" ? controller.discord_id : " Not Connected" }} </span>
+    <span v-if="controller.discord_id !== 'NULL'">
+      <button
+        v-if="discordButtonState === ButtonStates.Idle"
+        class="btn bg-colorado-red text-white font-bold py-2 px-4 rounded"
+        @click="save"
+      >
+        <i class="fab fa-trash-alt"></i>
+      </button>
+      <button
+        v-if="discordButtonState === ButtonStates.Saving"
+        class="btn bg-colorado-yellow text-black font-bold py-2 px-4 rounded"
+      >
+        <i class="fas fa-spinner fa-spin"></i>
+      </button>
+      <button
+        v-if="discordButtonState === ButtonStates.Saved"
+        class="btn bg-green text-white font-bold py-2 px-4 rounded"
+      >
+        <i class="fas fa-check"></i>
+      </button>
+      <button
+        v-if="discordButtonState === ButtonStates.Error"
+        class="btn bg-red text-white font-bold py-2 px-4 rounded"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+    </span>
   </p>
 
   <p v-if="controller.controller_type !== 'none'" class="mb-0">
@@ -245,6 +272,7 @@ enum ButtonStates {
   Error = 3,
 }
 const buttonState = ref(ButtonStates.Idle);
+const discordButtonState = ref(ButtonStates.Idle);
 
 const props = withDefaults(
   defineProps<{

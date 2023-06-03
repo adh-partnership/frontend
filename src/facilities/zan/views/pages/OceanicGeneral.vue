@@ -9,12 +9,12 @@
   </p>
   <p class="text-center">
     <img
-      src="https://cdn.vzanartcc.net/assets/img/maps/pacific_area_light.png"
+      src="https://cdn.zanartcc.org/assets/img/maps/pacific_area_light.png"
       class="w-1/2 dark:hidden"
       alt="Map of Pacific Area"
     />
     <img
-      src="https://cdn.vzanartcc.net/assets/img/maps/pacific_area_dark.png"
+      src="https://cdn.zanartcc.org/assets/img/maps/pacific_area_dark.png"
       class="w-1/2 hidden dark:inline-block"
       alt="Map of Pacific Area"
     />
