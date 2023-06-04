@@ -4,11 +4,21 @@
       <span class="badge-text">{{ props.controller.status || "unknown" }}</span>
     </div>
     <div class="controller-badge" :class="genClass(props.controller.certifications.ground)">GC</div>
-    <div class="controller-badge" :class="genClass(props.controller.certifications.major_ground)">MAJ GC</div>
+    <div v-if="!fac.skipMajor" class="controller-badge" :class="genClass(props.controller.certifications.major_ground)">
+      MAJ GC
+    </div>
     <div class="controller-badge" :class="genClass(props.controller.certifications.local)">LC</div>
-    <div class="controller-badge" :class="genClass(props.controller.certifications.major_local)">MAJ LC</div>
+    <div v-if="!fac.skipMajor" class="controller-badge" :class="genClass(props.controller.certifications.major_local)">
+      MAJ LC
+    </div>
     <div class="controller-badge" :class="genClass(props.controller.certifications.approach)">APP</div>
-    <div class="controller-badge" :class="genClass(props.controller.certifications.major_approach)">MAJ APP</div>
+    <div
+      v-if="!fac.skipMajor"
+      class="controller-badge"
+      :class="genClass(props.controller.certifications.major_approach)"
+    >
+      MAJ APP
+    </div>
     <div class="controller-badge" :class="genClass(props.controller.certifications.enroute)">ENR</div>
     <div v-if="fac.hasOceanicCert" class="controller-badge" :class="genClass(props.controller.certifications.oceanic)">
       OCA
@@ -30,6 +40,10 @@ const props = withDefaults(defineProps<Props>(), {
   showActive: false,
 });
 const width = ref(7);
+
+if (fac.skipMajor) {
+  width.value -= 3;
+}
 
 if (props.showActive) {
   width.value += 1;

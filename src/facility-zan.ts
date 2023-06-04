@@ -5,6 +5,7 @@ const fac: Facility = {
   faa_id: "ZAN",
   name: "Anchorage ARTCC",
   logo: "https://cdn.zanartcc.org/assets/img/logo-no-text.png",
+  skipMajor: true,
   minVisitorRating: "S2",
   domain: "zanartcc.org",
   apiUrl: "https://api.zanartcc.org",

@@ -5,6 +5,7 @@ const fac: Facility = {
   faa_id: "ZHN",
   name: "Honolulu Control Facility",
   navbarName: "Honolulu CF",
+  skipMajor: false,
   logo: "https://cdn.vhcf.net/assets/logo/hibiscus/logo_solid.png",
   customRoutes: [
     {

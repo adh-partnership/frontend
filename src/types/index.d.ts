@@ -80,6 +80,7 @@ export type Facility = {
   faa_id: string;
   name: string;
   navbarName?: string;
+  skipMajor: boolean;
   logo: string;
   apiUrl: string;
   devApiUrl: string;

@@ -73,7 +73,7 @@
         <option value="certified">Certified</option>
       </select>
     </div>
-    <div class="flex items-center">
+    <div v-if="!fac.skipMajor" class="flex items-center">
       <label
         class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
         for="major-ground-cert"
@@ -115,7 +115,7 @@
         <option value="certified">Certified</option>
       </select>
     </div>
-    <div class="flex items-center">
+    <div v-if="!fac.skipMajor" class="flex items-center">
       <label
         class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
         for="major-local-cert"
@@ -157,7 +157,7 @@
         <option value="certified">Certified</option>
       </select>
     </div>
-    <div class="flex items-center">
+    <div v-if="!fac.skipMajor" class="flex items-center">
       <label
         class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
         for="major-approach-cert"

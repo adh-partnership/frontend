@@ -5,6 +5,7 @@ const fac: Facility = {
   faa_id: "ZDV",
   name: "Denver ARTCC",
   logo: "https://cdn.denartcc.org/assets/img/logo_150.png",
+  skipMajor: false,
   minVisitorRating: "S1",
   domain: "denartcc.org",
   apiUrl: "https://api.denartcc.org",
