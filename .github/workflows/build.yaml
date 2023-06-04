@@ -179,7 +179,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         token: ${{ secrets.PAZA_GITOPS_TOKEN }}
-        repository: 'vpaza/gitops-new'
+        repository: 'vpaza/gitops'
         path: gitops-paza
     - name: Configure git
       run: |-
