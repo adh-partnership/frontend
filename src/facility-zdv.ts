@@ -4,12 +4,12 @@ const fac: Facility = {
   id: "KZDV",
   faa_id: "ZDV",
   name: "Denver ARTCC",
-  logo: "https://cdn.denartcc.org/assets/img/logo_150.png",
+  logo: "https://cdn.zdvartcc.org/assets/img/logo_150.png",
   skipMajor: false,
   minVisitorRating: "S1",
-  domain: "denartcc.org",
-  apiUrl: "https://api.denartcc.org",
-  devApiUrl: "https://api.dev.denartcc.org",
+  domain: "zdvartcc.org",
+  apiUrl: "https://api.zdvartcc.org",
+  devApiUrl: "https://api.dev.zdvartcc.org",
   customRoutes: [
     {
       path: "/",
