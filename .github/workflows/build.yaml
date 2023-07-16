@@ -133,7 +133,7 @@ jobs:
       run: |-
         cd $GITHUB_WORKSPACE/gitops
         git config user.name "${{ secrets.GH_PIPELINE_USERNAME }}"
-        git config user.email "wm@denartcc.org"
+        git config user.email "wm@zdvartcc.org"
     - name: Setup Kustomize
       uses: imranismail/setup-kustomize@v2
       with:

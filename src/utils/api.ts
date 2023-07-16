@@ -2,7 +2,7 @@ import axios from "axios";
 import fac from "@/facility";
 import type { Resource } from "@/types";
 
-// const apiUrl = import.meta.env.DEV ? "http://api.denartcc.local" : "https://api.denartcc.org";
+// const apiUrl = import.meta.env.DEV ? "http://api.zdvartcc.local" : "https://api.zdvartcc.org";
 const apiUrl = import.meta.env.DEV ? fac.devApiUrl : fac.apiUrl;
 
 export const ZDVAPI = axios.create({
