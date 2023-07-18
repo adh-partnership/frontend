@@ -43,6 +43,10 @@ const Links: Link[] = [
         title: "Airports",
       },
       {
+        to: { name: "StaffingRequest" },
+        title: "Staffing Request",
+      },
+      {
         href: "https://www.skyvector.com",
         title: "SkyVector",
       },
