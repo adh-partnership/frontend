@@ -11,7 +11,7 @@
         <i class="fa fa-user" /> Login with VATSIM
       </a>
     </div>
-    <div v-else class="w-full">
+    <div class="w-full">
       <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
@@ -73,7 +73,7 @@
                         :key="controller.cid"
                         :value="controller.cid.toString()"
                       >
-                        {{ controller.first_name }} {{ controller.last_name }}
+                        {{ toTitleCase(`${controller.first_name} ${controller.last_name}`) }}
                       </option>
                     </select>
                     <label
@@ -235,12 +235,12 @@
                       @click="goTo(feedback.id)"
                     >
                       <td>
-                        {{ feedback.controller.first_name }} {{ feedback.controller.last_name }} <br />
+                        {{ toTitleCase(`${feedback.controller.first_name} ${feedback.controller.last_name}`) }} <br />
                         <span>{{ feedback.controller.cid }}</span>
                       </td>
                       <td>{{ feedback.position }}</td>
                       <td>
-                        {{ feedback.submitter.first_name }} {{ feedback.submitter.last_name }} <br />
+                        {{ toTitleCase(`${feedback.submitter.first_name} ${feedback.submitter.last_name}`) }} <br />
                         <span>{{ feedback.submitter.cid }}</span>
                       </td>
                       <td class="capitalize">{{ feedback.rating }}</td>
@@ -279,6 +279,7 @@ import { AxiosResponse } from "axios";
 import type { Feedback } from "@/types";
 import { hasRole } from "@/utils/auth";
 import Spinner from "@/components/Spinner.vue";
+import { toTitleCase } from "@/utils/helpers";
 import useRosterStore from "@/stores/roster";
 import { useRouter } from "vue-router";
 import useUserStore from "@/stores/users";

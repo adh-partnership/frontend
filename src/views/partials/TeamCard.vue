@@ -8,7 +8,7 @@
         </p>
         <ul>
           <li v-for="c in props.controllers" :key="c.cid" class="list-disc ml-4">
-            {{ c.first_name }} {{ c.last_name }}
+            {{ toTitleCase(`${c.first_name} ${c.last_name}`) }}
           </li>
         </ul>
       </div>
@@ -20,6 +20,7 @@
 import type { Controller } from "@/types";
 import { ref } from "vue";
 import { StaffDescriptions } from "@/descriptions";
+import { toTitleCase } from "@/utils/helpers";
 
 type Props = {
   controllers: Controller[];

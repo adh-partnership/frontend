@@ -7,9 +7,9 @@
     <div v-else class="grid grid-cols-4 gap-4">
       <div class="font-bold">Controller:</div>
       <div class="col-span-3">
-        {{ feedback.controller.first_name }} {{ feedback.controller.last_name }} ({{ feedback.controller.cid }}/{{
-          feedback.controller.rating
-        }})
+        {{ toTitleCase(`${feedback.controller.first_name} ${feedback.controller.last_name}`) }} ({{
+          feedback.controller.cid
+        }}/{{ feedback.controller.rating }})
       </div>
       <div class="font-bold">Position:</div>
       <div>{{ feedback.position }}</div>
@@ -17,9 +17,9 @@
       <div class="capitalize">{{ feedback.rating }}</div>
       <div class="font-bold">Submitter:</div>
       <div>
-        {{ feedback.submitter.first_name }} {{ feedback.submitter.last_name }} ({{ feedback.submitter.cid }}/{{
-          feedback.submitter.rating
-        }})
+        {{ toTitleCase(`${feedback.submitter.first_name} ${feedback.submitter.last_name}`) }} ({{
+          feedback.submitter.cid
+        }}/{{ feedback.submitter.rating }})
       </div>
       <div class="font-bold">Contact Email:</div>
       <div>{{ feedback.contact_email }}</div>
@@ -81,6 +81,7 @@ import Alert from "@/components/Alert.vue";
 import type { Feedback } from "@/types";
 import { hasRole } from "@/utils/auth";
 import Spinner from "@/components/Spinner.vue";
+import { toTitleCase } from "@/utils/helpers";
 import { ZDVAPI } from "@/utils/api";
 
 enum ButtonStates {

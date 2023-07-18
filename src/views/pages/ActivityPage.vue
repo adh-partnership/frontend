@@ -23,7 +23,7 @@
           @click="goToUser(c.cid)"
         >
           <td class="py-2 border-b-1 dark:border-gray-900">
-            {{ c.first_name }} {{ c.last_name }} ({{ c.operating_initials || "none" }})
+            {{ toTitleCase(`${c.first_name} ${c.last_name}`) }} ({{ c.operating_initials || "none" }})
           </td>
           <td class="text-center py-2 border-b-1 dark:border-gray-900">{{ c.cid }}</td>
           <td class="text-center py-2 border-b-1 dark:border-gray-900">{{ c.rating }}</td>
@@ -43,6 +43,7 @@
 <script setup lang="ts">
 import { onMounted, ref, Ref } from "vue";
 import type { ControllerStats } from "@/types";
+import { toTitleCase } from "@/utils/helpers";
 import { useRouter } from "vue-router";
 import { ZDVAPI } from "@/utils/api";
 

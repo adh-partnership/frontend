@@ -22,9 +22,9 @@
 </template>
 
 <script setup lang="ts">
+import { months, toTitleCase } from "@/utils/helpers";
 import { onBeforeUnmount, onMounted, ref, Ref } from "vue";
 import { ControllerStats } from "@/types";
-import { months } from "@/utils/helpers";
 import { ZDVAPI } from "@/utils/api";
 
 const stats: Ref<{ name: string; time: string }[]> = ref([]);
@@ -54,7 +54,7 @@ const updateData = (): void => {
       });
       for (let i = 0; i < 3; i += 1) {
         stats.value.push({
-          name: `${sorted[i].first_name} ${sorted[i].last_name}`,
+          name: toTitleCase(`${sorted[i].first_name} ${sorted[i].last_name}`),
           time: getHours(sorted[i]),
         });
       }

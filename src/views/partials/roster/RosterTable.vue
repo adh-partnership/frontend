@@ -15,7 +15,7 @@
             </h2>
           </td>
           <td class="w-2/5 pl-4 py-2 text-left">
-            <h5 class="mb-0 text-xl">{{ `${controller.first_name} ${controller.last_name}` }}</h5>
+            <h5 class="mb-0 text-xl">{{ toTitleCase(`${controller.first_name} ${controller.last_name}`) }}</h5>
             <p class="mb-0">{{ getControllerTitle(controller) }} ({{ controller.rating }})</p>
           </td>
           <td class="w-1/2 pl-3 py-2 hidden md:inline">
@@ -28,11 +28,10 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-
+import { getControllerTitle, toTitleCase } from "@/utils/helpers";
 import type { Controller } from "@/types";
 import ControllerCertificationBadges from "@/components/ControllerCertificationBadges.vue";
-import { getControllerTitle } from "@/utils/helpers";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 const props = defineProps<{

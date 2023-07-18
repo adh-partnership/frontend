@@ -207,7 +207,7 @@
         </thead>
         <tbody>
           <tr v-for="signup in event.signups" :key="signup.id">
-            <td>{{ signup.user.first_name }} {{ signup.user.last_name }}</td>
+            <td>{{ toTitleCase(`${signup.user.first_name} ${signup.user.last_name}`) }}</td>
             <td>{{ signup.user.cid }} - {{ signup.user.rating }}</td>
             <td>{{ signup.choice1 }}</td>
             <td>{{ signup.choice2 }}</td>
@@ -228,15 +228,13 @@
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
 import CreatePositionModal from "@/views/partials/events/CreatePositionModal.vue";
 import { DatePicker } from "v-calendar";
 import DeleteEventModal from "@/views/partials/events/DeleteEventModal.vue";
+import { Event } from "@/types";
 import Positions from "@/views/partials/events/Positions.vue";
 import SignupModal from "@/views/partials/events/SignupModal.vue";
-
-import { Event } from "@/types";
-
+import { toTitleCase } from "@/utils/helpers";
 import { useDark } from "@vueuse/core";
 import useEventStore from "@/stores/event";
 import useUserStore from "@/stores/users";

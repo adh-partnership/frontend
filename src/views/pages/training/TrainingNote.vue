@@ -55,7 +55,8 @@
         <b>Instructor</b>
       </div>
       <div class="w-4/5">
-        {{ note.instructor?.first_name }} {{ note.instructor?.last_name }} - {{ note.instructor?.operating_initials }}
+        {{ toTitleCase(`${note.instructor?.first_name} ${note.instructor?.last_name}`) }} -
+        {{ note.instructor?.operating_initials }}
       </div>
     </div>
     <div class="flex w-full">
@@ -71,11 +72,11 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-
 import type { Controller, TrainingNote } from "@/types";
+import { useRoute, useRouter } from "vue-router";
 import ControllerHeader from "@/components/ControllerHeader.vue";
 import Spinner from "@/components/Spinner.vue";
+import { toTitleCase } from "@/utils/helpers";
 import useRosterStore from "@/stores/roster";
 import { ZDVAPI } from "@/utils/api";
 

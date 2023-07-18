@@ -10,7 +10,8 @@
     "dev": "vite",
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.js,.vue",
-    "lint:fix": "eslint src --ext .ts,.js,.vue --fix"
+    "lint:fix": "eslint src --ext .ts,.js,.vue --fix",
+    "test": "vitest"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.12",
@@ -57,6 +58,7 @@
     "vite": "^4.3.8",
     "vite-plugin-pwa": "^0.16.3",
     "vite-plugin-vue-type-imports": "^0.2.1",
+    "vitest": "^0.33.0",
     "vue-tsc": "^1.6.5"
   },
   "type": "module"

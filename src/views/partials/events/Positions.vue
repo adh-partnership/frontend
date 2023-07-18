@@ -10,7 +10,7 @@
               class="text-lg mb-0 truncate"
               :class="{ 'col-span-3': canModifyPosition(), 'col-span-5': !canModifyPosition() }"
             >
-              {{ position.user.first_name }} {{ position.user.last_name }}
+              {{ toTitleCase(`${position.user.first_name} ${position.user.last_name}`) }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
             <div v-if="canModifyPosition()" class="col-span-2 text-right">
@@ -28,7 +28,7 @@
                 <div class="py-1.5 text-sm text-gray-900 dark:text-white">
                   <p v-if="error != null" class="font-medium text-red-500">Error!</p>
                   <p v-else-if="position.user != null" class="font-medium">
-                    {{ position.user.first_name }} {{ position.user.last_name }}
+                    {{ toTitleCase(`${position.user.first_name} ${position.user.last_name}`) }}
                     <a
                       class="block cursor-pointer py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
                       @click="
@@ -50,7 +50,7 @@
                         position.user = signup.user;
                       "
                     >
-                      {{ signup.user.first_name }} {{ signup.user.last_name }}
+                      {{ toTitleCase(`${signup.user.first_name} ${signup.user.last_name}`) }}
                     </a>
                   </li>
                   <li v-if="signupsForPos(position.position).length === 0">
@@ -89,7 +89,7 @@
               class="text-lg mb-0 truncate"
               :class="{ 'col-span-3': canModifyPosition(), 'col-span-5': !canModifyPosition() }"
             >
-              {{ position.user.first_name }} {{ position.user.last_name }}
+              {{ toTitleCase(`${position.user.first_name} ${position.user.last_name}`) }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
             <div v-if="canModifyPosition()" class="col-span-2 text-right">
@@ -106,7 +106,7 @@
               >
                 <div class="py-1.5 text-sm text-gray-900 dark:text-white">
                   <p v-if="position.user != null" class="font-medium">
-                    {{ position.user.first_name }} {{ position.user.last_name }}
+                    {{ toTitleCase(`${position.user.first_name} ${position.user.last_name}`) }}
                     <a
                       class="block cursor-pointer py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
                       @click="
@@ -128,7 +128,7 @@
                         position.user = signup.user;
                       "
                     >
-                      {{ signup.user.first_name }} {{ signup.user.last_name }}
+                      {{ toTitleCase(`${signup.user.first_name} ${signup.user.last_name}`) }}
                     </a>
                   </li>
                   <li v-if="signupsForPos(position.position).length === 0">
@@ -168,7 +168,7 @@
               class="text-lg mb-0 truncate"
               :class="{ 'col-span-3': canModifyPosition(), 'col-span-5': !canModifyPosition() }"
             >
-              {{ position.user.first_name }} {{ position.user.last_name }}
+              {{ toTitleCase(`${position.user.first_name} ${position.user.last_name}`) }}
             </p>
             <p v-else class="col-span-3 mb-0">Vacant</p>
             <div v-if="canModifyPosition()" class="col-span-2 text-right">
@@ -185,7 +185,7 @@
               >
                 <div class="py-1.5 text-sm text-gray-900 dark:text-white">
                   <p v-if="position.user != null" class="font-medium">
-                    {{ position.user.first_name }} {{ position.user.last_name }}
+                    {{ toTitleCase(`${position.user.first_name} ${position.user.last_name}`) }}
                     <a
                       class="block cursor-pointer py-2 px-4 hover:bg-gray-200 dark:hover:bg-black-light dark:hover:text-white"
                       @click="
@@ -207,7 +207,7 @@
                         position.user = signup.user;
                       "
                     >
-                      {{ signup.user.first_name }} {{ signup.user.last_name }}
+                      {{ toTitleCase(`${signup.user.first_name} ${signup.user.last_name}`) }}
                     </a>
                   </li>
                   <li v-if="signupsForPos(position.position).length === 0">
@@ -273,7 +273,7 @@
             >
             <datalist id="controllers">
               <option v-for="controller in rosterStore.getActiveRoster" :key="controller.cid" :value="controller.cid">
-                {{ controller.first_name }} {{ controller.last_name }}
+                {{ toTitleCase(`${controller.first_name} ${controller.last_name}`) }}
               </option>
             </datalist>
           </div>
@@ -309,6 +309,7 @@ import { computed, onMounted, ref } from "vue";
 import type { EventPosition, EventSignup } from "@/types";
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import Alert from "@/components/Alert.vue";
+import { toTitleCase } from "@/utils/helpers";
 import useRosterStore from "@/stores/roster";
 import { ZDVAPI } from "@/utils/api";
 

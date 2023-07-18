@@ -76,7 +76,7 @@
           <tbody>
             <tr v-for="(c, i) in applications" :key="i">
               <td>{{ c.user.cid }}</td>
-              <td>{{ c.user.first_name }} {{ c.user.last_name }} ({{ c.user.rating }})</td>
+              <td>{{ toTitleCase(`${c.user.first_name} ${c.user.last_name}`) }} ({{ c.user.rating }})</td>
               <td>{{ c.user.region }} / {{ c.user.division }} / {{ c.user.subdivision }}</td>
               <td>{{ new Date(c.created_at).toLocaleDateString() }}</td>
               <td v-if="applying" class="text-center">Saving...</td>
@@ -111,6 +111,7 @@ import { AxiosResponse } from "axios";
 import fac from "@/facility";
 import { hasRole } from "@/utils/auth";
 import Spinner from "@/components/Spinner.vue";
+import { toTitleCase } from "@/utils/helpers";
 import useUserStore from "@/stores/users";
 import type { VisitorApplication } from "@/types";
 

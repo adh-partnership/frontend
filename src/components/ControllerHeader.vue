@@ -2,7 +2,7 @@
   <div class="grid grid-cols-4 gap-4 w-full m-0">
     <div class="col-span-3">
       <h1 class="text-2xl mb-0">
-        {{ props.controller.first_name }} {{ props.controller.last_name }} -
+        {{ toTitleCase(`${props.controller.first_name} ${props.controller.last_name}`) }} -
         {{ props.controller.operating_initials }} ({{ props.controller.cid }}/{{ props.controller.rating }})
       </h1>
       <h2 class="text-sm mt-0 mb-1 font-normal">{{ getControllerTitle(props.controller) }}</h2>
@@ -17,9 +17,9 @@
 </template>
 
 <script setup lang="ts">
+import { getControllerTitle, toTitleCase } from "@/utils/helpers";
 import type { Controller } from "@/types";
 import ControllerCertificationBadges from "@/components/ControllerCertificationBadges.vue";
-import { getControllerTitle } from "@/utils/helpers";
 
 const props = defineProps<{
   controller: Controller;
