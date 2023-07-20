@@ -1,9 +1,8 @@
 <template>
   <div>
     <h1 class="text-2xl">Staffing Request</h1>
-    <!-- FIXME restore condition -->
-    <div v-if="userStore.user !== null">
-      <p class="pb-2">To access the staffing request, please first login with VATSIM.</p>
+    <div v-if="userStore.user === null">
+      <p class="pb-2">To access the staffing request form, please first login with VATSIM.</p>
       <a
         class="btn py-4 px-4 bg-colorado-blue hover:bg-blue-900"
         :href="`${apiUrl}/v1/user/login?redirect=${loc}`"
@@ -92,7 +91,7 @@
                 </div>
                 <div v-else-if="submitButtonState === ButtonStates.Error">
                   <Alert type="error">
-                    <p>There was an error submitting your feedback. Error message: {{ error }}</p>
+                    <p>There was an error requesting staffing. Error message: {{ error }}</p>
                     <p>If you believe this is an error, please contact the facility staff for guidance.</p>
                   </Alert>
                 </div>
@@ -101,7 +100,14 @@
             <div class="relative flex justify-around z-0 mb-4 w-full group col-span-1">
               <div>
                 <p class="mb-0 pl-1">Start time (Zulu)</p>
-                <DatePicker v-model="form.date" mode="dateTime" timezone="UTC" :is24hr="true" is-required />
+                <DatePicker
+                  v-model="form.date"
+                  mode="dateTime"
+                  timezone="UTC"
+                  :is24hr="true"
+                  is-required
+                  :is-dark="isDark"
+                />
               </div>
             </div>
             <div class="pt-5">
@@ -121,9 +127,10 @@
 </template>
 
 <script setup lang="ts">
+import apiUrl, { ZDVAPI } from "@/utils/api";
 import { computed, ref, Ref } from "vue";
-import apiUrl from "@/utils/api";
 import { DatePicker } from "v-calendar";
+import { useDark } from "@vueuse/core";
 import useUserStore from "@/stores/users";
 
 enum ButtonStates {
@@ -134,6 +141,7 @@ enum ButtonStates {
 }
 
 const userStore = useUserStore();
+const isDark = useDark();
 const error = ref("");
 const submitButtonState: Ref<ButtonStates> = ref(ButtonStates.Idle);
 const form = ref({
@@ -148,10 +156,38 @@ const formValid = computed(() => {
   return form.value.date && form.value.departureAirport && form.value.arrivalAirport;
 });
 
-// eslint-disable-next-line no-restricted-globals
-const loc = location.href;
+const loc = window.location.href;
 
 const submit = async (): Promise<void> => {
-  // TODO
+  try {
+    submitButtonState.value = ButtonStates.Saving;
+    await ZDVAPI.post("/v1/staffing", {
+      date: form.value.date,
+      departureAirport: form.value.departureAirport,
+      arrivalAirport: form.value.arrivalAirport,
+      pilots: form.value.pilots,
+      comments: form.value.comments,
+    });
+    submitButtonState.value = ButtonStates.Saved;
+  } catch (e: any) {
+    submitButtonState.value = ButtonStates.Error;
+    switch (e.response.status) {
+      case 403:
+        error.value = "The staffing request you are trying to action returned forbidden.";
+        break;
+      case 404:
+        error.value = "The staffing request you are trying to action does not exist.";
+        break;
+      case 500:
+      default:
+        error.value = "There was an error processing your staffing request.";
+        break;
+    }
+  } finally {
+    setInterval(() => {
+      submitButtonState.value = ButtonStates.Idle;
+      error.value = "";
+    }, 6000);
+  }
 };
 </script>
