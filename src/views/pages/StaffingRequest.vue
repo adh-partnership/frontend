@@ -172,11 +172,9 @@ const submit = async (): Promise<void> => {
   } catch (e: any) {
     submitButtonState.value = ButtonStates.Error;
     switch (e.response.status) {
+      case 401:
       case 403:
-        error.value = "The staffing request you are trying to action returned forbidden.";
-        break;
-      case 404:
-        error.value = "The staffing request you are trying to action does not exist.";
+        error.value = "The staffing request you are trying to submit returned forbidden.";
         break;
       case 500:
       default:
