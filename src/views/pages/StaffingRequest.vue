@@ -130,6 +130,7 @@
 import apiUrl, { ZDVAPI } from "@/utils/api";
 import { computed, ref, Ref } from "vue";
 import { DatePicker } from "v-calendar";
+import { isAxiosError } from "axios";
 import { useDark } from "@vueuse/core";
 import useUserStore from "@/stores/users";
 
@@ -169,17 +170,21 @@ const submit = async (): Promise<void> => {
       comments: form.value.comments,
     });
     submitButtonState.value = ButtonStates.Saved;
-  } catch (e: any) {
+  } catch (err: unknown) {
     submitButtonState.value = ButtonStates.Error;
-    switch (e.response.status) {
-      case 401:
-      case 403:
-        error.value = "The staffing request you are trying to submit returned forbidden.";
-        break;
-      case 500:
-      default:
-        error.value = "There was an error processing your staffing request.";
-        break;
+    if (isAxiosError(err)) {
+      switch (err.response?.status) {
+        case 401:
+        case 403:
+          error.value = "The staffing request you are trying to submit returned forbidden.";
+          break;
+        case 500:
+        default:
+          error.value = "There was an error processing your staffing request.";
+          break;
+      }
+    } else {
+      error.value = "There was an error processing your staffing request.";
     }
   } finally {
     setInterval(() => {
