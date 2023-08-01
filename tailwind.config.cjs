@@ -16,6 +16,9 @@ module.exports = {
       pattern: /hawaii/,
     },
     {
+      pattern: /saltlake/,
+    },
+    {
       pattern: /grid-cols/,
       variants: ["sm", "md", "lg"],
     },
@@ -59,6 +62,7 @@ module.exports = {
         "alaska-blue": "#0f204b",
         "alaska-gold": "#ffb612",
         "hawaii-blue": "#80d8ff",
+        "saltlake-orange": "#a8672a",
         white: {
           DEFAULT: "#FFFFFF",
           light: "#f9f9f9",

@@ -36,7 +36,7 @@ jobs:
 
     strategy:
       matrix:
-        facility: [zdv, zan, hcf]
+        facility: [zdv, zan, hcf, zlc]
 
     steps:
     - uses: actions/checkout@v3
