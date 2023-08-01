@@ -15,7 +15,7 @@
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
             :class="{
               'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 1,
-              'text-white bg-colorado-blue': openTab === 1,
+              ['text-white' + primaryBackground]: openTab === 1,
             }"
             @click="toggleTabs(1)"
           >
@@ -27,7 +27,7 @@
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
             :class="{
               'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 2,
-              'text-white bg-colorado-blue': openTab === 2,
+              ['text-white' + primaryBackground]: openTab === 2,
             }"
             @click="toggleTabs(2)"
           >
@@ -39,7 +39,7 @@
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
             :class="{
               'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 3,
-              'text-white bg-colorado-blue': openTab === 3,
+              ['text-white' + primaryBackground]: openTab === 3,
             }"
             @click="toggleTabs(3)"
           >
@@ -72,9 +72,10 @@
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onBeforeMount, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { Controller } from "@/types";
+import { primaryBackground } from "@/utils/colors";
 import { storeToRefs } from "pinia";
 
-import { Controller } from "@/types";
 import ControllerActions from "@/views/partials/roster/ControllerActions.vue";
 import ControllerHeader from "@/components/ControllerHeader.vue";
 import ControllerProfile from "@/views/partials/roster/ControllerProfile.vue";

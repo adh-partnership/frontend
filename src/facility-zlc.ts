@@ -12,6 +12,8 @@ const fac: Facility = {
   devApiUrl: "https://api.dev.zlcartcc.org",
   navbarClasses: "bg-saltlake-orange dark:bg-saltlake-orange text-white",
   footerClasses: "bg-saltlake-orange dark:bg-black-deep text-white",
+  primaryBackground: "bg-saltlake-orange",
+  primaryHover: "bg-saltlake-orange hover:bg-amber-800",
   customRoutes: [
     {
       path: "/",

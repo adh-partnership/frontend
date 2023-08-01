@@ -31,14 +31,12 @@
 import { useDark, useToggle } from "@vueuse/core";
 
 import fac from "@/facility";
-import { ref } from "vue";
+import { footerClasses } from "@/utils/colors";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 const gitHash = import.meta.env.VITE_GIT_HASH || "dirty";
 const version = import.meta.env.VITE_VERSION_BASE || "unknown";
-
-const footerClasses = ref(fac.footerClasses || "bg-colorado-blue text-white dark:bg-black-deep");
 </script>
 
 <style scoped lang="postcss">

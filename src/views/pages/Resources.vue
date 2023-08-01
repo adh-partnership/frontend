@@ -15,7 +15,7 @@
             class="inline-block p-4 rounded-l-lg"
             :class="{
               'dark:text-white light:text-colorado-blue light:bg-white': openTab !== cat,
-              'text-white bg-colorado-blue': openTab === cat,
+              ['text-white' + primaryBackground]: openTab === cat,
             }"
             type="button"
             @click="openTab = cat"
@@ -66,7 +66,7 @@
               </td>
               <td class="text-center">
                 <a :href="resource.url" target="_blank" rel="noopener noreferrer">
-                  <button class="btn bg-colorado-blue text-white font-bold py-2 px-4 rounded">
+                  <button class="btn text-white font-bold py-2 px-4 rounded" :class="primaryHover">
                     <i class="fas fa-external-link-alt"></i>
                   </button>
                 </a>
@@ -175,6 +175,7 @@
 import { API, ZDVAPI } from "@/utils/api";
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onMounted, ref, Ref } from "vue";
+import { primaryBackground, primaryHover } from "@/utils/colors";
 import fac from "@/facility";
 import type { Resource } from "@/types";
 import Spinner from "@/components/Spinner.vue";
