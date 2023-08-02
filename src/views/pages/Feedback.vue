@@ -12,10 +12,7 @@
         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
-            :class="{
-              'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 1,
-              ['text-white' + primaryBackground]: openTab === 1,
-            }"
+            :class="openTab === 1 ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
             @click="toggleTabs(1)"
           >
             Submit Feedback
@@ -27,10 +24,7 @@
         >
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
-            :class="{
-              'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 2,
-              ['text-white' + primaryBackground]: openTab === 2,
-            }"
+            :class="openTab === 2 ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
             @click="toggleTabs(2)"
           >
             My Feedback
@@ -39,10 +33,7 @@
         <li v-if="isAdmin()" class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
-            :class="{
-              'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 3,
-              ['text-white' + primaryBackground]: openTab === 3,
-            }"
+            :class="openTab === 3 ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
             @click="toggleTabs(3)"
           >
             Manage Feedback
