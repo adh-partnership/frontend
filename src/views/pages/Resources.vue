@@ -13,10 +13,7 @@
           <button
             :id="`${cat}-tab`"
             class="inline-block p-4 rounded-l-lg"
-            :class="{
-              'dark:text-white light:text-colorado-blue light:bg-white': openTab !== cat,
-              ['text-white' + primaryBackground]: openTab === cat,
-            }"
+            :class="openTab === cat ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
             type="button"
             @click="openTab = cat"
           >
