@@ -123,7 +123,8 @@
       <div class="w-1/5">
         <button
           v-if="buttonState === ButtonStates.Idle"
-          class="btn bg-colorado-blue text-white font-bold py-2 px-4 rounded"
+          class="btn text-white font-bold py-2 px-4 rounded"
+          :class="primaryBackground"
           @click="save"
         >
           Save
@@ -151,6 +152,7 @@ import type { Ref } from "vue";
 
 import type { Controller } from "@/types";
 import { hasRole } from "@/utils/auth";
+import { primaryBackground } from "@/utils/colors";
 import useRosterStore from "@/stores/roster";
 import { ZDVAPI } from "@/utils/api";
 

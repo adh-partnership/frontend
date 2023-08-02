@@ -3,11 +3,7 @@
     <h1 class="text-2xl">Visiting Application</h1>
     <div v-if="userStore.user === null">
       <p class="pb-2">To access the visiting application, please first login with VATSIM.</p>
-      <a
-        class="btn py-4 px-4 bg-colorado-blue hover:bg-blue-900"
-        :href="`${apiUrl}/v1/user/login?redirect=${loc}`"
-        type="button"
-      >
+      <a class="btn py-4 px-4" :class="primaryHover" :href="`${apiUrl}/v1/user/login?redirect=${loc}`" type="button">
         <i class="fa fa-user" /> Login with VATSIM
       </a>
     </div>
@@ -35,7 +31,7 @@
         days to review your application before contacting staff.
       </p>
       <div v-if="!applying && !error">
-        <button class="btn bg-colorado-blue hover:bg-blue-900" type="button" @click="apply">
+        <button class="btn" :class="primaryHover" type="button" @click="apply">
           <i class="fa fa-paper-plane" /> Apply
         </button>
       </div>
@@ -110,6 +106,7 @@ import Alert from "@/components/Alert.vue";
 import { AxiosResponse } from "axios";
 import fac from "@/facility";
 import { hasRole } from "@/utils/auth";
+import { primaryHover } from "@/utils/colors";
 import Spinner from "@/components/Spinner.vue";
 import useUserStore from "@/stores/users";
 import type { VisitorApplication } from "@/types";

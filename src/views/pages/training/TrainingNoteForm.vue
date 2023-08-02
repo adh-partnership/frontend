@@ -113,7 +113,8 @@
           <div class="w-1/5">
             <button
               v-if="saveButtonState === ButtonStates.Idle"
-              class="bg-colorado-blue text-white hover:bg-dark-red font-bold py-2 px-4 rounded"
+              class="text-white hover:bg-dark-red font-bold py-2 px-4 rounded"
+              :class="primaryBackground"
               @click="submit"
             >
               Submit
@@ -158,6 +159,7 @@ import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import type { Controller } from "@/types";
 import ControllerHeader from "@/components/ControllerHeader.vue";
+import { primaryBackground } from "@/utils/colors";
 import { storeToRefs } from "pinia";
 import useRosterStore from "@/stores/roster";
 import useTrainingStore from "@/stores/training";

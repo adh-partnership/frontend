@@ -14,9 +14,7 @@
           </div>
           <div class="w-1/5">
             <div class="flex justify-end">
-              <button v-if="display" class="btn bg-colorado-blue hover:bg-blue-dark" @click="openTrainingNote(null)">
-                New Note
-              </button>
+              <button v-if="display" class="btn" :class="primaryHover" @click="openTrainingNote(null)">New Note</button>
             </div>
           </div>
         </div>
@@ -51,7 +49,7 @@
                 <td>{{ note.instructor?.first_name }} {{ note.instructor?.last_name }}</td>
                 <td>
                   <RouterLink :to="{ name: 'TrainingNoteView', params: { cid: controller.cid, id: note.id } }">
-                    <button class="bg-blue-700 hover:bg-blue-900 text-white py-1.5 px-1.5 rounded-l-lg">
+                    <button class="text-white py-1.5 px-1.5 rounded-l-lg" :class="primaryHover">
                       <i class="fa-solid fa-search" />
                     </button>
                   </RouterLink>
@@ -75,6 +73,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import type { Controller, TrainingNote } from "@/types";
+import { primaryHover } from "@/utils/colors";
 import type { Ref } from "vue";
 import Spinner from "@/components/Spinner.vue";
 import { useRouter } from "vue-router";

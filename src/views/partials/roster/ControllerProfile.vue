@@ -224,7 +224,8 @@
       <div v-if="canModifycerts()" class="w-full text-center">
         <button
           v-if="buttonState === ButtonStates.Idle"
-          class="btn bg-colorado-blue text-white font-bold py-2 px-4 rounded"
+          class="btn text-white font-bold py-2 px-4 rounded"
+          :class="primaryBackground"
           @click="save"
         >
           Save
@@ -252,6 +253,7 @@ import { onUnmounted, ref } from "vue";
 
 import type { Controller } from "@/types";
 import fac from "@/facility";
+import { primaryBackground } from "@/utils/colors";
 import useRosterStore from "@/stores/roster";
 import { ZDVAPI } from "@/utils/api";
 

@@ -85,6 +85,9 @@ export type Facility = {
   apiUrl: string;
   devApiUrl: string;
   navbarClasses?: string;
+  footerClasses?: string;
+  primaryBackground?: string;
+  primaryHover?: string;
   minVisitorRating: string;
   center: [number, number];
   domain: string;
