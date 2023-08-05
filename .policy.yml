@@ -1,12 +1,12 @@
 policy:
   approval:
   - or:
-    - the frontend team has approved
+    - the maintainers-frontend team has approved
     - an admin has approved
     - has auto-merge label
 
 approval_rules:
-  - name: the frontend team has approved
+  - name: the maintainers-frontend team has approved
     options:
       request_review:
         enabled: true
@@ -18,7 +18,7 @@ approval_rules:
     requires:
       count: 1
       teams:
-      - "adh-partnership/frontend"
+      - "adh-partnership/maintainers-frontend"
   - name: an admin has approved
     options:
       allow_author: true
@@ -35,3 +35,5 @@ approval_rules:
     if:
       has_labels:
       - "auto-merge"
+    has_author_in:
+      users: ["adh-bot"]
