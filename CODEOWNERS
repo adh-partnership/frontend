@@ -1,0 +1,17 @@
+*  @adh-partnership/maintainers-frontend
+
+# HCF specific file ownership is the hcf team
+src/facilities/hcf/ @adh-partnership/hcf
+src/facility-hcf.ts @adh-partnership/hcf
+
+# ZAN specific file ownership is the zan team
+src/facilities/zan/ @adh-partnership/zan
+src/facility-zan.ts @adh-partnership/zan
+
+# ZDV specific file ownership is the zdv team
+src/facilities/zdv/ @adh-partnership/zdv
+src/facility-zdv.ts @adh-partnership/zdv
+
+# ZLC specific file ownership is the zdv team
+src/facilities/zlc/ @adh-partnership/zlc
+src/facility-zlc.ts @adh-partnership/zlc

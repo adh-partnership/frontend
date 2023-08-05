@@ -1,9 +1,15 @@
 policy:
   approval:
   - or:
-    - the maintainers-frontend team has approved
-    - an admin has approved
     - has auto-merge label
+    - and:
+      - or:
+        - the maintainers-frontend team has approved
+        - an admin has approved
+      - the HCF team has approved
+      - the ZAN team has approved
+      - the ZDV team has approved
+      - the ZLC team has approved
 
 approval_rules:
   - name: the maintainers-frontend team has approved
@@ -19,6 +25,78 @@ approval_rules:
       count: 1
       teams:
       - "adh-partnership/maintainers-frontend"
+  - name: the HCF team has approved
+    if:
+      changed_files:
+        paths:
+          - "src/facilities/hcf/.*"
+          - "src/facility-hcf.ts"
+    options:
+      request_review:
+        enabled: true
+        mode: teams
+      methods:
+        comments:
+          - "LGTM"
+          - "/lgtm"
+    requires:
+      count: 1
+      teams:
+      - "adh-partnership/hcf"
+  - name: the ZAN team has approved
+    if:
+      changed_files:
+        paths:
+          - "src/facilities/zan/.*"
+          - "src/facility-zan.ts"
+    options:
+      request_review:
+        enabled: true
+        mode: teams
+      methods:
+        comments:
+          - "LGTM"
+          - "/lgtm"
+    requires:
+      count: 1
+      teams:
+      - "adh-partnership/zan"
+  - name: the ZDV team has approved
+    if:
+      changed_files:
+        paths:
+          - "src/facilities/zdv/.*"
+          - "src/facility-zdv.ts"
+    options:
+      request_review:
+        enabled: true
+        mode: teams
+      methods:
+        comments:
+          - "LGTM"
+          - "/lgtm"
+    requires:
+      count: 1
+      teams:
+      - "adh-partnership/zdv"
+  - name: the ZDV team has approved
+    if:
+      changed_files:
+        paths:
+          - "src/facilities/zdv/.*"
+          - "src/facility-zdv.ts"
+    options:
+      request_review:
+        enabled: true
+        mode: teams
+      methods:
+        comments:
+          - "LGTM"
+          - "/lgtm"
+    requires:
+      count: 1
+      teams:
+      - "adh-partnership/zlc"
   - name: an admin has approved
     options:
       allow_author: true
