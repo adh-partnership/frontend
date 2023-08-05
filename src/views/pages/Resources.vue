@@ -281,7 +281,7 @@ const isStaticResource = (resourceName: string): boolean => {
 };
 
 const canEditResources = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "ec", "fe", "wm"]);
+  return isAuthenticated() && hasRole(["atm", "datm", "ta", "ec", "fe", "facilities", "wm"]);
 };
 
 onMounted(() => {
