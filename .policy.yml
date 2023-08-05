@@ -43,6 +43,7 @@ approval_rules:
       count: 1
       teams:
       - "adh-partnership/hcf"
+      - "adh-partnership/maintainers-frontend"
   - name: the ZAN team has approved
     if:
       changed_files:
@@ -61,6 +62,7 @@ approval_rules:
       count: 1
       teams:
       - "adh-partnership/zan"
+      - "adh-partnership/maintainers-frontend"
   - name: the ZDV team has approved
     if:
       changed_files:
@@ -79,12 +81,13 @@ approval_rules:
       count: 1
       teams:
       - "adh-partnership/zdv"
-  - name: the ZDV team has approved
+      - "adh-partnership/maintainers-frontend"
+  - name: the ZLC team has approved
     if:
       changed_files:
         paths:
-          - "src/facilities/zdv/.*"
-          - "src/facility-zdv.ts"
+          - "src/facilities/zlc/.*"
+          - "src/facility-zlc.ts"
     options:
       request_review:
         enabled: true
@@ -97,6 +100,7 @@ approval_rules:
       count: 1
       teams:
       - "adh-partnership/zlc"
+      - "adh-partnership/maintainers-frontend"
   - name: an admin has approved
     options:
       allow_author: true
@@ -113,5 +117,5 @@ approval_rules:
     if:
       has_labels:
       - "auto-merge"
-    has_author_in:
-      users: ["adh-bot"]
+      has_author_in:
+        users: ["adh-bot"]
