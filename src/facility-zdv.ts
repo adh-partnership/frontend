@@ -16,6 +16,11 @@ const fac: Facility = {
       name: "Home",
       component: () => import("@/facilities/zdv/views/pages/Homepage.vue"),
     },
+    {
+      path: "/staffing_request",
+      name: "StaffingRequest",
+      component: () => import("@/facilities/zdv/views/pages/StaffingRequest.vue"),
+    },
   ],
   roles: [
     {
@@ -224,7 +229,7 @@ const fac: Facility = {
       longitude: -106.8663017,
     },
   ],
-  // This merges with the links in src/facility.ts using title as the key
+  // This merges with the `links` in src/facility.ts using title as the key
   links: [
     {
       title: "Profile",
@@ -232,6 +237,16 @@ const fac: Facility = {
         {
           title: "Schedule Training",
           href: "https://www.picktime.com/vzdv",
+        },
+      ],
+    },
+    {
+      title: "Pilots",
+      to: "#",
+      sublinks: [
+        {
+          to: { name: "StaffingRequest" },
+          title: "Staffing Request",
         },
       ],
     },

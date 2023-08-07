@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="text-2xl">Staffing Request</h1>
-    <div v-if="userStore.user === null">
+    <div v-if="userStore.user !== null">
       <p class="pb-2">To access the staffing request form, please first login with VATSIM.</p>
       <a
         class="btn py-4 px-4 bg-colorado-blue hover:bg-blue-900"

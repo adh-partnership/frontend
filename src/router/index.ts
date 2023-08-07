@@ -131,11 +131,6 @@ const routes = [
     component: () => import("@/views/pages/VisitingApplication.vue"),
   },
   {
-    path: "/staffing_request",
-    name: "StaffingRequest",
-    component: () => import("@/views/pages/StaffingRequest.vue"),
-  },
-  {
     path: "/events",
     name: "Events",
     component: () => import("@/views/pages/EventsPage.vue"),
