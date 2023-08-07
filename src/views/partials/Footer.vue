@@ -10,7 +10,7 @@
       </div>
     </div>
   </div>
-  <div class="bg-colorado-blue text-white dark:bg-black">
+  <div :class="footerClasses">
     <div class="py-4">
       <div class="container text-sm">
         Copyright &copy; 2022 by {{ fac.name }}. <RouterLink to="/privacy">Privacy Policy</RouterLink>. Open Source at
@@ -31,6 +31,7 @@
 import { useDark, useToggle } from "@vueuse/core";
 
 import fac from "@/facility";
+import { footerClasses } from "@/utils/colors";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);

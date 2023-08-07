@@ -13,10 +13,7 @@
         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
-            :class="{
-              'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 1,
-              'text-white bg-colorado-blue': openTab === 1,
-            }"
+            :class="openTab === 1 ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
             @click="toggleTabs(1)"
           >
             Profile
@@ -25,10 +22,7 @@
         <li v-if="canWorkController() || isMe()" class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
-            :class="{
-              'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 2,
-              'text-white bg-colorado-blue': openTab === 2,
-            }"
+            :class="openTab === 2 ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
             @click="toggleTabs(2)"
           >
             Training Notes
@@ -37,10 +31,7 @@
         <li v-if="canActionController()" class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
-            :class="{
-              'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 3,
-              'text-white bg-colorado-blue': openTab === 3,
-            }"
+            :class="openTab === 3 ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
             @click="toggleTabs(3)"
           >
             Actions
@@ -72,9 +63,10 @@
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onBeforeMount, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { Controller } from "@/types";
+import { primaryBackground } from "@/utils/colors";
 import { storeToRefs } from "pinia";
 
-import { Controller } from "@/types";
 import ControllerActions from "@/views/partials/roster/ControllerActions.vue";
 import ControllerHeader from "@/components/ControllerHeader.vue";
 import ControllerProfile from "@/views/partials/roster/ControllerProfile.vue";

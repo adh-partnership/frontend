@@ -3,11 +3,7 @@
     <h1 class="text-2xl">Feedback</h1>
     <div v-if="userStore.user === null">
       <p class="pb-2">To access the feedback form, please first login with VATSIM.</p>
-      <a
-        class="btn py-4 px-4 bg-colorado-blue hover:bg-blue-900"
-        :href="`${apiUrl}/v1/user/login?redirect=${loc}`"
-        type="button"
-      >
+      <a class="btn py-4 px-4" :class="primaryHover" :href="`${apiUrl}/v1/user/login?redirect=${loc}`" type="button">
         <i class="fa fa-user" /> Login with VATSIM
       </a>
     </div>
@@ -16,10 +12,7 @@
         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
-            :class="{
-              'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 1,
-              'text-white bg-colorado-blue': openTab === 1,
-            }"
+            :class="openTab === 1 ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
             @click="toggleTabs(1)"
           >
             Submit Feedback
@@ -31,10 +24,7 @@
         >
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
-            :class="{
-              'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 2,
-              'text-white bg-colorado-blue': openTab === 2,
-            }"
+            :class="openTab === 2 ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
             @click="toggleTabs(2)"
           >
             My Feedback
@@ -43,10 +33,7 @@
         <li v-if="isAdmin()" class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
             class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
-            :class="{
-              'dark:text-white light:text-colorado-blue light:bg-white': openTab !== 3,
-              'text-white bg-colorado-blue': openTab === 3,
-            }"
+            :class="openTab === 3 ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
             @click="toggleTabs(3)"
           >
             Manage Feedback
@@ -142,7 +129,7 @@
                 </div>
               </div>
               <div v-if="submitButtonState === ButtonStates.Idle">
-                <button class="btn bg-colorado-blue hover:bg-blue-900 mt-2 md:mt-0" type="button" @click="submit">
+                <button class="btn mt-2 md:mt-0" :class="primaryHover" type="button" @click="submit">
                   <i class="fa fa-paper-plane" /> Submit
                 </button>
               </div>
@@ -248,11 +235,7 @@
                       <td v-if="feedback.status === 'approved'">Approved</td>
                       <td v-else-if="submitting" class="text-center">Saving...</td>
                       <td v-else-if="!submitting">
-                        <button
-                          class="btn bg-blue-800 hover:bg-blue-900 text-white"
-                          type="button"
-                          @click="goTo(feedback.id)"
-                        >
+                        <button class="btn text-white" :class="primaryHover" type="button" @click="goTo(feedback.id)">
                           <i class="fa fa-envelope-open w-[15px]" />
                         </button>
                       </td>
@@ -274,6 +257,7 @@
 <script setup lang="ts">
 import apiUrl, { ZDVAPI } from "@/utils/api";
 import { computed, onMounted, Ref, ref } from "vue";
+import { primaryBackground, primaryHover } from "@/utils/colors";
 import Alert from "@/components/Alert.vue";
 import { AxiosResponse } from "axios";
 import type { Feedback } from "@/types";

@@ -41,6 +41,8 @@
 import { onMounted, ref } from "vue";
 
 import fac from "@/facility";
+import { navbarClasses } from "@/utils/colors";
+
 import HeaderNav from "@/components/header/HeaderNav.vue";
 import OffcanvasMenu from "@/components/header/OffcanvasMenu.vue";
 
@@ -50,8 +52,6 @@ const navOpen = ref(false);
 const toggleNav = (): void => {
   navOpen.value = !navOpen.value;
 };
-
-const navbarClasses = ref(fac.navbarClasses || "bg-colorado-blue text-white dark:bg-black-deep");
 
 onMounted(() => {
   window.addEventListener("scroll", () => {
