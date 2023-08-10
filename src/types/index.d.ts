@@ -270,3 +270,7 @@ export type Event = {
   positions: EventPosition[] | null;
   signups: EventSignup[] | null;
 };
+
+export type PermissionGroups = {
+  [key: string]: string[];
+};
