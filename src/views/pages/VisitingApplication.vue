@@ -71,7 +71,9 @@
           </thead>
           <tbody>
             <tr v-for="(c, i) in applications" :key="i">
-              <td>{{ c.user.cid }}</td>
+              <td>
+                <a :href="`https://www.vatusa.net/mgt/controller/${c.user.cid}`" target="_blank">{{ c.user.cid }}</a>
+              </td>
               <td>{{ c.user.first_name }} {{ c.user.last_name }} ({{ c.user.rating }})</td>
               <td>{{ c.user.region }} / {{ c.user.division }} / {{ c.user.subdivision }}</td>
               <td>{{ new Date(c.created_at).toLocaleDateString() }}</td>
