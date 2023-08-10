@@ -15,6 +15,7 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.12",
     "@heroicons/vue": "^2.0.18",
+    "@toast-ui/calendar": "^2.1.3",
     "@types/leaflet": "^1.9.1",
     "@vueuse/core": "^10.1.2",
     "adh-metar-parser": "^1.0.0",
