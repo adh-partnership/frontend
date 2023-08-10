@@ -172,9 +172,9 @@
 import { API, ZDVAPI } from "@/utils/api";
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onMounted, ref, Ref } from "vue";
+import type { PermissionGroups, Resource } from "@/types";
 import { primaryBackground, primaryHover } from "@/utils/colors";
 import fac from "@/facility";
-import type { PermissionGroups, Resource } from "@/types";
 import Spinner from "@/components/Spinner.vue";
 import { useRouter } from "vue-router";
 
