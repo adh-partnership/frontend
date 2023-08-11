@@ -4677,7 +4677,7 @@ tsutils@^3.21.0:
   dependencies:
     tslib "^1.8.1"
 
-tui-date-picker@^4.0.1:
+tui-date-picker@^4.0.1, tui-date-picker@^4.3.3:
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/tui-date-picker/-/tui-date-picker-4.3.3.tgz#a5f895d06cddcdbcb7fe081b62c17d8089aa0bca"
   integrity sha512-/2YoLnj5c1e+Ag1ZZYOgzEs2o0v7Ol7c5UAnBj438zGlkwkMxyH0HwP2pVqqIYX05WE7K0+6nTWVMybS8otBgw==
