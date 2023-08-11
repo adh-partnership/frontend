@@ -37,8 +37,6 @@ import "tui-time-picker/dist/tui-time-picker.css";
 import Calendar, { Options } from "@toast-ui/calendar";
 import { onMounted, ref, Ref } from "vue";
 
-// TODO load events from DB
-
 const calendar: Ref<Calendar | null> = ref(null);
 
 const options: Options = {
@@ -70,14 +68,18 @@ const options: Options = {
     },
     week: {},
   },
-  isReadOnly: false,
+  isReadOnly: false, // TODO conditional on facility status as trainer
   useFormPopup: true,
-  useDetailPopup: true,
+  useDetailPopup: false, // TODO conditional on facility status as trainer
 };
 
 onMounted(() => {
   // eslint-disable-next-line no-new
   calendar.value = new Calendar("#calendar", options);
+
+  calendar.value.on("clickEvent", () => {
+    // TODO open modal
+  });
 
   calendar.value.on("beforeCreateEvent", (e) => {
     if (!e.start || !e.end || !calendar.value) {
@@ -100,6 +102,16 @@ onMounted(() => {
     ]);
     calendar.value.clearGridSelections();
   });
+
+  calendar.value.on("onBeforeUpdateEvent", () => {
+    // TODO allow trainer editing
+  });
+
+  calendar.value.on("onBeforeDeleteEvent", () => {
+    // TODO allow trainer editing
+  });
+
+  // TODO load events from DB
 });
 </script>
 
