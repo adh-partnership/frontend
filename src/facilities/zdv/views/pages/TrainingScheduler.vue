@@ -1,6 +1,33 @@
 <template>
-  <h2>Training Scheduler</h2>
-  <div id="calendar" style="height: 100vh"></div>
+  <h1 class="text-2xl">Training Scheduler</h1>
+
+  <div class="flex justify-between pb-3">
+    <button
+      class="bg-colorado-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      type="button"
+      @click="calendar?.prev()"
+    >
+      <i class="fa fa-arrow-left" /> Previous week
+    </button>
+
+    <button
+      class="bg-colorado-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      type="button"
+      @click="calendar?.setDate(new Date())"
+    >
+      This week
+    </button>
+
+    <button
+      class="bg-colorado-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      type="button"
+      @click="calendar?.next()"
+    >
+      Next week <i class="fa fa-arrow-right" />
+    </button>
+  </div>
+
+  <div id="calendar" style="height: 800px"></div>
 </template>
 
 <script setup lang="ts">
@@ -8,9 +35,11 @@ import "@toast-ui/calendar/dist/toastui-calendar.min.css";
 import "tui-date-picker/dist/tui-date-picker.css";
 import "tui-time-picker/dist/tui-time-picker.css";
 import Calendar, { Options } from "@toast-ui/calendar";
-import { onMounted } from "vue";
+import { onMounted, ref, Ref } from "vue";
 
 // TODO load events from DB
+
+const calendar: Ref<Calendar | null> = ref(null);
 
 const options: Options = {
   usageStatistics: false,
@@ -37,7 +66,6 @@ const options: Options = {
   theme: {
     common: {
       saturday: { color: "black" },
-      holiday: { color: "black" },
       today: { color: "black" },
     },
     week: {},
@@ -49,10 +77,10 @@ const options: Options = {
 
 onMounted(() => {
   // eslint-disable-next-line no-new
-  const calendar = new Calendar("#calendar", options);
+  calendar.value = new Calendar("#calendar", options);
 
-  calendar.on("beforeCreateEvent", (e) => {
-    if (e.isAllday || !e.start || !e.end) {
+  calendar.value.on("beforeCreateEvent", (e) => {
+    if (!e.start || !e.end || !calendar.value) {
       return;
     }
 
@@ -63,14 +91,54 @@ onMounted(() => {
 
     // TODO post event to DB
 
-    calendar.createEvents([
+    calendar.value.createEvents([
       {
         ...e,
         start: newStart,
         end: newEnd,
       },
     ]);
-    calendar.clearGridSelections();
+    calendar.value.clearGridSelections();
   });
 });
 </script>
+
+<style lang="scss">
+#calendar {
+  .toastui-calendar-week-view-day-names {
+    overflow-y: hidden;
+  }
+
+  .toastui-calendar-calendar-section {
+    display: none;
+  }
+
+  .toastui-calendar-popup-section-title {
+    width: 425px;
+  }
+
+  .toastui-calendar-form-container .toastui-calendar-popup-section:nth-child(3) {
+    display: none;
+  }
+
+  .toastui-calendar-state-section {
+    display: none;
+  }
+
+  .toastui-calendar-popup-section-allday {
+    display: none;
+  }
+
+  .toastui-calendar-popup-section-private {
+    display: none;
+  }
+
+  .toastui-calendar-popup-date-picker {
+    width: 207px;
+  }
+
+  .toastui-calendar-popup-confirm {
+    background-color: green;
+  }
+}
+</style>
