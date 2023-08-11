@@ -21,6 +21,11 @@ const fac: Facility = {
       name: "StaffingRequest",
       component: () => import("@/facilities/zdv/views/pages/StaffingRequest.vue"),
     },
+    {
+      path: "/training_scheduler",
+      name: "TrainingScheduler",
+      component: () => import("@/facilities/zdv/views/pages/TrainingScheduler.vue"),
+    },
   ],
   roles: [
     {
@@ -236,7 +241,7 @@ const fac: Facility = {
       sublinks: [
         {
           title: "Schedule Training",
-          href: "https://www.picktime.com/vzdv",
+          to: { name: "TrainingScheduler" },
         },
       ],
     },
