@@ -10,40 +10,44 @@ import "tui-time-picker/dist/tui-time-picker.css";
 import Calendar, { Options } from "@toast-ui/calendar";
 import { onMounted } from "vue";
 
-onMounted(() => {
-  const options: Options = {
-    usageStatistics: false,
-    defaultView: "week",
-    timezone: {
-      zones: [
-        {
-          timezoneName: "UTC",
-          displayLabel: "UTC",
-          tooltip: "UTC",
-        },
-      ],
-    },
-    calendars: [
+// TODO load events from DB
+
+const options: Options = {
+  usageStatistics: false,
+  defaultView: "week",
+  timezone: {
+    zones: [
       {
-        id: "schedule",
-        name: "Schedule",
+        timezoneName: "UTC",
+        displayLabel: "UTC",
+        tooltip: "UTC",
       },
     ],
-    week: {
-      taskView: false,
+  },
+  calendars: [
+    {
+      id: "schedule",
+      name: "Schedule",
     },
-    theme: {
-      common: {
-        saturday: { color: "black" },
-        holiday: { color: "black" },
-        today: { color: "black" },
-      },
-      week: {},
+  ],
+  week: {
+    taskView: false,
+    eventView: ["time"],
+  },
+  theme: {
+    common: {
+      saturday: { color: "black" },
+      holiday: { color: "black" },
+      today: { color: "black" },
     },
-    isReadOnly: false,
-    useFormPopup: true,
-    useDetailPopup: true,
-  };
+    week: {},
+  },
+  isReadOnly: false,
+  useFormPopup: true,
+  useDetailPopup: true,
+};
+
+onMounted(() => {
   // eslint-disable-next-line no-new
   const calendar = new Calendar("#calendar", options);
 
@@ -56,6 +60,9 @@ onMounted(() => {
     const newStart = new Date(d1.getTime() - d1.getTimezoneOffset() * 60_000);
     const d2 = e.end as Date;
     const newEnd = new Date(d2.getTime() - d2.getTimezoneOffset() * 60_000);
+
+    // TODO post event to DB
+
     calendar.createEvents([
       {
         ...e,
