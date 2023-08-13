@@ -32,8 +32,6 @@
 
 <script setup lang="ts">
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
-import "tui-date-picker/dist/tui-date-picker.css";
-import "tui-time-picker/dist/tui-time-picker.css";
 import Calendar, { Options } from "@toast-ui/calendar";
 import { onMounted, ref, Ref } from "vue";
 
