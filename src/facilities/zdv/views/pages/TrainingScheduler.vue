@@ -67,13 +67,16 @@ const options: Options = {
     week: {},
   },
   isReadOnly: false, // TODO conditional on facility status as trainer
-  useFormPopup: true,
   useDetailPopup: false, // TODO conditional on facility status as trainer
 };
 
 onMounted(() => {
   // eslint-disable-next-line no-new
   calendar.value = new Calendar("#calendar", options);
+
+  calendar.value.on("selectDateTime", () => {
+    // TODO open modal
+  });
 
   calendar.value.on("clickEvent", () => {
     // TODO open modal
