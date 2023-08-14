@@ -15,14 +15,14 @@
 
   <p v-if="canWorkController()" class="mb-0">
     <strong>Discord ID:</strong>
-    <span class="capitalize"> {{ controller.discord_id !== "NULL" ? controller.discord_id : " Not Connected" }} </span>
-    <span v-if="controller.discord_id !== 'NULL'">
+    <span class="capitalize"> {{ controller.discord_id !== "" ? controller.discord_id : " Not Connected" }} </span>
+    <span v-if="controller.discord_id !== '' && hasRole(['atm', 'datm', 'wm'])">
       <button
         v-if="discordButtonState === ButtonStates.Idle"
         class="btn bg-colorado-red text-white font-bold py-2 px-4 rounded"
-        @click="save"
+        @click="clearDiscord"
       >
-        <i class="fab fa-trash-alt"></i>
+        <i class="fa fa-trash-alt"></i>
       </button>
       <button
         v-if="discordButtonState === ButtonStates.Saving"
@@ -293,6 +293,35 @@ const checkMtr = (
     if (certs.value[field] !== props.controller.certifications[field] && certs.value[field] === "certified") {
       certs.value[field] = props.controller.certifications[field];
     }
+  }
+};
+
+const clearDiscord = async (): Promise<void> => {
+  try {
+    discordButtonState.value = ButtonStates.Saving;
+    const result = await ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
+      discord_id: "",
+    });
+    if (result.status === 200) {
+      discordButtonState.value = ButtonStates.Saved;
+      setTimeout(() => {
+        discordButtonState.value = ButtonStates.Idle;
+      }, 4000);
+      store.updateController(props.controller.cid, {
+        ...props.controller,
+        discord_id: "",
+      });
+    } else {
+      discordButtonState.value = ButtonStates.Error;
+      setTimeout(() => {
+        discordButtonState.value = ButtonStates.Idle;
+      }, 4000);
+    }
+  } catch {
+    discordButtonState.value = ButtonStates.Error;
+    setTimeout(() => {
+      discordButtonState.value = ButtonStates.Idle;
+    }, 15000);
   }
 };
 
