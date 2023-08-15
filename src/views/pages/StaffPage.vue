@@ -16,16 +16,14 @@
     <StaffCard v-for="ec in staff.ec" :key="ec.cid" :controller="ec" position="ec" title="Events Coordinator" />
     <StaffCard v-for="ev in staff.events" :key="ev.cid" :controller="ev" position="et" title="Events Team" email="ec" />
     <StaffCard v-for="fe in staff.fe" :key="fe.cid" :controller="fe" position="fe" title="Facility Engineer" />
-    <StaffCard
-      v-for="ft in staff.facilities"
-      :key="ft.cid"
-      :controller="ft"
-      position="ft"
+    <TeamCard
+      v-if="staff.facilities.length > 0"
       title="Facilities Team"
-      email="fe"
+      :controllers="staff.facilities"
+      position="ft"
     />
     <StaffCard v-for="wm in staff.wm" :key="wm.cid" :controller="wm" position="wm" title="Webmaster" />
-    <StaffCard v-for="wt in staff.web" :key="wt.cid" :controller="wt" position="wt" title="Web Team" email="wm" />
+    <TeamCard v-if="staff.web.length > 0" title="Web Team" :controllers="staff.web" position="wt" />
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
     <TeamCard :controllers="staff.instructor" position="ins" title="Instructors" />
@@ -73,6 +71,7 @@ const staff = ref<Staff>({
 onMounted(async () => {
   const { data } = await ZDVAPI.get("/v1/user/staff");
   staff.value = data;
+  console.log(data);
 });
 </script>
 
