@@ -160,8 +160,6 @@ const toggleModal = (): void => {
 };
 
 const canCreateEvent = (): boolean => {
-  userStore.fetchPermissionGroupsIfNeeded();
-  if (userStore.getPermissionGroups?.events === undefined) return false;
   return (
     isAuthenticated() &&
     (hasRole(userStore.getPermissionGroups?.events) || hasRole(userStore.getPermissionGroups?.admin))

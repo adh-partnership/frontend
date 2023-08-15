@@ -90,8 +90,6 @@ const isMe = (): boolean => {
 };
 
 const canWorkController = (): boolean => {
-  userStore.fetchPermissionGroupsIfNeeded();
-  if (userStore.getPermissionGroups?.admin === undefined) return false;
   return (
     isAuthenticated() &&
     (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.training))

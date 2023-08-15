@@ -86,8 +86,6 @@ const toggleModal = (): void => {
 };
 
 const canCreatePosition = (): boolean => {
-  userStore.fetchPermissionGroupsIfNeeded();
-  if (userStore.getPermissionGroups?.admin === undefined) return false;
   return (
     isAuthenticated() &&
     (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.events))

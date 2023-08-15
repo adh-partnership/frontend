@@ -1,10 +1,14 @@
 /* eslint-disable import/prefer-default-export */
 import useUserStore from "@/stores/users";
 
-export const hasRole = (role: string[] | string): boolean => {
+export const hasRole = (role?: string[] | string): boolean => {
   const store = useUserStore();
 
   if (store.user === undefined) {
+    return false;
+  }
+
+  if (role === undefined) {
     return false;
   }
 

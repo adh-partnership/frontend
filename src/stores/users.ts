@@ -66,7 +66,7 @@ const useUserStore = defineStore("user", {
     },
     async fetchPermissionGroups() {
       try {
-        const { data } = await ZDVAPI.get("/v1/authorization/groups/");
+        const { data } = await ZDVAPI.get("/v1/authorization/groups");
         this.permissionGroups = data;
       } catch (e) {
         // Worst case scenario only vatusa recognized staff roles will be allowed.

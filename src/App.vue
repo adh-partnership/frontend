@@ -24,6 +24,8 @@ import Spinner from "@/components/Spinner.vue";
 import useUserStore from "@/stores/users";
 
 const userStore = useUserStore();
+
+userStore.fetchPermissionGroupsIfNeeded();
 </script>
 
 <style lang="scss">

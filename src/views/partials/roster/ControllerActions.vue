@@ -335,8 +335,6 @@ const save = async (): Promise<void> => {
 };
 
 const isAdmin = (): boolean => {
-  userStore.fetchPermissionGroupsIfNeeded();
-  if (userStore.getPermissionGroups?.admin === undefined) return false;
   return isAuthenticated() && hasRole(userStore.getPermissionGroups?.admin);
 };
 </script>

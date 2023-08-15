@@ -307,8 +307,6 @@ const form = ref({
 const loc = location.href;
 
 const isAdmin = (): boolean => {
-  userStore.fetchPermissionGroupsIfNeeded();
-  if (userStore.getPermissionGroups?.admin === undefined) return false;
   return isAuthenticated() && hasRole(userStore.getPermissionGroups?.admin);
 };
 

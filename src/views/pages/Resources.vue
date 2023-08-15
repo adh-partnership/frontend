@@ -284,8 +284,6 @@ const isStaticResource = (resourceName: string): boolean => {
 };
 
 const canEditResources = (): boolean => {
-  userStore.fetchPermissionGroupsIfNeeded();
-  if (userStore.getPermissionGroups?.files === undefined) return false;
   return isAuthenticated() && hasRole(userStore.getPermissionGroups?.files);
 };
 

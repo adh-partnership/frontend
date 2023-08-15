@@ -263,8 +263,6 @@ let saveTimer: ReturnType<typeof setTimeout>;
 const userStore = useUserStore();
 
 const canWorkController = (): boolean => {
-  userStore.fetchPermissionGroupsIfNeeded();
-  if (userStore.getPermissionGroups?.admin === undefined) return false;
   return (
     isAuthenticated() &&
     (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.training))
@@ -272,8 +270,6 @@ const canWorkController = (): boolean => {
 };
 
 const canModifycerts = (): boolean => {
-  userStore.fetchPermissionGroupsIfNeeded();
-  if (userStore.getPermissionGroups?.admin === undefined) return false;
   return (
     isAuthenticated() &&
     (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.training))

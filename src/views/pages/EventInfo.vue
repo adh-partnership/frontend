@@ -265,8 +265,6 @@ const localDate = (s: string): string => {
 };
 
 const canEditEvent = (): boolean => {
-  userStore.fetchPermissionGroupsIfNeeded();
-  if (userStore.getPermissionGroups?.events === undefined) return false;
   return (
     isAuthenticated() &&
     (hasRole(userStore.getPermissionGroups?.events) || hasRole(userStore.getPermissionGroups?.admin))
@@ -274,8 +272,6 @@ const canEditEvent = (): boolean => {
 };
 
 const canDeleteEvent = (): boolean => {
-  userStore.fetchPermissionGroupsIfNeeded();
-  if (userStore.getPermissionGroups?.events === undefined) return false;
   return (
     isAuthenticated() &&
     (hasRole(userStore.getPermissionGroups?.events) || hasRole(userStore.getPermissionGroups?.admin))
