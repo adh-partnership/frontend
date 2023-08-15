@@ -101,11 +101,11 @@
 
 <script setup lang="ts">
 import apiUrl, { ZDVAPI } from "@/utils/api";
+import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onMounted, Ref, ref } from "vue";
 import Alert from "@/components/Alert.vue";
 import { AxiosResponse } from "axios";
 import fac from "@/facility";
-import { hasRole } from "@/utils/auth";
 import { primaryHover } from "@/utils/colors";
 import Spinner from "@/components/Spinner.vue";
 import useUserStore from "@/stores/users";
@@ -121,7 +121,9 @@ const applications: Ref<VisitorApplication[] | null> = ref(null);
 const loc = location.href;
 
 const isAdmin = (): boolean => {
-  return hasRole(["atm", "datm", "wm"]);
+  userStore.fetchPermissionGroupsIfNeeded();
+  if (userStore.getPermissionGroups?.admin === undefined) return false;
+  return isAuthenticated() && hasRole(userStore.getPermissionGroups?.admin);
 };
 
 const apply = async (): Promise<void> => {

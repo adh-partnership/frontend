@@ -66,12 +66,14 @@ import { hasRole, isAuthenticated } from "@/utils/auth";
 import { EventPosition } from "@/types";
 import { ref } from "vue";
 import useEventStore from "@/stores/event";
+import useUserStore from "@/stores/users";
 import { ZDVAPI } from "@/utils/api";
 
 const eventStore = useEventStore();
 const isOpen = ref(false);
 const position = ref({} as EventPosition);
 const error = ref();
+const userStore = useUserStore();
 
 type Props = {
   id: number;
@@ -84,7 +86,12 @@ const toggleModal = (): void => {
 };
 
 const canCreatePosition = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ec", "events", "wm"]);
+  userStore.fetchPermissionGroupsIfNeeded();
+  if (userStore.getPermissionGroups?.admin === undefined) return false;
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.events))
+  );
 };
 
 const positionValid = (): boolean => {

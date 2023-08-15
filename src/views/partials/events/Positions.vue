@@ -310,6 +310,7 @@ import type { EventPosition, EventSignup } from "@/types";
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import Alert from "@/components/Alert.vue";
 import useRosterStore from "@/stores/roster";
+import useUserStore from "@/stores/users";
 import { ZDVAPI } from "@/utils/api";
 
 const rosterStore = useRosterStore();
@@ -317,6 +318,7 @@ const isOpen = ref(false);
 const assignPosSelected = ref("");
 const controllerId = ref();
 const error = ref();
+const userStore = useUserStore();
 
 const emit = defineEmits<{
   (e: "update"): void;
@@ -370,7 +372,12 @@ const signupsForPos = (position: string): EventSignup[] => {
 };
 
 const canModifyPosition = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ec", "wm"]);
+  userStore.fetchPermissionGroupsIfNeeded();
+  if (userStore.getPermissionGroups?.admin === undefined) return false;
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.events))
+  );
 };
 
 const assignPosition = async (cid: number, position: string): Promise<void> => {

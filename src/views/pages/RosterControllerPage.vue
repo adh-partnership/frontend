@@ -90,7 +90,12 @@ const isMe = (): boolean => {
 };
 
 const canWorkController = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
+  userStore.fetchPermissionGroupsIfNeeded();
+  if (userStore.getPermissionGroups?.admin === undefined) return false;
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.training))
+  );
 };
 
 const canActionController = (): boolean => {

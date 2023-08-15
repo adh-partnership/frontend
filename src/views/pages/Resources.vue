@@ -172,11 +172,14 @@
 import { API, ZDVAPI } from "@/utils/api";
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onMounted, ref, Ref } from "vue";
-import type { PermissionGroups, Resource } from "@/types";
 import { primaryBackground, primaryHover } from "@/utils/colors";
 import fac from "@/facility";
+import type { Resource } from "@/types";
 import Spinner from "@/components/Spinner.vue";
 import { useRouter } from "vue-router";
+import useUserStore from "@/stores/users";
+
+const userStore = useUserStore();
 
 const newResource = ref({
   name: "",
@@ -191,7 +194,6 @@ const loaded = ref(true);
 
 const categories = fac.resources || ["SOPs", "LOAs", "VRC", "vSTARS", "vERAM", "vATIS", "Misc"];
 const staticResources = fac.staticResources || [];
-const permissionGroups: Ref<PermissionGroups> = ref({});
 const openTab: Ref<string | null> = ref(categories[0]);
 const router = useRouter();
 const resources: Ref<Resource[]> = ref([]);
@@ -282,18 +284,12 @@ const isStaticResource = (resourceName: string): boolean => {
 };
 
 const canEditResources = (): boolean => {
-  if (permissionGroups.value.files === undefined) return false;
-  return isAuthenticated() && hasRole(permissionGroups.value.files);
+  userStore.fetchPermissionGroupsIfNeeded();
+  if (userStore.getPermissionGroups?.files === undefined) return false;
+  return isAuthenticated() && hasRole(userStore.getPermissionGroups?.files);
 };
 
-onMounted(async () => {
-  try {
-    const { data } = await ZDVAPI.get("/v1/authorization/groups");
-    permissionGroups.value = data;
-  } catch (err) {
-    // Worst case scenario only senior staff & department heads can edit resources
-    permissionGroups.value.files = ["atm", "datm", "ta", "ec", "fe", "wm"];
-  }
+onMounted(() => {
   updateResources();
 });
 </script>

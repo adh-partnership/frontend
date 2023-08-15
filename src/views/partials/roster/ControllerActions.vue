@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="text-3xl">Actions</h2>
-    <div v-if="hasRole(['atm', 'datm', 'wm'])" class="flex items-center mb-4">
+    <div v-if="isAdmin()" class="flex items-center mb-4">
       <div class="w-full md:w-1/5">
         <label
           class="block text-gray-500 dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -74,7 +74,7 @@
         </button>
       </div>
     </div>
-    <div v-if="hasRole(['atm', 'datm', 'wm'])" class="flex items-center mb-4">
+    <div v-if="isAdmin()" class="flex items-center mb-4">
       <div class="w-1/5">
         <label
           class="block text-gray-500 dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -114,12 +114,12 @@
           type="text"
           max-size="2"
           class="block w-full bg-white dark:bg-black-deep border disabled:border-0 disabled:dark:bg-black-light disabled:bg-white border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-          :disabled="!hasRole(['atm', 'datm', 'wm'])"
+          :disabled="!isAdmin()"
           @focus="resetError()"
         />
       </div>
     </div>
-    <div v-if="hasRole(['atm', 'datm', 'wm'])" class="flex items-center mb-4">
+    <div v-if="isAdmin()" class="flex items-center mb-4">
       <div class="w-1/5">
         <button
           v-if="buttonState === ButtonStates.Idle"
@@ -147,18 +147,21 @@
 </template>
 
 <script setup lang="ts">
+import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onMounted, onUnmounted, ref } from "vue";
 import type { Ref } from "vue";
 
 import type { Controller } from "@/types";
-import { hasRole } from "@/utils/auth";
 import { primaryBackground } from "@/utils/colors";
 import useRosterStore from "@/stores/roster";
+import useUserStore from "@/stores/users";
 import { ZDVAPI } from "@/utils/api";
 
 let saveTimer: ReturnType<typeof setTimeout>;
 
 const store = useRosterStore();
+const userStore = useUserStore();
+
 const form: Ref<{
   ControllerType: string;
   ControllerStatus: string;
@@ -329,6 +332,12 @@ const save = async (): Promise<void> => {
         saveError.value = null;
       }, 15000);
     });
+};
+
+const isAdmin = (): boolean => {
+  userStore.fetchPermissionGroupsIfNeeded();
+  if (userStore.getPermissionGroups?.admin === undefined) return false;
+  return isAuthenticated() && hasRole(userStore.getPermissionGroups?.admin);
 };
 </script>
 

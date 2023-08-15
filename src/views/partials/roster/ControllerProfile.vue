@@ -255,16 +255,29 @@ import type { Controller } from "@/types";
 import fac from "@/facility";
 import { primaryBackground } from "@/utils/colors";
 import useRosterStore from "@/stores/roster";
+import useUserStore from "@/stores/users";
 import { ZDVAPI } from "@/utils/api";
 
 let saveTimer: ReturnType<typeof setTimeout>;
 
+const userStore = useUserStore();
+
 const canWorkController = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
+  userStore.fetchPermissionGroupsIfNeeded();
+  if (userStore.getPermissionGroups?.admin === undefined) return false;
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.training))
+  );
 };
 
 const canModifycerts = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
+  userStore.fetchPermissionGroupsIfNeeded();
+  if (userStore.getPermissionGroups?.admin === undefined) return false;
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.training))
+  );
 };
 
 enum ButtonStates {
