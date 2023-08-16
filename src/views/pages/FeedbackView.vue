@@ -75,12 +75,13 @@
 </template>
 
 <script setup lang="ts">
+import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onMounted, Ref, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Alert from "@/components/Alert.vue";
 import type { Feedback } from "@/types";
-import { hasRole } from "@/utils/auth";
 import Spinner from "@/components/Spinner.vue";
+import useUserStore from "@/stores/users";
 import { ZDVAPI } from "@/utils/api";
 
 enum ButtonStates {
@@ -95,8 +96,10 @@ const form = ref({
   status: "pending",
 });
 
+const userStore = useUserStore();
+
 const isAdmin = (): boolean => {
-  return hasRole(["atm", "datm", "wm"]);
+  return isAuthenticated() && hasRole(userStore.getPermissionGroups?.admin);
 };
 
 const error = ref("");

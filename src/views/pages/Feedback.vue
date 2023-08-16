@@ -257,11 +257,11 @@
 <script setup lang="ts">
 import apiUrl, { ZDVAPI } from "@/utils/api";
 import { computed, onMounted, Ref, ref } from "vue";
+import { hasRole, isAuthenticated } from "@/utils/auth";
 import { primaryBackground, primaryHover } from "@/utils/colors";
 import Alert from "@/components/Alert.vue";
 import { AxiosResponse } from "axios";
 import type { Feedback } from "@/types";
-import { hasRole } from "@/utils/auth";
 import Spinner from "@/components/Spinner.vue";
 import useRosterStore from "@/stores/roster";
 import { useRouter } from "vue-router";
@@ -307,7 +307,7 @@ const form = ref({
 const loc = location.href;
 
 const isAdmin = (): boolean => {
-  return hasRole(["atm", "datm", "wm"]);
+  return isAuthenticated() && hasRole(userStore.getPermissionGroups?.admin);
 };
 
 const submit = async (): Promise<void> => {

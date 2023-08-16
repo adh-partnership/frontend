@@ -265,11 +265,17 @@ const localDate = (s: string): string => {
 };
 
 const canEditEvent = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ec", "events", "wm"]);
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.events) || hasRole(userStore.getPermissionGroups?.admin))
+  );
 };
 
 const canDeleteEvent = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ec", "events", "wm"]);
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.events) || hasRole(userStore.getPermissionGroups?.admin))
+  );
 };
 
 const hasSignedUp = (): boolean => {

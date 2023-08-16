@@ -49,12 +49,14 @@ import { hasRole, isAuthenticated } from "@/utils/auth";
 import { ref } from "vue";
 import useEventStore from "@/stores/event";
 import { useRouter } from "vue-router";
+import useUserStore from "@/stores/users";
 import { ZDVAPI } from "@/utils/api";
 
 const router = useRouter();
 const eventStore = useEventStore();
 const isOpen = ref(false);
 const error = ref();
+const userStore = useUserStore();
 
 type Props = {
   id: number;
@@ -67,7 +69,10 @@ const deleteEventModal = (): void => {
 };
 
 const canDeleteEvent = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ec", "events", "wm"]);
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.events))
+  );
 };
 
 const deleteEvent = async (): Promise<void> => {
