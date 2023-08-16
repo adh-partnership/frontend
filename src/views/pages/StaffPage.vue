@@ -71,7 +71,6 @@ const staff = ref<Staff>({
 onMounted(async () => {
   const { data } = await ZDVAPI.get("/v1/user/staff");
   staff.value = data;
-  console.log(data);
 });
 </script>
 
