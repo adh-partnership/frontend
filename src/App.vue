@@ -25,7 +25,7 @@ import useUserStore from "@/stores/users";
 
 const userStore = useUserStore();
 
-userStore.fetchPermissionGroupsIfNeeded();
+userStore.fetchPermissionGroups();
 </script>
 
 <style lang="scss">
