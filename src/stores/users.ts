@@ -59,11 +59,6 @@ const useUserStore = defineStore("user", {
         this.hasFetched = true;
       }
     },
-    async fetchPermissionGroupsIfNeeded() {
-      if (this.permissionGroups === null) {
-        await this.fetchPermissionGroups();
-      }
-    },
     async fetchPermissionGroups() {
       try {
         const { data } = await ZDVAPI.get("/v1/authorization/groups");
