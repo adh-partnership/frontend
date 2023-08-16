@@ -14,7 +14,7 @@
     />
     <StaffCard v-for="ta in staff.ta" :key="ta.cid" :controller="ta" position="ta" title="Training Administrator" />
     <StaffCard v-for="ec in staff.ec" :key="ec.cid" :controller="ec" position="ec" title="Events Coordinator" />
-    <StaffCard v-for="ev in staff.events" :key="ev.cid" :controller="ev" position="et" title="Events Team" email="ec" />
+    <TeamCard v-if="staff.events.length > 0" title="Events Team" :controllers="staff.events" position="et" />
     <StaffCard v-for="fe in staff.fe" :key="fe.cid" :controller="fe" position="fe" title="Facility Engineer" />
     <TeamCard
       v-if="staff.facilities.length > 0"
