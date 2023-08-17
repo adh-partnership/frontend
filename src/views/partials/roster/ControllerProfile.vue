@@ -309,7 +309,7 @@ const clearDiscord = async (): Promise<void> => {
   try {
     discordButtonState.value = ButtonStates.Saving;
     const result = await ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
-      discord_id: "",
+      discord_id: "-1",
     });
     if (result.status === 200) {
       discordButtonState.value = ButtonStates.Saved;
