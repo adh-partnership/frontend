@@ -1,6 +1,6 @@
-<!-- Adapted from https://github.com/Nikolai558/Equipment-Suffix-Generator under MIT license -->
-
 <!--
+  Adapted from https://github.com/Nikolai558/Equipment-Suffix-Generator under MIT license
+
   NOTE: the unescaped HTML that's being shown here is part of a static
   set of strings. No user input is being displayed in this manner.
 -->
@@ -10,7 +10,7 @@
   <h2>Equipment Suffix Generator</h2>
   <div v-if="suffix">
     <p>
-      Equipment suffix: <span class="text-blue-500">{{ suffix }}</span>
+      Equipment suffix: <span class="text-blue-500">/{{ suffix }}</span>
     </p>
   </div>
   <div v-else-if="questionIndex < QUESTIONS.length">
@@ -164,9 +164,15 @@ const QUESTIONS: Question[] = [
 ];
 
 enum Answer {
-  Unselected = 0,
-  Yes = 1,
-  No = 2,
+  Yes = 0,
+  No = 1,
+  Unselected = 2,
+}
+
+enum Matcher {
+  Yes = 0,
+  No = 1,
+  Any = 2,
 }
 
 enum SelectedExplanation {
@@ -174,6 +180,33 @@ enum SelectedExplanation {
   Simple = 1,
   Technical = 2,
 }
+
+// Transponder, Mode C, GNSS, RNAV, RVSM, DME, TACAN
+const EQUIPMENT: [[Matcher, Matcher, Matcher, Matcher, Matcher, Matcher, Matcher], string][] = [
+  [[Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.No], "X"],
+  [[Matcher.Yes, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.No], "T"],
+  [[Matcher.Yes, Matcher.Yes, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.No], "U"],
+
+  [[Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.Yes, Matcher.No], "D"],
+  [[Matcher.Yes, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.Yes, Matcher.No], "B"],
+  [[Matcher.Yes, Matcher.Yes, Matcher.No, Matcher.No, Matcher.No, Matcher.Yes, Matcher.No], "B"],
+
+  [[Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.Yes], "M"],
+  [[Matcher.Yes, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.Yes], "N"],
+  [[Matcher.Yes, Matcher.Yes, Matcher.No, Matcher.No, Matcher.No, Matcher.No, Matcher.Yes], "P"],
+
+  [[Matcher.No, Matcher.No, Matcher.No, Matcher.Yes, Matcher.No, Matcher.Any, Matcher.Any], "Y"],
+  [[Matcher.Yes, Matcher.No, Matcher.No, Matcher.Yes, Matcher.No, Matcher.Any, Matcher.Any], "C"],
+  [[Matcher.Yes, Matcher.Yes, Matcher.No, Matcher.Yes, Matcher.No, Matcher.Any, Matcher.Any], "I"],
+
+  [[Matcher.No, Matcher.No, Matcher.Yes, Matcher.Yes, Matcher.No, Matcher.Any, Matcher.Any], "V"],
+  [[Matcher.Yes, Matcher.No, Matcher.Yes, Matcher.Yes, Matcher.No, Matcher.Any, Matcher.Any], "S"],
+  [[Matcher.Yes, Matcher.Yes, Matcher.Yes, Matcher.Yes, Matcher.No, Matcher.Any, Matcher.Any], "G"],
+
+  [[Matcher.No, Matcher.No, Matcher.Any, Matcher.Any, Matcher.Yes, Matcher.Any, Matcher.Any], "W"],
+  [[Matcher.Yes, Matcher.No, Matcher.Any, Matcher.Any, Matcher.Yes, Matcher.Any, Matcher.Any], "Z"],
+  [[Matcher.Yes, Matcher.Yes, Matcher.Any, Matcher.Any, Matcher.Yes, Matcher.Any, Matcher.Any], "L"],
+];
 
 const questionIndex = ref(0);
 const answers: Ref<Record<QuestionCode, Answer>> = ref({
@@ -191,90 +224,27 @@ const suffix: Ref<string | null> = ref(null);
 const makeChoice = (yes: boolean): void => {
   selectedExplanation.value = SelectedExplanation.Neither;
   answers.value[QUESTIONS[questionIndex.value].code] = yes ? Answer.Yes : Answer.No;
-
-  if (questionIndex.value === 0 && !yes) {
-    answers.value.MODEC = Answer.No;
-    questionIndex.value += 1;
-  }
-
   questionIndex.value += 1;
 
-  /* Answers sourced from the ZLA Info Tool */
-
-  if (answers.value.TACAN === Answer.Yes) {
-    if (answers.value.XPDR === Answer.No) {
-      // TACAN, no Transponder
-      suffix.value = "M";
-    } else if (answers.value.MODEC === Answer.Yes) {
-      // TACAN, Transponder with C
-      suffix.value = "P";
-    } else if (answers.value.MODEC === Answer.No) {
-      // TACAN, Transponder without C
-      suffix.value = "N";
+  const current = [
+    answers.value.XPDR,
+    answers.value.MODEC,
+    answers.value.GNSS,
+    answers.value.RNAV,
+    answers.value.RVSM,
+    answers.value.DME,
+    answers.value.TACAN,
+  ];
+  const matching = EQUIPMENT.find(([matchers, _suffix]) => {
+    for (let i = 0; i < 7; i += 1) {
+      if (matchers[i] !== Matcher.Any && matchers[i].valueOf() !== current[i].valueOf()) {
+        return false;
+      }
     }
-  } else if (answers.value.DME === Answer.Yes) {
-    if (answers.value.XPDR === Answer.No) {
-      // DME, no Transponder
-      suffix.value = "D";
-    } else if (answers.value.MODEC === Answer.Yes) {
-      // DME, Transponder with C
-      suffix.value = "A";
-    } else {
-      // DME, Transponder without C
-      suffix.value = "B";
-    }
-  } else if (answers.value.RVSM === Answer.Yes) {
-    if (answers.value.GNSS === Answer.Yes && answers.value.RNAV === Answer.Yes) {
-      // RVSM, Transponder with C, GNSS, and RNAV
-      suffix.value = "L";
-    } else if (answers.value.GNSS === Answer.No && answers.value.RNAV === Answer.Yes) {
-      // RVSM, Transponder with C, no GNSS, RNAV
-      suffix.value = "Z";
-    } else {
-      // RVSM, Transponder with C, no GNSS, no RNAV
-      suffix.value = "W";
-    }
-  } else if (
-    answers.value.RNAV === Answer.Yes &&
-    answers.value.GNSS === Answer.No &&
-    answers.value.RVSM !== Answer.Unselected
-  ) {
-    if (answers.value.XPDR === Answer.No) {
-      // RNAV, no Transponder
-      suffix.value = "Y";
-    } else if (answers.value.MODEC === Answer.Yes) {
-      // RNAV, Transponder with C
-      suffix.value = "I";
-    } else if (answers.value.MODEC === Answer.No) {
-      // RNAV, Transponder without C
-      suffix.value = "C";
-    }
-  } else if (
-    answers.value.RNAV === Answer.Yes &&
-    answers.value.GNSS === Answer.Yes &&
-    answers.value.RVSM !== Answer.Unselected
-  ) {
-    if (answers.value.XPDR === Answer.No) {
-      // RNAV, GNSS, no Transponder
-      suffix.value = "V";
-    } else if (answers.value.MODEC === Answer.Yes) {
-      // RNAV, GNSS, Transponder with C
-      suffix.value = "G";
-    } else if (answers.value.MODEC === Answer.No) {
-      // RNAV, GNSS, Transponder without C
-      suffix.value = "S";
-    }
-  } else if (answers.value.DME === Answer.No) {
-    if (answers.value.XPDR === Answer.No) {
-      // No DME, no Transponder
-      suffix.value = "X";
-    } else if (answers.value.MODEC === Answer.Yes) {
-      // No DME, Transponder with C
-      suffix.value = "U";
-    } else if (answers.value.MODEC === Answer.No) {
-      // No DME, Transponder without C
-      suffix.value = "T";
-    }
+    return true;
+  });
+  if (matching) {
+    suffix.value = matching[1];
   }
 };
 
