@@ -176,6 +176,12 @@ const buttonState = ref(ButtonStates.Idle);
 
 const createEvent = async (): Promise<void> => {
   if (canCreateEvent()) {
+    if (new Date(startDate.value) > new Date(endDate.value)) {
+      buttonState.value = ButtonStates.Error;
+      error.value = "The event's start is after the end";
+      return;
+    }
+
     event.value.start_date = new Date(startDate.value).toISOString();
     event.value.end_date = new Date(endDate.value).toISOString();
     try {
