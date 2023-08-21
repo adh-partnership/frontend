@@ -25,6 +25,11 @@ const fac: Facility = {
       name: "StaffingRequest",
       component: () => import("@/facilities/zdv/views/pages/StaffingRequest.vue"),
     },
+    {
+      path: "/equipment_suffix",
+      name: "Equipment",
+      component: () => import("@/facilities/zlc/views/pages/Equipment.vue"),
+    },
   ],
   roles: [
     {
@@ -242,6 +247,10 @@ const fac: Facility = {
         {
           to: { name: "StaffingRequest" },
           title: "Staffing Request",
+        },
+        {
+          to: { name: "Equipment" },
+          title: "Equipment",
         },
       ],
     },
