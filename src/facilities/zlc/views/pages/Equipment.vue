@@ -7,48 +7,49 @@
 <!-- eslint-disable vue/no-v-html -->
 
 <template>
-  <h2>Equipment Suffix Generator</h2>
+  <h2 class="text-3xl pb-5">Equipment Suffix Generator</h2>
   <div v-if="suffix">
-    <p>
-      Equipment suffix: <span class="text-blue-500">/{{ suffix }}</span>
+    <p class="text-4xl text-center pt-5 pb-10 font-medium">
+      Equipment suffix: <span class="text-blue-500 font-bold">/{{ suffix }}</span>
     </p>
   </div>
   <div v-else-if="questionIndex < QUESTIONS.length">
-    <h4>{{ QUESTIONS[questionIndex].question }}</h4>
+    <p class="text-2xl mb-2">{{ QUESTIONS[questionIndex].question }}</p>
     <div>
       <button
         type="button"
-        class="text-white bg-black focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        class="text-white dark:text-black bg-slate-700 dark:bg-slate-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 text-center"
         @click="makeChoice(true)"
       >
         Yes
       </button>
       <button
         type="button"
-        class="text-white bg-black focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        class="text-white dark:text-black bg-slate-700 dark:bg-slate-300 font-medium rounded-lg text-sm px-5 py-1 text-center"
         @click="makeChoice(false)"
       >
         No
       </button>
     </div>
     <div>
-      <p>{{ QUESTIONS[questionIndex].explanationPrimer }}</p>
+      <p class="pt-15 text-lg mb-2">{{ QUESTIONS[questionIndex].explanationPrimer }}</p>
       <button
         type="button"
-        class="text-white bg-black focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        class="text-white dark:text-black bg-slate-700 dark:bg-slate-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 text-center"
         @click="selectedExplanation = SelectedExplanation.Simple"
       >
         Simple Explanation
       </button>
       <button
         type="button"
-        class="text-white bg-black focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        class="text-white dark:text-black bg-slate-700 dark:bg-slate-300 font-medium rounded-lg text-sm px-5 py-1 text-center"
         @click="selectedExplanation = SelectedExplanation.Technical"
       >
         Technical Explanation
       </button>
       <p
         v-if="selectedExplanation !== SelectedExplanation.Neither"
+        class="py-2 text-normal"
         v-html="
           selectedExplanation === SelectedExplanation.Simple
             ? QUESTIONS[questionIndex].explanationSimple
@@ -56,9 +57,8 @@
         "
       ></p>
     </div>
-    <div v-show="QUESTIONS[questionIndex].notes !== null">
-      <h4>Notes</h4>
-      <p v-html="QUESTIONS[questionIndex].notes"></p>
+    <div v-show="QUESTIONS[questionIndex].notes !== null" class="pt-8">
+      <p class="text-normal" v-html="QUESTIONS[questionIndex].notes"></p>
     </div>
   </div>
   <div v-else-if="questionIndex === QUESTIONS.length">
@@ -69,9 +69,10 @@
   </div>
   <button
     type="button"
-    class="text-white bg-black focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+    class="mt-15 text-white dark:text-black bg-red-500 font-medium rounded-lg text-sm px-2 py-1 text-center"
     @click="startOver()"
   >
+    <i class="fa fa-backward" />
     Start over
   </button>
 </template>
@@ -98,7 +99,7 @@ const QUESTIONS: Question[] = [
       'If you can input a code that ATC gives you in a device similar to <a class="text-blue-300" href="https://www.google.com/search?q=airplane+transponder&rlz=1C1CHBD_enUS884US884&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjR5-vG1aTvAhWOMd8KHRo3DgoQ_AUoAnoECBQQBA&biw=1440&bih=797#imgrc=dj86MIjIEMrVDM" target="_blank">THIS</a>, select YES to this question.',
     explanationTechnical:
       'A transponder is an electronic device that produces a response when it receives a radio-frequency interrogation.<br />Aircraft have transponders to assist in identifying them on Air Traffic Control radar.<br />Collision avoidance systems have been developed to use transponder transmissions as a means of detecting aircraft at risk of colliding with each other.<br /><br />Air Traffic Control units use the term "squawk" when they are assigning an aircraft a transponder code, e.g., "Squawk 7421".<br />Squawk thus can be said to mean "select transponder code" or "squawking xxxx" to mean "I have selected transponder code xxxx".',
-    notes: `<span class="text-red-700 font-bold pr-3">Warning</span> On the VATSIM network, simulation of aircraft without a transponder is only permitted with Air Traffic Control approval.`,
+    notes: `<span class="text-red-500 font-bold pr-2">Warning</span> On the VATSIM network, simulation of aircraft without a transponder is only permitted with Air Traffic Control approval.`,
   },
   {
     code: "MODEC",
@@ -109,7 +110,7 @@ const QUESTIONS: Question[] = [
     explanationTechnical:
       '<a class="text-blue-300" href="https://skybrary.aero/articles/transponder" target="_blank">Click here</a> for more information.',
     notes:
-      'The "Mode C" portion of your transponder is usually turned on by selecting the "ALT" option on your transponder.<br /><br /><span class="text-red-700 font-bold pr-3">Warning</span> On the VATSIM network, you must have a transponder that reports altitude to ATC.',
+      'The "Mode C" portion of your transponder is usually turned on by selecting the "ALT" option on your transponder.<br /><br /><span class="text-red-500 font-bold pr-2">Warning</span> On the VATSIM network, you must have a transponder that reports altitude to ATC.',
   },
   {
     code: "GNSS",
@@ -260,5 +261,6 @@ const startOver = (): void => {
     TACAN: Answer.Unselected,
   };
   suffix.value = null;
+  selectedExplanation.value = SelectedExplanation.Neither;
 };
 </script>
