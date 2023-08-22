@@ -25,7 +25,9 @@ import CreateEventModal from "@/views/partials/events/CreateEventModal.vue";
 import EventCard from "@/views/partials/events/EventCard.vue";
 import useEventStore from "@/stores/event";
 import { useRouter } from "vue-router";
+import useUserStore from "@/stores/users";
 
+const userStore = useUserStore();
 const router = useRouter();
 
 const fetched = ref(false);
@@ -33,7 +35,10 @@ const error = ref("");
 const eventStore = useEventStore();
 
 const canCreateEvent = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ec", "events", "wm"]);
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.events) || hasRole(userStore.getPermissionGroups?.admin))
+  );
 };
 
 const goToEvent = (id: number): void => {

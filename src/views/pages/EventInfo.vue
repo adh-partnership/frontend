@@ -265,11 +265,17 @@ const localDate = (s: string): string => {
 };
 
 const canEditEvent = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ec", "events", "wm"]);
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.events) || hasRole(userStore.getPermissionGroups?.admin))
+  );
 };
 
 const canDeleteEvent = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ec", "events", "wm"]);
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.events) || hasRole(userStore.getPermissionGroups?.admin))
+  );
 };
 
 const hasSignedUp = (): boolean => {
@@ -341,6 +347,12 @@ const cancelSignup = async (): Promise<void> => {
 const saveEvent = async (e: Event): Promise<void> => {
   if (canEditEvent()) {
     buttonState.value = ButtonStates.Saving;
+    if (new Date(e.start_date) > new Date(e.end_date)) {
+      buttonState.value = ButtonStates.Error;
+      error.value = "The event's start is after the end";
+      return;
+    }
+
     try {
       const result = await ZDVAPI.patch(`/v1/events/${id}`, e);
       if (result.status === 200) {

@@ -141,6 +141,7 @@ import { Event } from "@/types";
 import { ref } from "vue";
 import { useDark } from "@vueuse/core";
 import useEventStore from "@/stores/event";
+import useUserStore from "@/stores/users";
 import { ZDVAPI } from "@/utils/api";
 
 const isDark = useDark();
@@ -148,6 +149,7 @@ const eventStore = useEventStore();
 const isOpen = ref(false);
 const event = ref({} as Event);
 const error = ref();
+const userStore = useUserStore();
 
 const startDate = ref();
 const endDate = ref();
@@ -158,7 +160,10 @@ const toggleModal = (): void => {
 };
 
 const canCreateEvent = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ec", "events", "wm"]);
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.events) || hasRole(userStore.getPermissionGroups?.admin))
+  );
 };
 
 enum ButtonStates {
@@ -171,6 +176,12 @@ const buttonState = ref(ButtonStates.Idle);
 
 const createEvent = async (): Promise<void> => {
   if (canCreateEvent()) {
+    if (new Date(startDate.value) > new Date(endDate.value)) {
+      buttonState.value = ButtonStates.Error;
+      error.value = "The event's start is after the end";
+      return;
+    }
+
     event.value.start_date = new Date(startDate.value).toISOString();
     event.value.end_date = new Date(endDate.value).toISOString();
     try {

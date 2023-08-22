@@ -177,6 +177,9 @@ import fac from "@/facility";
 import type { Resource } from "@/types";
 import Spinner from "@/components/Spinner.vue";
 import { useRouter } from "vue-router";
+import useUserStore from "@/stores/users";
+
+const userStore = useUserStore();
 
 const newResource = ref({
   name: "",
@@ -281,7 +284,7 @@ const isStaticResource = (resourceName: string): boolean => {
 };
 
 const canEditResources = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "ec", "fe", "wm"]);
+  return isAuthenticated() && hasRole(userStore.getPermissionGroups?.files);
 };
 
 onMounted(() => {

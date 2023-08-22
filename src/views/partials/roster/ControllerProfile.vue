@@ -255,16 +255,25 @@ import type { Controller } from "@/types";
 import fac from "@/facility";
 import { primaryBackground } from "@/utils/colors";
 import useRosterStore from "@/stores/roster";
+import useUserStore from "@/stores/users";
 import { ZDVAPI } from "@/utils/api";
 
 let saveTimer: ReturnType<typeof setTimeout>;
 
+const userStore = useUserStore();
+
 const canWorkController = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.training))
+  );
 };
 
 const canModifycerts = (): boolean => {
-  return isAuthenticated() && hasRole(["atm", "datm", "ta", "wm", "ins", "mtr"]);
+  return (
+    isAuthenticated() &&
+    (hasRole(userStore.getPermissionGroups?.admin) || hasRole(userStore.getPermissionGroups?.training))
+  );
 };
 
 enum ButtonStates {
@@ -300,7 +309,7 @@ const clearDiscord = async (): Promise<void> => {
   try {
     discordButtonState.value = ButtonStates.Saving;
     const result = await ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
-      discord_id: "",
+      discord_id: "-1",
     });
     if (result.status === 200) {
       discordButtonState.value = ButtonStates.Saved;

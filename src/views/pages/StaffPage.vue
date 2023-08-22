@@ -14,18 +14,16 @@
     />
     <StaffCard v-for="ta in staff.ta" :key="ta.cid" :controller="ta" position="ta" title="Training Administrator" />
     <StaffCard v-for="ec in staff.ec" :key="ec.cid" :controller="ec" position="ec" title="Events Coordinator" />
-    <StaffCard v-for="ev in staff.events" :key="ev.cid" :controller="ev" position="et" title="Events Team" email="ec" />
+    <TeamCard v-if="staff.events.length > 0" title="Events Team" :controllers="staff.events" position="et" />
     <StaffCard v-for="fe in staff.fe" :key="fe.cid" :controller="fe" position="fe" title="Facility Engineer" />
-    <StaffCard
-      v-for="ft in staff.facilities"
-      :key="ft.cid"
-      :controller="ft"
-      position="ft"
+    <TeamCard
+      v-if="staff.facilities.length > 0"
       title="Facilities Team"
-      email="fe"
+      :controllers="staff.facilities"
+      position="ft"
     />
     <StaffCard v-for="wm in staff.wm" :key="wm.cid" :controller="wm" position="wm" title="Webmaster" />
-    <StaffCard v-for="wt in staff.web" :key="wt.cid" :controller="wt" position="wt" title="Web Team" email="wm" />
+    <TeamCard v-if="staff.web.length > 0" title="Web Team" :controllers="staff.web" position="wt" />
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
     <TeamCard :controllers="staff.instructor" position="ins" title="Instructors" />
