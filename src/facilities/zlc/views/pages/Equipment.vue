@@ -1,10 +1,4 @@
-<!--
-  Adapted from https://github.com/Nikolai558/Equipment-Suffix-Generator under MIT license
-
-  NOTE: the unescaped HTML that's being shown here is part of a static
-  set of strings. No user input is being displayed in this manner.
--->
-<!-- eslint-disable vue/no-v-html -->
+<!-- Adapted from https://github.com/Nikolai558/Equipment-Suffix-Generator under MIT license -->
 
 <template>
   <h2 class="text-3xl pb-5">Equipment Suffix Generator</h2>
@@ -47,18 +41,23 @@
       >
         Technical Explanation
       </button>
-      <p
-        v-if="selectedExplanation !== SelectedExplanation.Neither"
-        class="py-2 text-normal"
-        v-html="
+      <p v-if="selectedExplanation !== SelectedExplanation.Neither" class="py-2 text-normal">
+        {{
           selectedExplanation === SelectedExplanation.Simple
             ? QUESTIONS[questionIndex].explanationSimple
             : QUESTIONS[questionIndex].explanationTechnical
-        "
-      ></p>
+        }}
+        <span v-show="QUESTIONS[questionIndex].infoLink">
+          <br />
+          <br />
+          <a :href="QUESTIONS[questionIndex].infoLink!" class="text-blue-600 dark:text-blue-300 text-lg" target="_blank"
+            >More info</a
+          >
+        </span>
+      </p>
     </div>
     <div v-show="QUESTIONS[questionIndex].notes !== null" class="pt-8">
-      <p class="text-normal" v-html="QUESTIONS[questionIndex].notes"></p>
+      <p class="text-normal">{{ QUESTIONS[questionIndex].notes }}</p>
     </div>
   </div>
   <div v-else-if="questionIndex === QUESTIONS.length">
@@ -87,6 +86,7 @@ type Question = {
   explanationPrimer: string;
   explanationSimple: string;
   explanationTechnical: string;
+  infoLink: string | null;
   notes: string | null;
 };
 
@@ -96,10 +96,13 @@ const QUESTIONS: Question[] = [
     question: "Do you have a Transponder?",
     explanationPrimer: "What is a Transponder?",
     explanationSimple:
-      'If you can input a code that ATC gives you in a device similar to <a class="text-blue-300" href="https://www.google.com/search?q=airplane+transponder&rlz=1C1CHBD_enUS884US884&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjR5-vG1aTvAhWOMd8KHRo3DgoQ_AUoAnoECBQQBA&biw=1440&bih=797#imgrc=dj86MIjIEMrVDM" target="_blank">THIS</a>, select YES to this question.',
+      'If you can input a code that ATC gives you in a device similar to the images at the "More info" link, select YES to this question.',
     explanationTechnical:
-      'A transponder is an electronic device that produces a response when it receives a radio-frequency interrogation.<br />Aircraft have transponders to assist in identifying them on Air Traffic Control radar.<br />Collision avoidance systems have been developed to use transponder transmissions as a means of detecting aircraft at risk of colliding with each other.<br /><br />Air Traffic Control units use the term "squawk" when they are assigning an aircraft a transponder code, e.g., "Squawk 7421".<br />Squawk thus can be said to mean "select transponder code" or "squawking xxxx" to mean "I have selected transponder code xxxx".',
-    notes: `<span class="text-red-500 font-bold pr-2">Warning</span> On the VATSIM network, simulation of aircraft without a transponder is only permitted with Air Traffic Control approval.`,
+      'A transponder is an electronic device that produces a response when it receives a radio-frequency interrogation. Aircraft have transponders to assist in identifying them on Air Traffic Control radar. Collision avoidance systems have been developed to use transponder transmissions as a means of detecting aircraft at risk of colliding with each other. Air Traffic Control units use the term "squawk" when they are assigning an aircraft a transponder code, e.g., "Squawk 7421" Squawk thus can be said to mean "select transponder code" or "squawking xxxx" to mean "I have selected transponder code xxxx".',
+    infoLink:
+      "https://www.google.com/search?q=airplane+transponder&rlz=1C1CHBD_enUS884US884&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjR5-vG1aTvAhWOMd8KHRo3DgoQ_AUoAnoECBQQBA&biw=1440&bih=797#imgrc=dj86MIjIEMrVDM",
+    notes:
+      "Warning! On the VATSIM network, simulation of aircraft without a transponder is only permitted with Air Traffic Control approval.",
   },
   {
     code: "MODEC",
@@ -107,10 +110,10 @@ const QUESTIONS: Question[] = [
     explanationPrimer: 'What is a "Mode-C Transponder"?',
     explanationSimple:
       "If your transponder have the ability to report your altitude to ATC, then answer YES to this question.",
-    explanationTechnical:
-      '<a class="text-blue-300" href="https://skybrary.aero/articles/transponder" target="_blank">Click here</a> for more information.',
+    explanationTechnical: 'See the "More info" link.',
+    infoLink: "https://skybrary.aero/articles/transponder",
     notes:
-      'The "Mode C" portion of your transponder is usually turned on by selecting the "ALT" option on your transponder.<br /><br /><span class="text-red-500 font-bold pr-2">Warning</span> On the VATSIM network, you must have a transponder that reports altitude to ATC.',
+      'The "Mode C" portion of your transponder is usually turned on by selecting the "ALT" option on your transponder. Warning! On the VATSIM network, you must have a transponder that reports altitude to ATC.',
   },
   {
     code: "GNSS",
@@ -118,7 +121,8 @@ const QUESTIONS: Question[] = [
     explanationPrimer: 'What is "GNSS"?',
     explanationSimple: "If your aircraft uses satellites to navigate, answer YES to this question.",
     explanationTechnical:
-      'Global Navigation Satellite System (GNSS) refers to a constellation of satellites providing signals from space that transmit positioning and timing data to GNSS receivers. The receivers then use this data to determine location.<br /><br />By definition, GNSS provides global coverage. Examples of GNSS include Europe\'s Galileo, the USA\'s NAVSTAR Global Positioning System (GPS), Russia\'s Global\'naya Navigatsionnaya Sputnikovaya Sistema (GLONASS) and China\'s BeiDou Navigation Satellite System.<br /><br /><a class="text-blue-300" href="https://www.gsa.europa.eu/european-gnss/what-gnss" target="_blank">Click here</a> for more information.',
+      "Global Navigation Satellite System (GNSS) refers to a constellation of satellites providing signals from space that transmit positioning and timing data to GNSS receivers. The receivers then use this data to determine location. By definition, GNSS provides global coverage. Examples of GNSS include Europe's Galileo, the USA's NAVSTAR Global Positioning System (GPS), Russia's Global'naya Navigatsionnaya Sputnikovaya Sistema (GLONASS) and China's BeiDou Navigation Satellite System.",
+    infoLink: "https://www.gsa.europa.eu/european-gnss/what-gnss",
     notes: null,
   },
   {
@@ -127,8 +131,8 @@ const QUESTIONS: Question[] = [
     explanationPrimer: 'What is "RNAV"?',
     explanationSimple:
       'If ATC told you "Cleared direct (any NAVAID or point)", would you be able to type that into your navigation system and go straight to that point?',
-    explanationTechnical:
-      '<a class="text-blue-300" href="https://www.skybrary.aero/index.php/Area_Navigation_(RNAV)" target="_blank" >Click HERE</a> for more information.',
+    explanationTechnical: 'See the "More info" link.',
+    infoLink: "https://www.skybrary.aero/index.php/Area_Navigation_(RNAV)",
     notes: null,
   },
   {
@@ -137,8 +141,8 @@ const QUESTIONS: Question[] = [
     explanationPrimer: 'What is "RVSM"?',
     explanationSimple:
       "If you have equipment on your aircraft that allows you to fly at altitudes at and between FL290 and FL410 where ATC only has to provide 1,000ft of separation from you, then answer YES to this question.",
-    explanationTechnical:
-      '<a class="text-blue-300" href="https://www.faa.gov/air_traffic/separation_standards/rvsm/" target="_blank">Click here</a> for more information.',
+    explanationTechnical: 'See the "More info" link.',
+    infoLink: "https://www.faa.gov/air_traffic/separation_standards/rvsm/",
     notes:
       "Answering NO to this question may prevent you from being allowed to fly a cruising altitude at or between FL290 and FL410.",
   },
@@ -148,8 +152,9 @@ const QUESTIONS: Question[] = [
     explanationPrimer: 'What is "DME"?',
     explanationSimple:
       "If your aircraft has the ability to tell how far away you are from a point or NAVAID, answer YES to this question.",
-    explanationTechnical:
-      '<a class="text-blue-300" href="https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/techops/navservices/gbng/lpdme/" target="_blank">Click here</a> for more information.',
+    explanationTechnical: 'See the "More info" link.',
+    infoLink:
+      "https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/techops/navservices/gbng/lpdme/",
     notes: null,
   },
   {
@@ -159,7 +164,8 @@ const QUESTIONS: Question[] = [
     explanationSimple:
       "Generally speaking, unless you are flying a military aircraft, you will likely answer NO to this question.",
     explanationTechnical:
-      "A tactical air navigation system (TACAN) is a navigation system used by military aircraft.<br />It provides the user with bearing and distance (slant-range or hypotenuse) to a ground or ship-borne station.<br />It is a more accurate version of the VOR/DME system that provides bearing and range information for civil aviation.<br />Aircraft equipped with TACAN avionics can use this system for en route navigation as well as non-precision approaches to landing fields.",
+      "A tactical air navigation system (TACAN) is a navigation system used by military aircraft. It provides the user with bearing and distance (slant-range or hypotenuse) to a ground or ship-borne station. It is a more accurate version of the VOR/DME system that provides bearing and range information for civil aviation. Aircraft equipped with TACAN avionics can use this system for en route navigation as well as non-precision approaches to landing fields.",
+    infoLink: null,
     notes: null,
   },
 ];
