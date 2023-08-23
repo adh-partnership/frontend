@@ -61,8 +61,8 @@ const options: Options = {
   },
   theme: {
     common: {
-      saturday: { color: "black" },
-      today: { color: "black" },
+      saturday: { color: "#000" },
+      today: { color: "#000" },
     },
     week: {},
   },
@@ -152,6 +152,10 @@ onMounted(() => {
 
   .toastui-calendar-popup-confirm {
     background-color: green;
+  }
+
+  .toastui-calendar-day-name-item {
+    color: black !important;
   }
 }
 </style>
