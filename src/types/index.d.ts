@@ -62,6 +62,7 @@ export interface Link {
   sublinks?: Link[];
   auth?: boolean;
   roles?: string[];
+  rostered_controller?: boolean;
   sameWindow?: boolean;
   weight?: number;
 }

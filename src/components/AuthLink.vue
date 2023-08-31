@@ -1,7 +1,10 @@
 <template>
-  <RouterLink v-if="display" v-bind="$attrs" :to="props.to">
+  <RouterLink v-if="display && to !== undefined" v-bind="$attrs" :to="props.to!">
     <slot />
   </RouterLink>
+  <a v-else-if="display && href !== undefined" v-bind="$attrs" :href="props.href!" :target="href && '_blank'">
+    <slot />
+  </a>
   <div v-else-if="!display && !hideUnauthed">
     <slot />
   </div>
@@ -15,14 +18,19 @@ import useUserStore from "@/stores/users";
 
 const props = withDefaults(
   defineProps<{
-    to: RouteLocationRaw;
+    to?: RouteLocationRaw;
+    href?: string;
     hideUnauthed?: boolean | undefined;
     auth?: boolean | undefined;
     roles?: string[];
+    rostered_controller?: boolean;
   }>(),
   {
+    to: undefined,
+    href: undefined,
     auth: undefined,
     hideUnauthed: undefined,
+    rostered_controller: false,
     roles: () => [],
   }
 );
@@ -36,6 +44,9 @@ const display = computed(() => {
   if (props.auth) {
     if (props.roles !== undefined && props.roles.length > 0) {
       return store.user !== null && props.roles.some((role) => store.user?.roles.includes(role));
+    }
+    if (props.rostered_controller !== undefined && props.rostered_controller) {
+      return store.user !== null && ["home", "visitor"].includes(store.user?.controller_type);
     }
 
     return store.user !== null;
