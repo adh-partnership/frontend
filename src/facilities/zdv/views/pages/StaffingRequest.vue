@@ -79,11 +79,17 @@
             <label for="endDate" :class="labelClass + ' required'"> End date & time </label>
           </div>
         </div>
-        <div class="relative z-0 mb-4 w-full group col-span-1">
-          <input id="contactInfo" v-model="form.contactInfo" type="text" :class="inputClass" />
-          <label for="contactInfo" :class="labelClass + ' required'">
-            Contact info (organization homepage, email, Discord ID, etc.)
-          </label>
+        <div class="grid md:grid-cols-2 md:gap-6">
+          <div class="relative z-0 mb-4 w-full group col-span-1">
+            <input id="contactInfo" v-model="form.contactInfo" type="text" :class="inputClass" />
+            <label for="contactInfo" :class="labelClass + ' required'">
+              Contact info (homepage, email, Discord ID, etc.)
+            </label>
+          </div>
+          <div class="relative z-0 mb-4 w-full group col-span-1">
+            <input id="organization" v-model="form.organization" type="text" :class="inputClass" />
+            <label for="organization" :class="labelClass">Organization (if part of one)</label>
+          </div>
         </div>
         <textarea
           id="description"
@@ -161,13 +167,22 @@ const form = ref({
   endDate: null,
   bannerUrl: null,
   contactInfo: null,
+  organization: null,
   comments: "",
 });
 
 const formValid = computed(() => {
-  const f = form.value;
   return (
-    f.departureAirport && f.arrivalAirport && f.pilots && f.pilots > 0 && f.startDate && f.endDate && f.contactInfo
+    form.value.departureAirport &&
+    form.value.arrivalAirport &&
+    form.value.departureAirport.length >= 3 &&
+    form.value.arrivalAirport.length >= 3 &&
+    form.value.pilots &&
+    form.value.pilots > 0 &&
+    form.value.startDate &&
+    form.value.endDate &&
+    form.value.endDate > form.value.startDate &&
+    form.value.contactInfo
   );
 });
 
