@@ -36,16 +36,6 @@
           </div>
         </div>
         <div class="grid md:grid-cols-2 md:gap-6">
-          <div class="relative z-0 mb-4 w-full group col-span-1">
-            <input id="pilots" v-model="form.pilots" type="number" min="1" :class="inputClass" />
-            <label for="pilots" :class="labelClass + ' required'"> Number of Pilots (estimated) </label>
-          </div>
-          <div class="relative z-0 mb-4 w-full group col-span-1">
-            <input id="bannerUrl" v-model="form.bannerUrl" type="url" :class="inputClass" />
-            <label for="bannerUrl" :class="labelClass"> Banner URL (if you have one) </label>
-          </div>
-        </div>
-        <div class="grid md:grid-cols-2 md:gap-6">
           <div class="relative z-20 mb-4 w-full group col-span-1">
             <DatePicker
               v-model="form.startDate"
@@ -77,6 +67,16 @@
               </template>
             </DatePicker>
             <label for="endDate" :class="labelClass + ' required'"> End date & time </label>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 md:gap-6">
+          <div class="relative z-0 mb-4 w-full group col-span-1">
+            <input id="pilots" v-model="form.pilots" type="number" min="1" :class="inputClass" />
+            <label for="pilots" :class="labelClass + ' required'"> Number of Pilots (estimated) </label>
+          </div>
+          <div class="relative z-0 mb-4 w-full group col-span-1">
+            <input id="bannerUrl" v-model="form.bannerUrl" type="url" :class="inputClass" />
+            <label for="bannerUrl" :class="labelClass"> Banner URL (if you have one) </label>
           </div>
         </div>
         <div class="grid md:grid-cols-2 md:gap-6">
