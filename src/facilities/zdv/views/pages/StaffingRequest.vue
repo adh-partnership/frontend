@@ -197,11 +197,14 @@ const submit = async (): Promise<void> => {
     }
     submitButtonState.value = ButtonStates.Saving;
     await ZDVAPI.post("/v1/staffing", {
-      startDate: (form.value.startDate ?? new Date()).toLocaleString("en-US"),
-      endDate: (form.value.endDate ?? new Date()).toLocaleString("en-US"),
       departureAirport: form.value.departureAirport,
       arrivalAirport: form.value.arrivalAirport,
+      startDate: (form.value.startDate ?? new Date()).toLocaleString("en-US"),
+      endDate: (form.value.endDate ?? new Date()).toLocaleString("en-US"),
       pilots: form.value.pilots,
+      contactInfo: form.value.contactInfo,
+      organization: form.value.organization,
+      bannerUrl: form.value.bannerUrl,
       comments: form.value.comments,
     });
     submitButtonState.value = ButtonStates.Saved;
