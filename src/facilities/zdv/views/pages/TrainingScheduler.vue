@@ -108,7 +108,6 @@ import { hasRole, isAuthenticated } from "@/utils/auth";
 import { DatePicker } from "v-calendar";
 import { useDark } from "@vueuse/core";
 import { ZDVAPI } from "@/utils/api";
-import { AttributeConfig } from "v-calendar/dist/types/src/utils/attribute";
 import Alert from "@/components/Alert.vue";
 
 type Session = {
@@ -167,7 +166,7 @@ const canBeTrainee = (): boolean => {
   return isAuthenticated() && userStore.user?.controller_type !== "none";
 };
 
-const calendarAttributes = computed((): AttributeConfig[] => {
+const calendarAttributes = computed((): unknown[] => {
   // TODO Convert sessions from backend to attributes for the calendar
   // https://vcalendar.io/calendar/attributes.html
   return [];
@@ -190,7 +189,7 @@ const sessionsCurrentDate = computed(() => {
 
 const retrieveAllSessions = async (): Promise<void> => {
   ZDVAPI.get("/v1/training/requests").then((r) => {
-    sessions.value = r.data.filter((session: Session) => {
+    sessions.value = (r.data ?? []).filter((session: Session) => {
       return new Date(session.session_date) >= minimumDate;
     });
     loading.value = false;
