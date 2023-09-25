@@ -9,7 +9,7 @@
     <div v-if="props.clouds">{{ props.weather.clouds }}</div>
     <div v-if="props.precipitation">{{ props.weather.precipitation }}</div>
     <div v-if="props.rules" class="text-right">
-      <WeatherBadge :flight-category="props.weather.rules" slim />
+      <WeatherBadge :flight-category="props.weather.rules" :raw="props.weather.raw" slim />
     </div>
   </div>
 </template>
@@ -28,6 +28,7 @@ type WeatherType = {
   clouds: string;
   precipitation: string;
   rules: string;
+  raw: string;
 };
 
 interface Props {

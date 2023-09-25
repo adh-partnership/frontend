@@ -46,6 +46,7 @@ type WeatherType = {
   clouds: string;
   precipitation: string;
   rules: string;
+  raw: string;
 };
 
 interface Props {
@@ -132,6 +133,7 @@ const updateWeather = (): void => {
         visibility: `${metar.visibility?.miles} nm`,
         precipitation: metar.conditions.join(" "),
         rules: (metar.flight_category as string).toLowerCase(),
+        raw,
       };
       if ((metar.wind?.speed_kts as number) < 3) {
         w.wind = "Calm";

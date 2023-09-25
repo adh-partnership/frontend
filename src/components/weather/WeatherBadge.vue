@@ -1,6 +1,7 @@
 <template>
   <button
     :class="`wx-badge wx-badge-${props.flightCategory.toLowerCase()} ${props.slim ? 'wx-badge-slim' : ''}`"
+    :title="props.raw"
     disabled
   >
     {{ props.flightCategory }}
@@ -11,6 +12,7 @@
 const props = defineProps<{
   flightCategory: string;
   slim?: boolean;
+  raw?: string;
 }>();
 </script>
 
