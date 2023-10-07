@@ -342,10 +342,12 @@ const toggleModal = (s: string): void => {
 };
 
 const toggleAssignDropdown = (id: number): void => {
-  for (const pos of Object.keys(assign.value)) {
-    const position = parseInt(pos);
+  const keys = Object.keys(assign.value);
+  for (let i = 0; i < keys.length; i += 1) {
+    const pos = keys[i];
+    const position = parseInt(pos, 10);
     if (position !== id) {
-      assign.value[parseInt(pos)] = false;
+      assign.value[parseInt(pos, 10)] = false;
     }
   }
   assign.value[id] = !assign.value[id];
