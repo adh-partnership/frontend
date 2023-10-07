@@ -83,6 +83,8 @@ const props = defineProps<Props>();
 const toggleModal = (): void => {
   isOpen.value = !isOpen.value;
   window.scrollTo(0, 0);
+  position.value.position = "";
+  error.value = null;
 };
 
 const canCreatePosition = (): boolean => {
@@ -135,6 +137,7 @@ const createPosition = async (): Promise<void> => {
           .then(() => {
             isOpen.value = false;
             position.value.position = "";
+            error.value = null;
           })
           .catch(() => {
             buttonState.value = ButtonStates.Error;
