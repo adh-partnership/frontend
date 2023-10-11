@@ -17,7 +17,7 @@
               <button
                 type="button"
                 class="btn bg-yellow-400 text-white font-bold py-0.5 px-2 ml-2 rounded"
-                @click="assign[position.id] = !assign[position.id]"
+                @click="() => toggleAssignDropdown(position.id)"
               >
                 <i class="fas fa-user"></i>
               </button>
@@ -96,7 +96,7 @@
               <button
                 type="button"
                 class="btn bg-yellow-400 text-white font-bold py-0.5 px-2 ml-2 rounded"
-                @click="assign[position.id] = !assign[position.id]"
+                @click="() => toggleAssignDropdown(position.id)"
               >
                 <i class="fas fa-user"></i>
               </button>
@@ -175,7 +175,7 @@
               <button
                 type="button"
                 class="btn bg-yellow-400 text-white font-bold py-0.5 px-2 ml-2 rounded"
-                @click="assign[position.id] = !assign[position.id]"
+                @click="() => toggleAssignDropdown(position.id)"
               >
                 <i class="fas fa-user"></i>
               </button>
@@ -332,13 +332,25 @@ type Props = {
 };
 const props = defineProps<Props>();
 
-const assign = ref({});
+const assign = ref<Record<number, boolean>>({});
 
 const toggleModal = (s: string): void => {
   assignPosSelected.value = s;
   isOpen.value = !isOpen.value;
   window.scrollTo(0, 0);
   error.value = null;
+};
+
+const toggleAssignDropdown = (id: number): void => {
+  const keys = Object.keys(assign.value);
+  for (let i = 0; i < keys.length; i += 1) {
+    const pos = keys[i];
+    const position = parseInt(pos, 10);
+    if (position !== id) {
+      assign.value[parseInt(pos, 10)] = false;
+    }
+  }
+  assign.value[id] = !assign.value[id];
 };
 
 const enroutePositions = computed(() => {
