@@ -832,17 +832,6 @@ const fac: Facility = {
       ],
     },
     {
-      title: "Profile",
-      sublinks: [
-        {
-          title: "Schedule Training",
-          href: "https://www.picktime.com/zanartcctraining",
-          auth: true,
-          rostered_controller: true,
-        },
-      ],
-    },
-    {
       title: "Facility",
       sublinks: [
         {
