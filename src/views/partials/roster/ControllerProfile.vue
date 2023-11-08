@@ -51,168 +51,24 @@
 
   <h2 class="text-3xl mt-4">Certifications</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 mx-5">
-    <div class="flex items-center">
+    <div
+      v-for="(value, certification) in sortedCertifications(controller.certifications)"
+      :key="certification"
+      class="flex items-center"
+    >
       <label
         class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
         for="ground-cert"
       >
-        Ground
+        {{ value.display_name }}
       </label>
-      <span v-if="!canWorkController()" class="capitalize">{{ certs.ground }}</span>
+      <span v-if="!canWorkController()" class="capitalize">{{ value.value }}</span>
       <select
         v-else
-        id="ground-cert"
-        v-model="certs.ground"
+        :id="`cert-${certification}`"
+        v-model="certs[certification].value"
         data-position="ground"
         class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-        @change="checkMtr('ground')"
-      >
-        <option value="none">None</option>
-        <option value="training">Training</option>
-        <option value="solo">Solo</option>
-        <option value="certified">Certified</option>
-      </select>
-    </div>
-    <div v-if="!fac.skipMajor" class="flex items-center">
-      <label
-        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
-        for="major-ground-cert"
-      >
-        Major Ground
-      </label>
-      <span v-if="!canWorkController()" class="capitalize">{{ certs.major_ground }}</span>
-      <select
-        v-else
-        id="major-ground-cert"
-        v-model="certs.major_ground"
-        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-        @change="checkMtr('major_ground')"
-      >
-        <option value="none">None</option>
-        <option value="training">Training</option>
-        <option value="solo">Solo</option>
-        <option value="certified">Certified</option>
-      </select>
-    </div>
-    <div class="flex items-center">
-      <label
-        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
-        for="local-cert"
-      >
-        Local
-      </label>
-      <span v-if="!canWorkController()" class="capitalize">{{ certs.local }}</span>
-      <select
-        v-else
-        id="local-cert"
-        v-model="certs.local"
-        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-        @change="checkMtr('local')"
-      >
-        <option value="none">None</option>
-        <option value="training">Training</option>
-        <option value="solo">Solo</option>
-        <option value="certified">Certified</option>
-      </select>
-    </div>
-    <div v-if="!fac.skipMajor" class="flex items-center">
-      <label
-        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
-        for="major-local-cert"
-      >
-        Major Local
-      </label>
-      <span v-if="!canWorkController()" class="capitalize">{{ certs.major_local }}</span>
-      <select
-        v-else
-        id="major-local-cert"
-        v-model="certs.major_local"
-        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-        @change="checkMtr('major_local')"
-      >
-        <option value="none">None</option>
-        <option value="training">Training</option>
-        <option value="solo">Solo</option>
-        <option value="certified">Certified</option>
-      </select>
-    </div>
-    <div class="flex items-center">
-      <label
-        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
-        for="approach-cert"
-      >
-        Approach
-      </label>
-      <span v-if="!canWorkController()" class="capitalize">{{ certs.approach }}</span>
-      <select
-        v-else
-        id="approach-cert"
-        v-model="certs.approach"
-        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-        @change="checkMtr('approach')"
-      >
-        <option value="none">None</option>
-        <option value="training">Training</option>
-        <option value="solo">Solo</option>
-        <option value="certified">Certified</option>
-      </select>
-    </div>
-    <div v-if="!fac.skipMajor" class="flex items-center">
-      <label
-        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
-        for="major-approach-cert"
-      >
-        Major Approach
-      </label>
-      <span v-if="!canWorkController()" class="capitalize">{{ certs.major_approach }}</span>
-      <select
-        v-else
-        id="major-approach-cert"
-        v-model="certs.major_approach"
-        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-        @change="checkMtr('major_approach')"
-      >
-        <option value="none">None</option>
-        <option value="training">Training</option>
-        <option value="solo">Solo</option>
-        <option value="certified">Certified</option>
-      </select>
-    </div>
-    <div class="flex items-center">
-      <label
-        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
-        for="enroute-cert"
-      >
-        Enroute
-      </label>
-      <span v-if="!canWorkController()" class="capitalize">{{ certs.enroute }}</span>
-      <select
-        v-else
-        id="enroute-cert"
-        v-model="certs.enroute"
-        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-        @change="checkMtr('enroute')"
-      >
-        <option value="none">None</option>
-        <option value="training">Training</option>
-        <option value="solo">Solo</option>
-        <option value="certified">Certified</option>
-      </select>
-    </div>
-    <div v-if="fac.hasOceanicCert" class="flex items-center">
-      <label
-        class="w-1/3 block text-gray-500 dark:text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4"
-        for="oceanic-cert"
-      >
-        Oceanic
-      </label>
-      <span v-if="!canWorkController()" class="capitalize">{{ certs.oceanic }}</span>
-      <select
-        v-else
-        id="oceanic-cert"
-        v-model="certs.oceanic"
-        class="block w-2/3 bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
-        @change="checkMtr('oceanic')"
       >
         <option value="none">None</option>
         <option value="training">Training</option>
@@ -251,8 +107,7 @@
 import { hasRole, isAuthenticated } from "@/utils/auth";
 import { onUnmounted, ref } from "vue";
 
-import type { Controller } from "@/types";
-import fac from "@/facility";
+import type { Controller, CertificationItem } from "@/types";
 import { primaryBackground } from "@/utils/colors";
 import useRosterStore from "@/stores/roster";
 import useUserStore from "@/stores/users";
@@ -276,6 +131,15 @@ const canModifycerts = (): boolean => {
   );
 };
 
+// Sort by certification item's order property
+function sortedCertifications(certs: { [key: string]: CertificationItem }): { [key: string]: CertificationItem } {
+  return Object.fromEntries(
+    Object.entries(certs)
+      .filter(([, cert]) => !cert.hidden)
+      .sort(([, a], [, b]) => a.order - b.order)
+  );
+}
+
 enum ButtonStates {
   Idle = 0,
   Saving = 1,
@@ -294,16 +158,6 @@ const props = withDefaults(
 
 const certs = ref({ ...props.controller.certifications }); // Dereference
 const store = useRosterStore();
-
-const checkMtr = (
-  field: "ground" | "major_ground" | "local" | "major_local" | "approach" | "major_approach" | "enroute" | "oceanic"
-): void => {
-  if (hasRole(["mtr"]) && !field.startsWith("major_")) {
-    if (certs.value[field] !== props.controller.certifications[field] && certs.value[field] === "certified") {
-      certs.value[field] = props.controller.certifications[field];
-    }
-  }
-};
 
 const clearDiscord = async (): Promise<void> => {
   try {
@@ -335,40 +189,15 @@ const clearDiscord = async (): Promise<void> => {
 };
 
 const save = async (): Promise<void> => {
-  // This is going to be complicated...
-  if (hasRole(["mtr"])) {
-    // MTRs can only change minor certs.value. between none, training, solo.... major up to and incl. certified
-
-    // Check if minor ground is changing... we're just going to change it back silently
-    if (certs.value.ground !== props.controller.certifications.ground && certs.value.ground === "certified") {
-      certs.value.ground = props.controller.certifications.ground;
-    }
-    // Now minor local
-    if (certs.value.local !== props.controller.certifications.local && certs.value.local === "certified") {
-      certs.value.local = props.controller.certifications.local;
-    }
-    // Now minor approach
-    if (certs.value.approach !== props.controller.certifications.approach && certs.value.approach === "certified") {
-      certs.value.approach = props.controller.certifications.approach;
-    }
-    // Now enroute
-    if (certs.value.enroute !== props.controller.certifications.enroute && certs.value.enroute === "certified") {
-      certs.value.enroute = props.controller.certifications.enroute;
-    }
-    // Now oceanic
-    if (
-      fac.hasOceanicCert &&
-      certs.value.oceanic !== props.controller.certifications.oceanic &&
-      certs.value.oceanic === "certified"
-    ) {
-      certs.value.oceanic = props.controller.certifications.oceanic;
-    }
-  }
+  const certifications: { [key: string]: { value: string } } = {};
+  Object.keys(certs.value).forEach((key) => {
+    certifications[key] = { value: certs.value[key].value };
+  });
 
   buttonState.value = ButtonStates.Saving;
   try {
     const result = await ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
-      certifications: certs.value,
+      certifications,
     });
     if (result.status === 200) {
       buttonState.value = ButtonStates.Saved;

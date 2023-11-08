@@ -22,10 +22,13 @@ import Header from "@/views/partials/Header.vue";
 import ReloadPrompt from "@/components/ReloadPrompt.vue";
 import Spinner from "@/components/Spinner.vue";
 import useUserStore from "@/stores/users";
+import useRosterStore from "@/stores/roster";
 
 const userStore = useUserStore();
+const rosterStore = useRosterStore();
 
 userStore.fetchPermissionGroups();
+rosterStore.fetchCertifications();
 </script>
 
 <style lang="scss">

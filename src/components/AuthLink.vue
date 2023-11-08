@@ -23,14 +23,14 @@ const props = withDefaults(
     hideUnauthed?: boolean | undefined;
     auth?: boolean | undefined;
     roles?: string[];
-    rostered_controller?: boolean;
+    rosteredController?: boolean;
   }>(),
   {
     to: undefined,
     href: undefined,
     auth: undefined,
     hideUnauthed: undefined,
-    rostered_controller: false,
+    rosteredController: false,
     roles: () => [],
   }
 );
@@ -45,7 +45,7 @@ const display = computed(() => {
     if (props.roles !== undefined && props.roles.length > 0) {
       return store.user !== null && props.roles.some((role) => store.user?.roles.includes(role));
     }
-    if (props.rostered_controller !== undefined && props.rostered_controller) {
+    if (props.rosteredController !== undefined && props.rosteredController) {
       return store.user !== null && ["home", "visitor"].includes(store.user?.controller_type);
     }
 

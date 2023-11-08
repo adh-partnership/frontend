@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
 
-import { Controller } from "@/types";
+import { CertificationItem, Controller } from "@/types";
 import { ZDVAPI } from "@/utils/api";
 
 interface RosterState {
   controllers: Controller[];
+  certifications: CertificationItem[];
   fetching: boolean;
   hasFetched: boolean;
   fetched: Date;
@@ -15,6 +16,7 @@ const useRosterStore = defineStore("roster", {
   state: () =>
     ({
       controllers: [],
+      certifications: [],
       fetching: false,
       hasFetched: false,
       fetched: new Date(),
@@ -39,6 +41,9 @@ const useRosterStore = defineStore("roster", {
     getInactiveRoster: (state) => {
       return state.controllers.filter((c) => c.controller_type === "none");
     },
+    getCertification: (state) => (name: string) => {
+      return state.certifications.find((c) => c.name === name);
+    },
   },
   actions: {
     updateController(cid: number, controller: Controller) {
@@ -61,6 +66,14 @@ const useRosterStore = defineStore("roster", {
         this.fetching = false;
         this.hasFetched = true;
         this.fetched = new Date();
+      }
+    },
+    async fetchCertifications() {
+      try {
+        const { data } = await ZDVAPI.get("/v1/certifications");
+        this.certifications = data;
+      } catch (e) {
+        this.certifications = [];
       }
     },
   },

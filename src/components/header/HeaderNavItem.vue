@@ -5,7 +5,7 @@
       :href="props.href"
       :auth="props.auth"
       :roles="props.roles"
-      :controller="props.controller"
+      :rostered-controller="props.rosteredController"
       :hide-unauthed="props.auth === true"
       class="block text-[16px] font-semibold group-hover:text-colorado-yellow py-7 text-white group-hover:cursor-pointer"
       @click="checkClick()"
@@ -22,7 +22,7 @@
           :href="link.href"
           :auth="link.auth"
           :roles="link.roles"
-          :controller="link.controller"
+          :rostered-controller="link.rosteredController"
           :hide-unauthed="link.auth === true"
           class="block text-heading-light dark:text-white-deep font-semibold py-1 px-4 hover:text-primary dark:hover:text-colorado-yellow hover:bg-gray-light dark:hover:bg-body"
         >

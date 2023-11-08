@@ -107,6 +107,7 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
+  rosterStore.fetchCertifications();
   if (controller.value) {
     loading.value = false;
   } else {

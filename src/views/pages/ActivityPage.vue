@@ -7,9 +7,9 @@
     <table class="w-full">
       <thead class="border-b-2 dark:border-gray-800">
         <tr>
-          <th class="text-left">Name</th>
-          <th>CID</th>
-          <th>Rating</th>
+          <th class="text-left">Name<br />CID (Rating)</th>
+          <th>{{ months[4] }}</th>
+          <th>{{ months[3] }}</th>
           <th>{{ months[2] }}</th>
           <th>{{ months[1] }}</th>
           <th>{{ months[0] }}</th>
@@ -23,10 +23,15 @@
           @click="goToUser(c.cid)"
         >
           <td class="py-2 border-b-1 dark:border-gray-900">
-            {{ c.first_name }} {{ c.last_name }} ({{ c.operating_initials || "none" }})
+            {{ c.first_name }} {{ c.last_name }} ({{ c.operating_initials || "none" }})<br />
+            {{ c.cid }} ({{ c.rating }})
           </td>
-          <td class="text-center py-2 border-b-1 dark:border-gray-900">{{ c.cid }}</td>
-          <td class="text-center py-2 border-b-1 dark:border-gray-900">{{ c.rating }}</td>
+          <td class="text-center py-2 border-b-1 dark:border-gray-900">
+            {{ getHours(minus4.find((c2) => c2.cid === c.cid)) }}
+          </td>
+          <td class="text-center py-2 border-b-1 dark:border-gray-900">
+            {{ getHours(minus3.find((c2) => c2.cid === c.cid)) }}
+          </td>
           <td class="text-center py-2 border-b-1 dark:border-gray-900">
             {{ getHours(minus2.find((c2) => c2.cid === c.cid)) }}
           </td>
@@ -50,6 +55,8 @@ const loading = ref(0);
 const curMonth: Ref<ControllerStats[]> = ref([]);
 const minus1: Ref<ControllerStats[]> = ref([]);
 const minus2: Ref<ControllerStats[]> = ref([]);
+const minus3: Ref<ControllerStats[]> = ref([]);
+const minus4: Ref<ControllerStats[]> = ref([]);
 const months: Ref<string[]> = ref([]);
 const endpointMonths: string[] = [];
 const router = useRouter();
@@ -88,7 +95,7 @@ const goToUser = (cid: string | number): void => {
 
 onMounted(() => {
   const today = new Date();
-  for (let i = 0; i < 3; i += 1) {
+  for (let i = 0; i < 5; i += 1) {
     const nd = new Date();
     nd.setDate(1);
     nd.setMonth(today.getMonth() - i);
@@ -118,10 +125,26 @@ onMounted(() => {
     .catch(() => {
       router.push({ name: "ErrorCrash" });
     });
-  // Get stats for 2 months ago
+  // Get stats for 3 months ago
   ZDVAPI.get(`/v1/stats/historical/${endpointMonths[2]}`)
     .then((res) => {
       minus2.value = res.data;
+      loading.value += 1;
+    })
+    .catch(() => {
+      router.push({ name: "ErrorCrash" });
+    });
+  ZDVAPI.get(`/v1/stats/historical/${endpointMonths[3]}`)
+    .then((res) => {
+      minus3.value = res.data;
+      loading.value += 1;
+    })
+    .catch(() => {
+      router.push({ name: "ErrorCrash" });
+    });
+  ZDVAPI.get(`/v1/stats/historical/${endpointMonths[4]}`)
+    .then((res) => {
+      minus4.value = res.data;
       loading.value += 1;
     })
     .catch(() => {

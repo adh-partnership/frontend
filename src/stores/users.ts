@@ -17,21 +17,13 @@ interface User {
   last_name: string;
   operating_initials: string;
   controller_type: string;
-  certifications: Certifications;
+  certifications: { [key: string]: string };
   rating: string;
   status: string;
   roles: string[];
   discord_id: string;
   created_at: string;
   updated_at: string;
-}
-
-interface Certifications {
-  delivery: string;
-  ground: string;
-  local: string;
-  approach: string;
-  enroute: string;
 }
 
 const useUserStore = defineStore("user", {

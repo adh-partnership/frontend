@@ -5,7 +5,7 @@
       :href="props.href"
       :auth="props.auth"
       :roles="props.roles"
-      :controller="props.controller"
+      :rostered-controller="props.rosteredController"
       :hide-unauthed="props.auth === true"
       class="font-semibold leading-9 capitalize text-heading-light dark:text-white dark:group-hover:text-colorado-yellow group-hover:text-colorado-red"
       @click="checkClick()"
@@ -28,7 +28,7 @@
           :to="sl.to"
           :href="sl.href"
           :auth="sl.auth"
-          :controller="sl.controller"
+          :rostered-controller="sl.rosteredController"
           :roles="sl.roles"
           :hide-unauthed="sl.auth === true"
         >

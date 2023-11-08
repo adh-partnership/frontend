@@ -3,11 +3,13 @@ import fac from "@/facility";
 import Home from "@/views/pages/HomePage.vue";
 import { nextTick } from "vue";
 import useUserStore from "@/stores/users";
+import { inGroup } from "@/utils/auth";
 
 declare module "vue-router" {
   interface RouteMeta {
     requiresAuth?: boolean;
     requiresRole?: string[] | string;
+    requiresGroup?: string[] | string;
     cidOverridesRole?: boolean;
   }
 }
@@ -57,6 +59,11 @@ const routes = [
     path: "/roster",
     name: "Roster",
     component: () => import("@/views/pages/RosterPage.vue"),
+  },
+  {
+    path: "/certifications",
+    name: "Certifications",
+    component: () => import("@/views/pages/Certifications.vue"),
   },
   {
     path: "/roster/inactive",
@@ -188,13 +195,19 @@ const check: NavigationGuard = (to, from, next): void => {
   }
 
   if (requiresAuth && userStore.user) {
-    const { requiresRole, cidOverridesRole } = to.meta;
+    const { requiresRole, requiresGroup, cidOverridesRole } = to.meta;
     if (cidOverridesRole && to.params.cid === userStore.user.cid.toString()) {
       next();
       return;
     }
     if (requiresRole) {
       if (!userStore.user.roles.some((role) => requiresRole.includes(role))) {
+        next({ name: "Forbidden" });
+        return;
+      }
+    }
+    if (requiresGroup) {
+      if (!inGroup(requiresGroup)) {
         next({ name: "Forbidden" });
         return;
       }

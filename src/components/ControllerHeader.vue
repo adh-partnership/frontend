@@ -4,6 +4,7 @@
       <h1 class="text-2xl mb-0">
         {{ props.controller.first_name }} {{ props.controller.last_name }} -
         {{ props.controller.operating_initials }} ({{ props.controller.cid }}/{{ props.controller.rating }})
+        <span class="capitalize">[{{ controller.status }}]</span>
       </h1>
       <h2 class="text-sm mt-0 mb-1 font-normal">{{ getControllerTitle(props.controller) }}</h2>
     </div>

@@ -55,6 +55,15 @@ export interface AirportWeather {
   taf: string;
 }
 
+export interface CertificationItem {
+  id: number;
+  name: string;
+  display_name: string;
+  order: number;
+  hidden: boolean;
+  value: string;
+}
+
 export interface Link {
   title: string;
   to?: string | RouteLocationRaw;
@@ -62,7 +71,7 @@ export interface Link {
   sublinks?: Link[];
   auth?: boolean;
   roles?: string[];
-  rostered_controller?: boolean;
+  rosteredController?: boolean;
   sameWindow?: boolean;
   weight?: number;
 }
@@ -170,16 +179,7 @@ export type Controller = {
   last_name: string;
   operating_initials: string;
   controller_type: string;
-  certifications: {
-    ground: string;
-    major_ground: string;
-    local: string;
-    major_local: string;
-    approach: string;
-    major_approach: string;
-    enroute: string;
-    oceanic: string;
-  };
+  certifications: { [key: string]: CertificationItem };
   rating: string;
   status: string;
   roles: string[];

@@ -57,6 +57,12 @@ const Links: Link[] = [
     to: "#",
     sublinks: [
       {
+        to: { name: "Certifications" },
+        title: "Certifications",
+        auth: true,
+        roles: ["atm", "datm", "ta", "wm"],
+      },
+      {
         to: { name: "Staff" },
         title: "Staff",
       },

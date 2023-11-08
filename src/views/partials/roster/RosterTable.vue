@@ -9,12 +9,27 @@
     >
       <tbody class="border-collapse text-center w-full">
         <tr>
-          <td class="w-1/10">
+          <td class="w-[5em]">
             <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-400 mb-0">
               {{ controller.operating_initials }}
             </h2>
           </td>
-          <td class="w-2/5 pl-4 py-2 text-left">
+          <td class="w-[2em]">
+            <div
+              class="float-right rounded-full w-[1em] h-[1em]"
+              :class="genStatusClass(controller.status)"
+              :data-tooltip-target="`tooltip-status-${controller.cid}`"
+            ></div>
+            <div
+              :id="`tooltip-status-${controller.cid}`"
+              role="tooltip"
+              class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+            >
+              {{ controller.status }}
+              <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+          </td>
+          <td class="w-3/10 pl-4 py-2 text-left">
             <h5 class="mb-0 text-xl">{{ `${controller.first_name} ${controller.last_name}` }}</h5>
             <p class="mb-0">{{ getControllerTitle(controller) }} ({{ controller.rating }})</p>
           </td>
@@ -41,6 +56,19 @@ const props = defineProps<{
 
 const goToController = (cid: number): void => {
   router.push(`/roster/${cid}`);
+};
+
+const genStatusClass = (status: string): string => {
+  switch (status) {
+    case "active":
+      return "bg-green-500";
+    case "inactive":
+      return "bg-yellow-600";
+    case "loa":
+      return "bg-purple-600";
+    default:
+      return "bg-neutral-500";
+  }
 };
 </script>
 
