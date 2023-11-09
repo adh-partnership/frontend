@@ -41,6 +41,7 @@
         <div class="draggable flex justify-between items-center">
           <div :key="element.id" class="flex">
             {{ element.name }}
+            <span v-if="element.hidden"><i class="fa-solid fa-ghost ml-2"></i></span>
           </div>
           <div class="flex">
             <button
@@ -255,10 +256,14 @@ const saveOrder = async (): Promise<void> => {
   }
 };
 
+function sortedCertifications(certs: CertificationItem[]): CertificationItem[] {
+  return certs.sort((a, b) => a.order - b.order);
+}
+
 const load = async (): Promise<void> => {
   await rosterStore.fetchCertifications();
-  // copy rosterStore.certifications into certifications
-  certifications.value = structuredClone(toRaw(rosterStore.certifications));
+  // We don't want to mess with store data, so clone it... we'll update store on save
+  certifications.value = sortedCertifications(structuredClone(toRaw(rosterStore.certifications)));
   cancelCertification();
 };
 

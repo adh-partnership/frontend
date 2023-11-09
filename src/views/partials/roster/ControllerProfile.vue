@@ -61,6 +61,7 @@
         for="ground-cert"
       >
         {{ value.display_name }}
+        <span v-if="value.hidden"><i class="fa-solid fa-ghost pl-2"></i></span>
       </label>
       <span v-if="!canWorkController()" class="capitalize">{{ value.value }}</span>
       <select
@@ -133,11 +134,7 @@ const canModifycerts = (): boolean => {
 
 // Sort by certification item's order property
 function sortedCertifications(certs: { [key: string]: CertificationItem }): { [key: string]: CertificationItem } {
-  return Object.fromEntries(
-    Object.entries(certs)
-      .filter(([, cert]) => !cert.hidden)
-      .sort(([, a], [, b]) => a.order - b.order)
-  );
+  return Object.fromEntries(Object.entries(certs).sort(([, a], [, b]) => a.order - b.order));
 }
 
 enum ButtonStates {

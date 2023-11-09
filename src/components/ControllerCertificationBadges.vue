@@ -1,10 +1,10 @@
 <template>
-  <div class="mr-2 overflow-hidden dark:mr-2 flex">
+  <div class="mr-2 overflow-hidden dark:mr-2 flex flex-wrap">
     <Badge
       v-for="(value, certification) in sortedCertifications(props.controller.certifications)"
       :key="certification"
       :background-color="genClass(value.value)"
-      class="mr-2"
+      class="mr-2 my-1"
       >{{ value.display_name }}</Badge
     >
   </div>
@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import type { CertificationItem, Controller } from "@/types";
+import fac from "@/facility";
 import Badge from "./Badge.vue";
 
 interface Props {
@@ -25,6 +26,7 @@ function sortedCertifications(certs: { [key: string]: CertificationItem }): { [k
   return Object.fromEntries(
     Object.entries(certs)
       .filter(([, cert]) => !cert.hidden)
+      .filter(([, cert]) => !fac.certificationsHideNone || (fac.certificationsHideNone && cert.value !== "none"))
       .sort(([, a], [, b]) => a.order - b.order)
   );
 }
@@ -65,5 +67,10 @@ function genClass(cert: string): string {
 
 .cert-color-none {
   background-color: #d7dce0;
+}
+
+.dark .cert-color-none {
+  background-color: #2d3748;
+  color: #687179;
 }
 </style>

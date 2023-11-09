@@ -37,6 +37,8 @@ module.exports = {
     "border-l-2",
     "border-colorado-yellow",
     "list-inside",
+    "bg-slate-100",
+    "bg-slate-800"
   ],
   theme: {
     extend: {

@@ -3,37 +3,29 @@
     <table
       v-for="(controller, index) in props.roster"
       :key="controller.cid"
-      class="w-full dark:bg-slate-900 bg-slate-50 cursor-pointer"
-      :class="{ 'bg-slate-100 dark:bg-slate-800': (index - 1) % 2 }"
+      class="w-full cursor-pointer"
+      :class="{ 'bg-slate-100 dark:bg-slate-800': (index - 1) % 2, 'dark:bg-slate-900 bg-slate-50': index % 2 }"
       @click="goToController(controller.cid)"
     >
       <tbody class="border-collapse text-center w-full">
         <tr>
-          <td class="w-[5em]">
+          <td class="w-[5em] py-2">
             <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-400 mb-0">
               {{ controller.operating_initials }}
             </h2>
           </td>
-          <td class="w-[2em]">
+          <td class="w-[2em] py-2">
             <div
               class="float-right rounded-full w-[1em] h-[1em]"
               :class="genStatusClass(controller.status)"
               :data-tooltip-target="`tooltip-status-${controller.cid}`"
-            ></div>
-            <div
-              :id="`tooltip-status-${controller.cid}`"
-              role="tooltip"
-              class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-            >
-              {{ controller.status }}
-              <div class="tooltip-arrow" data-popper-arrow></div>
-            </div>
+            />
           </td>
-          <td class="w-3/10 pl-4 py-2 text-left">
+          <td class="w-3/10 pl-4 text-left py-2">
             <h5 class="mb-0 text-xl">{{ `${controller.first_name} ${controller.last_name}` }}</h5>
             <p class="mb-0">{{ getControllerTitle(controller) }} ({{ controller.rating }})</p>
           </td>
-          <td class="w-1/2 pl-3 py-2 hidden md:inline">
+          <td class="w-full pl-3 hidden md:block py-2">
             <ControllerCertificationBadges :controller="controller" :show-active="true" />
           </td>
         </tr>

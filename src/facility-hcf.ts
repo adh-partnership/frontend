@@ -18,6 +18,7 @@ const fac: Facility = {
   domain: "vhcf.net",
   apiUrl: "https://api.vhcf.net",
   devApiUrl: "https://api.dev.vhcf.net",
+  certificationsHideNone: false,
   navbarClasses: "bg-slate-800 text-white",
   boundaries: {
     center: [

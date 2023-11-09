@@ -10,6 +10,7 @@ const fac: Facility = {
   domain: "zanartcc.org",
   apiUrl: "https://api.zanartcc.org",
   devApiUrl: "https://api.dev.zanartcc.org",
+  certificationsHideNone: false,
   hasOceanicCert: true,
   navbarClasses: "bg-alaska-blue dark:bg-alaska-blue text-white",
   resources: ["Policies", "LOAs", "VRC", "vSTARS", "vERAM", "vATIS", "Misc"],

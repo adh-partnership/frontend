@@ -94,6 +94,7 @@ export type Facility = {
   logo: string;
   apiUrl: string;
   devApiUrl: string;
+  certificationsHideNone: boolean;
   navbarClasses?: string;
   footerClasses?: string;
   primaryBackground?: string;

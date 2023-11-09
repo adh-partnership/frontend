@@ -83,7 +83,7 @@ const rosterStore = useRosterStore();
 const { controllers, lastRoster } = storeToRefs(rosterStore);
 const userStore = useUserStore();
 const cid = route.params.cid === "me" ? userStore.user?.cid : parseInt(route.params.cid as string, 10);
-const controller = ref(cid ? (rosterStore.getController(cid) as Controller) : null);
+const controller = ref(cid ? (rosterStore.getController(cid) as Controller) : ({} as Controller));
 
 const isMe = (): boolean => {
   return isAuthenticated() && cid === userStore.user?.cid;
