@@ -10,7 +10,7 @@ const fac: Facility = {
   domain: "zdvartcc.org",
   apiUrl: "https://api.zdvartcc.org",
   devApiUrl: "https://api.dev.zdvartcc.org",
-  certificationsHideNone: false,
+  certificationsHideNone: true,
   customRoutes: [
     {
       path: "/",
