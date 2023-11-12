@@ -10,7 +10,7 @@ const fac: Facility = {
   domain: "zlcartcc.org",
   apiUrl: "https://api.zlcartcc.org",
   devApiUrl: "https://api.dev.zlcartcc.org",
-  certificationsHideNone: false,
+  certificationsHideNone: true,
   navbarClasses: "bg-saltlake-orange dark:bg-saltlake-orange text-white",
   footerClasses: "bg-saltlake-orange dark:bg-black-deep text-white",
   primaryBackground: "bg-saltlake-orange",
