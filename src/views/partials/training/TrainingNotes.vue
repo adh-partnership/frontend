@@ -44,7 +44,7 @@
                 <td>{{ note.id }}</td>
                 <td>{{ note.position }}</td>
                 <td class="capitalize">{{ convertType(note.type) }}</td>
-                <td>{{ new Date(note.session_date).toDateString() }}</td>
+                <td>{{ getUTCDate(note.session_date) }}</td>
                 <td>{{ note.duration }}</td>
                 <td>{{ note.instructor?.first_name }} {{ note.instructor?.last_name }}</td>
                 <td>
@@ -73,6 +73,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import type { Controller, TrainingNote } from "@/types";
+import { getUTCDate } from "@/utils/helpers";
 import { primaryHover } from "@/utils/colors";
 import type { Ref } from "vue";
 import Spinner from "@/components/Spinner.vue";

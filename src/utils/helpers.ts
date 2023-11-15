@@ -31,6 +31,11 @@ export const convertTime = (since: string): string => {
   return `${hours}+${minutes}`;
 };
 
+export const getUTCDate = (date: string): string => {
+  const d = new Date(date);
+  return `${d.getUTCDate()} ${months[d.getUTCMonth()]}, ${d.getUTCFullYear()}`;
+};
+
 export const getControllerTitle = (controller: Controller): string => {
   if (controller.roles.includes("atm")) {
     return "Air Traffic Manager";
