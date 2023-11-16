@@ -36,6 +36,7 @@ module.exports = {
     "w-6",
     "border-l-2",
     "border-colorado-yellow",
+    "bg-fortworth-blue",
     "list-inside",
     "bg-slate-100",
     "bg-slate-800"
@@ -65,6 +66,8 @@ module.exports = {
         "alaska-gold": "#ffb612",
         "hawaii-blue": "#80d8ff",
         "saltlake-orange": "#a8672a",
+        "fortworth-blue": "#002868",
+        "fortworth-red": "#bf0a30",
         white: {
           DEFAULT: "#FFFFFF",
           light: "#f9f9f9",
