@@ -120,8 +120,7 @@ const fac: Facility = {
   },
   center: [33.56, -97.84444],
   defaultZoom: 6,
-  airports: [
-  ],
+  airports: [],
   // This merges with the `links` in src/facility.ts using title as the key
   links: [],
   staticResources: [],
