@@ -36,7 +36,33 @@ jobs:
 
     strategy:
       matrix:
-        facility: [zdv, zan, hcf, zlc]
+        facility: [zdv, zan, hcf, zlc, zfw]
+        include:
+        - facility: hcf
+          name: HCF
+          secret: ADH_PIPELINE_PAT
+          repo: vphzh/gitops
+          frontend: adhp/hcf-frontend
+        - facility: zan
+          name: PAZA
+          secret: ADH_PIPELINE_PAT
+          repo: vpaza/gitops
+          frontend: adhp/zan-frontend
+        - facility: zdv
+          name: KZDV
+          secret: GH_PIPELINE_PAT
+          repo: kzdv/gitops
+          frontend: adhp/zdv-frontend
+        - facility: zfw
+          name: KZFW
+          secret: ADH_PIPELINE_PAT
+          repo: kzfw/gitops
+          frontend: adhp/frontend
+        - facility: zlc
+          name: KZLC
+          secret: KZLC_GITOPS_TOKEN 
+          repo: kzlc/gitops
+          frontend: adhp/zlc-frontend
 
     steps:
     - uses: actions/checkout@v3
@@ -61,7 +87,7 @@ jobs:
       uses: sigstore/cosign-installer@main
       with:
         cosign-release: 'v1.13.1'
-    - name: Create HCF env
+    - name: Create .env
       run: |
         SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
         cat <<EOF > .env
@@ -106,8 +132,39 @@ jobs:
         image_digest_branch=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ github.ref_name }})
         cosign sign --key env://COSIGN_PRIVATE_KEY $image_digest_sha $image_digest_branch
 ###########################################################################################################
-  deploy-kzdv:
-    name: Update KZDV GitOps Repo
+  deploy:
+    name: Update ${{ matrix.facility.name }} GitOps Repo
+
+    strategy:
+      matrix:
+        facility: [zdv, zan, hcf, zlc, zfw]
+        include:
+        - facility: hcf
+          name: HCF
+          secret: ADH_PIPELINE_PAT
+          repo: vphzh/gitops
+          frontend: adhp/hcf-frontend
+        - facility: zan
+          name: PAZA
+          secret: ADH_PIPELINE_PAT
+          repo: vpaza/gitops
+          frontend: adhp/zan-frontend
+        - facility: zdv
+          name: KZDV
+          secret: GH_PIPELINE_PAT
+          repo: kzdv/gitops
+          frontend: adhp/zdv-frontend
+        - facility: zfw
+          name: KZFW
+          secret: ADH_PIPELINE_PAT
+          repo: kzfw/gitops
+          frontend: adhp/frontend
+        - facility: zlc
+          name: KZLC
+          secret: KZLC_GITOPS_TOKEN 
+          repo: kzlc/gitops
+          frontend: adhp/zlc-frontend
+  
     runs-on: ubuntu-latest
     needs: build
     if: ${{ github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/main')) }}
@@ -123,31 +180,31 @@ jobs:
           branch="${GITHUB_REF#refs/heads/}"
         fi
         echo "branch=${branch}" >> $GITHUB_ENV
-    - name: Checkout KZDV Gitops Repo
+    - name: Checkout ${{ matrix.name }} Gitops Repo
       uses: actions/checkout@v3
       with:
-        token: ${{ secrets.GH_PIPELINE_PAT }}
-        repository: 'kzdv/gitops'
+        token: ${{ secrets[matrix.secret] }}
+        repository: ${{ matrix.repo }}
         path: gitops
     - name: Configure git
       run: |-
         cd $GITHUB_WORKSPACE/gitops
-        git config user.name "${{ secrets.GH_PIPELINE_USERNAME }}"
-        git config user.email "wm@denartcc.org"
+        git config user.name "adh-pipeline"
+        git config user.email "daniel@adhp.dev"
     - name: Setup Kustomize
       uses: imranismail/setup-kustomize@v2
       with:
-        kustomize-version: "4.4.1"
+        kustomize-version: "5.2.1"
     - name: Update dev overlay
       if: ${{ github.ref == 'refs/heads/main' }}
       run: |
         cd $GITHUB_WORKSPACE/gitops/overlays/dev
-        kustomize edit set image adhp/zdv-frontend=adhp/frontend:zdv-${{ env.branch }}-${{ env.sha_short }}
+        kustomize edit set image ${{ matrix.frontend }}=adhp/frontend:${{ matrix.facility }}-${{ env.branch }}-${{ env.sha_short }}
     - name: Update prod overlay
       if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       run: |
         cd $GITHUB_WORKSPACE/gitops/overlays/prod
-        kustomize edit set image adhp/zdv-frontend=adhp/frontend:zdv-${{ github.ref_name }}-${{ env.sha_short }}
+        kustomize edit set image ${{ matrix.frontend }}=adhp/frontend:${{ matrix.facility }}-${{ github.ref_name }}-${{ env.sha_short }}
     - name: Commit manifests
       run: |
         cd $GITHUB_WORKSPACE/gitops
@@ -157,160 +214,3 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/gitops
         git push origin main
-###########################################################################################################
-  deploy-paza:
-    name: Update PAZA GitOps Repo
-    runs-on: ubuntu-latest
-    needs: build
-    if: ${{ github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/main')) }}
-    steps:
-    - name: Set sha_short
-      id: vars
-      run: |-
-        echo "sha_short=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
-        # Set default branch name for PRs, as we still want to test build an image on PRs
-        # but we have no branch to set a tag for.
-        branch="test"
-        if [[ "$GITHUB_REF" == "refs/heads/"* ]]; then
-          branch="${GITHUB_REF#refs/heads/}"
-        fi
-        echo "branch=${branch}" >> $GITHUB_ENV
-    - name: Checkout PAZA Gitops Repo
-      uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.PAZA_GITOPS_TOKEN }}
-        repository: 'vpaza/gitops'
-        path: gitops-paza
-    - name: Configure git
-      run: |-
-        cd $GITHUB_WORKSPACE/gitops-paza
-        git config user.name "${{ secrets.PAZA_GITOPS_USER }}"
-        git config user.email "${{ secrets.PAZA_GITOPS_EMAIL }}"
-    - name: Setup Kustomize
-      uses: imranismail/setup-kustomize@v2
-      with:
-        kustomize-version: "4.4.1"
-    - name: Update dev overlay
-      if: ${{ github.ref == 'refs/heads/main' }}
-      run: |
-        cd $GITHUB_WORKSPACE/gitops-paza/overlays/dev
-        kustomize edit set image adhp/zan-frontend=adhp/frontend:zan-${{ env.branch }}-${{ env.sha_short }}
-    - name: Update prod overlay
-      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-      run: |
-        HASH=`echo ${GITHUB_SHA} | cut -c1-7`
-        cd $GITHUB_WORKSPACE/gitops-paza/overlays/prod
-        kustomize edit set image adhp/zan-frontend=adhp/frontend:zan-${{ github.ref_name }}-${{ env.sha_short }}
-    - name: Commit manifests
-      run: |
-        cd $GITHUB_WORKSPACE/gitops-paza
-        git add .
-        git commit -m "Update manifests for frontend"
-    - name: Push to gitops repo
-      run: |
-        cd $GITHUB_WORKSPACE/gitops-paza
-        git push origin main
-###########################################################################################################
-  deploy-phzh:
-    name: Update PHZH GitOps Repo
-    runs-on: ubuntu-latest
-    needs: build
-    if: ${{ github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/main')) }}
-    steps:
-    - name: Set sha_short
-      id: vars
-      run: |-
-        echo "sha_short=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
-        # Set default branch name for PRs, as we still want to test build an image on PRs
-        # but we have no branch to set a tag for.
-        branch="test"
-        if [[ "$GITHUB_REF" == "refs/heads/"* ]]; then
-          branch="${GITHUB_REF#refs/heads/}"
-        fi
-        echo "branch=${branch}" >> $GITHUB_ENV
-    - name: Checkout PHZH Gitops Repo
-      uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.PAZA_GITOPS_TOKEN }}
-        repository: 'vphzh/gitops'
-        path: gitops-phzh
-    - name: Configure git
-      run: |-
-        cd $GITHUB_WORKSPACE/gitops-phzh
-        git config user.name "${{ secrets.PAZA_GITOPS_USER }}"
-        git config user.email "${{ secrets.PAZA_GITOPS_EMAIL }}"
-    - name: Setup Kustomize
-      uses: imranismail/setup-kustomize@v2
-      with:
-        kustomize-version: "4.4.1"
-    - name: Update dev overlay
-      if: ${{ github.ref == 'refs/heads/main' }}
-      run: |
-        cd $GITHUB_WORKSPACE/gitops-phzh/overlays/dev
-        kustomize edit set image adhp/hcf-frontend=adhp/frontend:hcf-${{ env.branch }}-${{ env.sha_short }}
-    - name: Update prod overlay
-      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-      run: |
-        cd $GITHUB_WORKSPACE/gitops-phzh/overlays/prod
-        kustomize edit set image adhp/hcf-frontend=adhp/frontend:hcf-${{ github.ref_name }}-${{ env.sha_short }}
-    - name: Commit manifests
-      run: |
-        cd $GITHUB_WORKSPACE/gitops-phzh
-        git add .
-        git commit -m "Update manifests for frontend"
-    - name: Push to gitops repo
-      run: |
-        cd $GITHUB_WORKSPACE/gitops-phzh
-        git push origin main
-  ###########################################################################################################
-  deploy-kzlc:
-    name: Update KZLC GitOps Repo
-    runs-on: ubuntu-latest
-    needs: build
-    if: ${{ github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/main')) }}
-    steps:
-      - name: Set sha_short
-        id: vars
-        run: |-
-          echo "sha_short=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
-          # Set default branch name for PRs, as we still want to test build an image on PRs
-          # but we have no branch to set a tag for.
-          branch="test"
-          if [[ "$GITHUB_REF" == "refs/heads/"* ]]; then
-            branch="${GITHUB_REF#refs/heads/}"
-          fi
-          echo "branch=${branch}" >> $GITHUB_ENV
-      - name: Checkout KZLC Gitops Repo
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.KZLC_GITOPS_TOKEN }}
-          repository: 'kzlc/gitops'
-          path: gitops
-      - name: Configure git
-        run: |-
-          cd $GITHUB_WORKSPACE/gitops
-          git config user.name "${{ secrets.KZLC_GITOPS_USER }}"
-          git config user.email "${{ secrets.KZLC_GITOPS_EMAIL }}"
-      - name: Setup Kustomize
-        uses: imranismail/setup-kustomize@v2
-        with:
-          kustomize-version: "4.4.1"
-      - name: Update dev overlay
-        if: ${{ github.ref == 'refs/heads/main' }}
-        run: |
-          cd $GITHUB_WORKSPACE/gitops/overlays/dev
-          kustomize edit set image adhp/zlc-frontend=adhp/frontend:zlc-${{ env.branch }}-${{ env.sha_short }}
-      - name: Update prod overlay
-        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-        run: |
-          cd $GITHUB_WORKSPACE/gitops/overlays/prod
-          kustomize edit set image adhp/zlc-frontend=adhp/frontend:zlc-${{ github.ref_name }}-${{ env.sha_short }}
-      - name: Commit manifests
-        run: |
-          cd $GITHUB_WORKSPACE/gitops
-          git add .
-          git commit -m "Update manifests for frontend"
-      - name: Push to gitops repo
-        run: |
-          cd $GITHUB_WORKSPACE/gitops
-          git push origin main
