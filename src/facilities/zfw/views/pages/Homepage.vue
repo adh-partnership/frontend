@@ -36,7 +36,7 @@
       </div>
       <div class="card">
         <WeatherTable
-          :stations="['KASE', 'KPUB', 'KCOS', 'KDEN', 'KAPA']"
+          :stations="['KDFW', 'KDAL', 'KAFW', 'KOKC', 'KACT']"
           rules
           show-updated
           sort
