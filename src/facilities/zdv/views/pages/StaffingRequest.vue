@@ -50,7 +50,7 @@
                 <input id="startDate" type="text" :class="inputClass" :value="inputValue" v-on="inputEvents" />
               </template>
             </DatePicker>
-            <label for="startDate" :class="labelClass + ' required'"> Start date & time </label>
+            <label for="startDate" :class="labelClass + ' required'"> Start date & time (in Zulu) </label>
           </div>
           <div class="relative z-20 mb-4 w-full group col-span-1">
             <DatePicker
@@ -66,7 +66,7 @@
                 <input id="endDate" type="text" :class="inputClass" :value="inputValue" v-on="inputEvents" />
               </template>
             </DatePicker>
-            <label for="endDate" :class="labelClass + ' required'"> End date & time </label>
+            <label for="endDate" :class="labelClass + ' required'"> End date & time (in Zulu) </label>
           </div>
         </div>
         <div class="grid md:grid-cols-2 md:gap-6">
