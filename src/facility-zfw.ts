@@ -237,7 +237,19 @@ const fac: Facility = {
     { icao: "KXBP", name: "BRIDGEPORT MUNI", latitude: 33.174, longitude: -97.8284 },
   ],
   // This merges with the `links` in src/facility.ts using title as the key
-  links: [],
+  links: [
+    {
+      title: "Profile",
+      auth: true,
+      rosteredController: true,
+      sublinks: [
+        {
+          title: "ZFW Academy",
+          href: "https://sites.google.com/view/zfwacademy",
+        },
+      ],
+    },
+  ],
   staticResources: [],
 };
 

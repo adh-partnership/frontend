@@ -29,6 +29,11 @@ const rosterStore = useRosterStore();
 
 userStore.fetchPermissionGroups();
 rosterStore.fetchCertifications();
+// Update user every minute, this should catch any roster or role changes
+// if someone doesn't refresh the page
+setInterval(() => {
+  userStore.fetchUser();
+}, 1000 * 60);
 </script>
 
 <style lang="scss">
