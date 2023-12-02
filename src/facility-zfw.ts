@@ -246,7 +246,6 @@ const fac: Facility = {
     {
       title: "Profile",
       auth: true,
-      rosteredController: true,
       sublinks: [
         {
           title: "ZFW Academy",
