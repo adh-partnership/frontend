@@ -8,7 +8,7 @@ const fac: Facility = {
   skipMajor: false,
   minVisitorRating: "S1",
   domain: "zfwartcc.net",
-  apiUrl: "https://api.next.zfwartcc.net",
+  apiUrl: "https://api.zfwartcc.net",
   devApiUrl: "https://api.dev.zfwartcc.net",
   certificationsHideNone: false,
   customRoutes: [
