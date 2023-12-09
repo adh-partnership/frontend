@@ -82,8 +82,8 @@ const filteredAirports = computed(() => {
       }
 
       return (
-        (a.arpt_id.includes(search.value) ||
-          a.icao_id.includes(search.value) ||
+        (a.arpt_id.toUpperCase().includes(search.value.toUpperCase()) ||
+          a.icao_id.toUpperCase().includes(search.value.toUpperCase()) ||
           a.arpt_name.toLowerCase().includes(search.value.toLowerCase()) ||
           a.city.toLowerCase().includes(search.value.toLowerCase())) &&
         searchTowered &&
