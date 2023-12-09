@@ -4,21 +4,21 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to tag (blank will auto-generate)'
+        description: "Version to tag (blank will auto-generate)"
         required: false
 
 jobs:
   check-team:
     runs-on: ubuntu-latest
     steps:
-    - env:
-        GITHUB_TOKEN: ${{ secrets.ADH_BOT_ORG_TOKEN }}
-      run: |
-        access=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/adh-partnership/teams/maintainers-frontend/memberships/${{ github.actor }})
-        if [ "$(echo $access | jq -r .state)" != "active" ]; then
-          echo "${{ github.actor }} is not a member of the maintainers-frontend team and cannot run this workflow"
-          exit 1
-        fi
+      - env:
+          GITHUB_TOKEN: ${{ secrets.ADH_BOT_ORG_TOKEN }}
+        run: |
+          access=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/adh-partnership/teams/maintainers-frontend/memberships/${{ github.actor }})
+          if [ "$(echo $access | jq -r .state)" != "active" ]; then
+            echo "${{ github.actor }} is not a member of the maintainers-frontend team and cannot run this workflow"
+            exit 1
+          fi
   release:
     runs-on: ubuntu-latest
     steps:
@@ -27,6 +27,7 @@ jobs:
           ref: "main"
           token: ${{ secrets.ADH_BOT_TOKEN }}
       - name: Tag Release
+        id: tag
         env:
           GITHUB_TOKEN: ${{ secrets.ADH_BOT_TOKEN }}
         run: |
@@ -44,6 +45,7 @@ jobs:
           version="${version}.$(date +%s).${{ github.run_number }}"
 
           echo "Version: $version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
           # Tag the release
           git tag "$version"
@@ -63,4 +65,11 @@ jobs:
           git push origin "bump-version-$new_version"
           gh pr create -t "Bump version to $new_version" -b "Bump version to $new_version" -B "main" -l "dependencies" -l "auto-merge"
           echo "Created PR to bump version to $new_version"
-
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag.outputs.version }}
+          allowUpdates: true
+          omitBodyDuringUpdate: true
+          generateReleaseNotes: true
+          token: ${{ secrets.ADH_BOT_TOKEN }}
