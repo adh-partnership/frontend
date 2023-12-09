@@ -30,10 +30,15 @@
         you will receive an email with the outcome of your application after it has been reviewed. Please allow up to 7
         days to review your application before contacting staff.
       </p>
-      <div v-if="!applying && !error">
+      <div v-if="!applying && !error && !isRatingBelow(fac.minVisitorRating, userStore.user?.rating)">
         <button class="btn" :class="primaryHover" type="button" @click="apply">
           <i class="fa fa-paper-plane" /> Apply
         </button>
+      </div>
+      <div v-else-if="isRatingBelow(fac.minVisitorRating, userStore.user?.rating)">
+        <p>
+          You do not meet the minimum rating requirement of {{ fac.minVisitorRating }} to apply for visiting status.
+        </p>
       </div>
       <div v-else-if="applying && !error">
         <p>Submitting application...</p>
@@ -44,6 +49,9 @@
           <li>You already have an outstanding visiting application.</li>
           <li>You do not meet the eligibility requirements as listed above.</li>
           <li>You are already a member of this facility.</li>
+          <li>
+            You are apart of VATUSA and assigned to the ZAE subdivision. You <b>must</b> have a home subdivision first.
+          </li>
         </ul>
         <p>The error we got from the backend was: {{ error }}</p>
         <p>If you believe this is an error, please contact the facility staff for guidance.</p>
@@ -108,6 +116,7 @@ import { onMounted, Ref, ref } from "vue";
 import Alert from "@/components/Alert.vue";
 import { AxiosResponse } from "axios";
 import fac from "@/facility";
+import { isRatingBelow } from "@/utils/helpers";
 import { primaryHover } from "@/utils/colors";
 import Spinner from "@/components/Spinner.vue";
 import useUserStore from "@/stores/users";

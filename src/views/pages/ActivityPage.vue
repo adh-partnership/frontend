@@ -5,14 +5,15 @@
   <div v-if="loading < 3" class="flex mt-4">Loading... {{ loading }} month(s) loaded.</div>
   <div v-else class="flex mt-4">
     <table class="w-full">
-      <thead class="border-b-2 dark:border-gray-800">
+      <thead class="border-b-2 dark:border-neutral-800">
         <tr>
-          <th class="text-left">Name<br />CID (Rating)</th>
-          <th>{{ months[4] }}</th>
-          <th>{{ months[3] }}</th>
-          <th>{{ months[2] }}</th>
-          <th>{{ months[1] }}</th>
-          <th>{{ months[0] }}</th>
+          <th class="text-left border-r-2 dark:border-neutral-800">Name<br />CID (Rating)</th>
+          <th class="border-r-1 dark:border-neutral-800">{{ months[4] }}</th>
+          <th class="border-r-1 dark:border-neutral-800">{{ months[3] }}</th>
+          <th class="border-r-1 dark:border-neutral-800">{{ months[2] }}</th>
+          <th class="border-r-1 dark:border-neutral-800">{{ months[1] }}</th>
+          <th class="border-r-1 dark:border-neutral-800">{{ months[0] }}</th>
+          <th class="border-l-2 dark:border-neutral-800">Controller Total</th>
         </tr>
       </thead>
       <tbody>
@@ -22,25 +23,54 @@
           class="hover:dark:bg-zinc-800 hover:bg-zinc-300 hover:cursor-pointer"
           @click="goToUser(c.cid)"
         >
-          <td class="py-2 border-b-1 dark:border-gray-900">
+          <td class="py-2 border-b-1 dark:border-neutral-800 border-r-2 dark:border-neutral-800">
             {{ c.first_name }} {{ c.last_name }} ({{ c.operating_initials || "none" }})<br />
             {{ c.cid }} ({{ c.rating }})
           </td>
-          <td class="text-center py-2 border-b-1 dark:border-gray-900">
+          <td class="text-center py-2 border-b-1 border-r-1 dark:border-neutral-800">
             {{ getHours(minus4.find((c2) => c2.cid === c.cid)) }}
+            <i :class="getCrown(c, minus4)" />
           </td>
-          <td class="text-center py-2 border-b-1 dark:border-gray-900">
+          <td class="text-center py-2 border-b-1 border-r-1 dark:border-neutral-800">
             {{ getHours(minus3.find((c2) => c2.cid === c.cid)) }}
+            <i :class="getCrown(c, minus3)" />
           </td>
-          <td class="text-center py-2 border-b-1 dark:border-gray-900">
+          <td class="text-center py-2 border-b-1 border-r-1 dark:border-neutral-800">
             {{ getHours(minus2.find((c2) => c2.cid === c.cid)) }}
+            <i :class="getCrown(c, minus2)" />
           </td>
-          <td class="text-center py-2 border-b-1 dark:border-gray-900">
+          <td class="text-center py-2 border-b-1 border-r-1 dark:border-neutral-800">
             {{ getHours(minus1.find((c1) => c1.cid === c.cid)) }}
+            <i :class="getCrown(c, minus1)" />
           </td>
-          <td class="text-center py-2 border-b-1 dark:border-gray-900">{{ getHours(c) }}</td>
+          <td class="text-center py-2 border-b-1 dark:border-neutral-800">
+            {{ getHours(c) }}
+            <i :class="getCrown(c, curMonth)" />
+          </td>
+          <td class="text-center py-2 border-b-1 dark:border-neutral-800 border-l-2">
+            {{
+              getSum([
+                minus4.find((c2) => c2.cid === c.cid),
+                minus3.find((c2) => c2.cid === c.cid),
+                minus2.find((c2) => c2.cid === c.cid),
+                minus1.find((c2) => c2.cid === c.cid),
+                c,
+              ])
+            }}
+          </td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <th class="text-left py-2 border-r-2 border-t-2 dark:border-neutral-800">Total Hours</th>
+          <th class="py-2 border-r-1 border-t-2 dark:border-neutral-800">{{ getSum(minus4) }}</th>
+          <th class="py-2 border-r-1 border-t-2 dark:border-neutral-800">{{ getSum(minus3) }}</th>
+          <th class="py-2 border-r-1 border-t-2 dark:border-neutral-800">{{ getSum(minus2) }}</th>
+          <th class="py-2 border-r-1 border-t-2 dark:border-neutral-800">{{ getSum(minus1) }}</th>
+          <th class="py-2 border-r-1 border-t-2 dark:border-neutral-800">{{ getSum(curMonth) }}</th>
+          <th class="border-l-2 border-t-2 dark:border-neutral-800 py-2"></th>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </template>
@@ -81,12 +111,49 @@ const getHours = (controller: ControllerStats | undefined): string => {
   if (!controller) return "";
 
   const secs = controller.cab + controller.terminal + controller.enroute;
-  const hours = Math.floor(secs / 3600);
-  const minutes = Math.floor((secs % 3600) / 60);
+
+  return formatSecs(secs);
+};
+
+const getSum = (stats: (ControllerStats | undefined)[]): string => {
+  if (!stats) return "";
+
+  let sum = 0;
+  stats.forEach((c) => {
+    if (!c) return;
+    sum += c.cab + c.terminal + c.enroute;
+  });
+  return formatSecs(sum);
+};
+
+const formatSecs = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
 
   if (hours === 0 && minutes === 0) return "";
 
-  return `${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m`;
+  return `${String(hours).padStart(1, "0")}:${String(minutes).padStart(2, "0")}`;
+};
+
+const getCrown = (controller: ControllerStats | undefined, stats: ControllerStats[]): string => {
+  if (!controller || !stats) return "hidden";
+
+  // Copy stats into new array
+  const sorted: ControllerStats[] = stats.slice().sort((a: ControllerStats, b: ControllerStats) => {
+    return b.cab + b.terminal + b.enroute - (a.cab + a.terminal + a.enroute);
+  });
+
+  if (sorted.length === 0) return "hidden";
+
+  if (sorted[0].cid === controller.cid) {
+    return "fa-solid fa-trophy text-alaska-gold";
+  } else if (sorted[1].cid === controller.cid) {
+    return "fa-solid fa-trophy text-zinc-500";
+  } else if (sorted[2].cid === controller.cid) {
+    return "fa-solid fa-trophy text-amber-700";
+  } else {
+    return "hidden";
+  }
 };
 
 const goToUser = (cid: string | number): void => {

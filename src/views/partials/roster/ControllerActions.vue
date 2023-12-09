@@ -225,6 +225,8 @@ const focusRemoval = (): void => {
 const addVisitor = async (): Promise<void> => {
   // This shouldn't be possible, in theory...
   if (props.controller.controller_type !== "none") {
+    console.log("Controller is not controller_type=none.");
+    console.log(props.controller);
     return;
   }
 
