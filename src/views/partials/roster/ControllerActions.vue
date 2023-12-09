@@ -225,7 +225,9 @@ const focusRemoval = (): void => {
 const addVisitor = async (): Promise<void> => {
   // This shouldn't be possible, in theory...
   if (props.controller.controller_type !== "none") {
+    // eslint-disable-next-line no-console
     console.log("Controller is not controller_type=none.");
+    // eslint-disable-next-line no-console
     console.log(props.controller);
     return;
   }

@@ -107,6 +107,15 @@ const monthNames = [
   "December",
 ];
 
+const formatSecs = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  if (hours === 0 && minutes === 0) return "";
+
+  return `${String(hours).padStart(1, "0")}:${String(minutes).padStart(2, "0")}`;
+};
+
 const getHours = (controller: ControllerStats | undefined): string => {
   if (!controller) return "";
 
@@ -126,15 +135,6 @@ const getSum = (stats: (ControllerStats | undefined)[]): string => {
   return formatSecs(sum);
 };
 
-const formatSecs = (seconds: number): string => {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-
-  if (hours === 0 && minutes === 0) return "";
-
-  return `${String(hours).padStart(1, "0")}:${String(minutes).padStart(2, "0")}`;
-};
-
 const getCrown = (controller: ControllerStats | undefined, stats: ControllerStats[]): string => {
   if (!controller || !stats) return "hidden";
 
@@ -151,9 +151,9 @@ const getCrown = (controller: ControllerStats | undefined, stats: ControllerStat
     return "fa-solid fa-trophy text-zinc-500";
   } else if (sorted[2].cid === controller.cid) {
     return "fa-solid fa-trophy text-amber-700";
-  } else {
-    return "hidden";
   }
+
+  return "hidden";
 };
 
 const goToUser = (cid: string | number): void => {
