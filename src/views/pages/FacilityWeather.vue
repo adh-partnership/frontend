@@ -9,7 +9,7 @@
     >
       <div>{{ station }}</div>
       <div class="hidden md:block">
-        <WeatherBadge :flight-category="(weather[station]?.flight_category as string)" slim />
+        <WeatherBadge :flight-category="weather[station]?.flight_category as string" slim />
       </div>
       <div class="col-span-4 md:col-span-8">{{ weather[station]?.raw_text }}</div>
     </div>

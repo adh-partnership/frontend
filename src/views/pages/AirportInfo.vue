@@ -46,8 +46,8 @@
               airportATC.twr_hrs === "24"
                 ? "Continuous"
                 : airportInfo.twr_type_code !== "NON-ATCT"
-                ? airportATC.twr_hrs
-                : "Not Applicable"
+                  ? airportATC.twr_hrs
+                  : "Not Applicable"
             }}
           </td>
         </tr>

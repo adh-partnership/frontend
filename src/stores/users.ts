@@ -33,7 +33,7 @@ const useUserStore = defineStore("user", {
       permissionGroups: null,
       fetching: false,
       hasFetched: false,
-    } as UserState),
+    }) as UserState,
   getters: {
     isLoggedIn: (state) => !!state.user,
     getPermissionGroups: (state) => state.permissionGroups,
