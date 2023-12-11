@@ -32,7 +32,7 @@ const useTrainingStore = defineStore("training", {
       currentTrainingNote: { ...defaultState },
       fetching: false,
       failed: false,
-    } as TrainingState),
+    }) as TrainingState,
   actions: {
     resetForm() {
       this.copyToForm();

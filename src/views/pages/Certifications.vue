@@ -183,7 +183,7 @@ const options: Ref<SortableOptions> = ref({
   bubbleScroll: true,
 });
 
-const moveItemInArray = <T>(array: T[], from: number, to: number): void => {
+const moveItemInArray = <T,>(array: T[], from: number, to: number): void => {
   const item = array.splice(from, 1)[0];
   nextTick(() => array.splice(to, 0, item));
 };
