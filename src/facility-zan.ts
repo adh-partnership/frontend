@@ -13,7 +13,7 @@ const fac: Facility = {
   certificationsHideNone: false,
   hasOceanicCert: true,
   navbarClasses: "bg-alaska-blue dark:bg-alaska-blue text-white",
-  resources: ["Policies", "LOAs", "VRC", "vSTARS", "vERAM", "vATIS", "Misc"],
+  resources: ["Policies", "LOAs", "vATIS", "Misc"],
   customRoutes: [
     {
       path: "/",

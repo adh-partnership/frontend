@@ -94,6 +94,7 @@ const fac: Facility = {
     },
   ],
   center: [39.861667, -104.673056],
+  resources: ["SOPs", "LOAs", "vATIS", "Misc"],
   defaultZoom: 6,
   airports: [
     {
