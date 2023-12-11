@@ -839,6 +839,11 @@ const fac: Facility = {
           title: "Facility SOPs",
           href: "https://sops.zanartcc.org",
         },
+        {
+          title: "IDS",
+          href: "https://ids.zanartcc.org",
+          rosteredController: true,
+        },
       ],
     },
   ],
