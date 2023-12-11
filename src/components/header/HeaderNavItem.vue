@@ -6,6 +6,7 @@
       :auth="props.auth"
       :roles="props.roles"
       :rostered-controller="props.rosteredController"
+      :same-window="props.sameWindow"
       :hide-unauthed="props.auth === true"
       class="block text-[16px] font-semibold group-hover:text-colorado-yellow py-7 text-white group-hover:cursor-pointer"
       @click="checkClick()"
@@ -23,6 +24,7 @@
           :auth="link.auth"
           :roles="link.roles"
           :rostered-controller="link.rosteredController"
+          :same-window="link.sameWindow"
           :hide-unauthed="link.auth === true"
           class="block text-heading-light dark:text-white-deep font-semibold py-1 px-4 hover:text-primary dark:hover:text-colorado-yellow hover:bg-gray-light dark:hover:bg-body"
         >

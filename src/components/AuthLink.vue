@@ -2,7 +2,7 @@
   <RouterLink v-if="display && to !== undefined" v-bind="$attrs" :to="props.to!">
     <slot />
   </RouterLink>
-  <a v-else-if="display && href !== undefined" v-bind="$attrs" :href="props.href!" :target="href && '_blank'">
+  <a v-else-if="display && href !== undefined" v-bind="$attrs" :href="props.href!" :target="target">
     <slot />
   </a>
   <div v-else-if="!display && !hideUnauthed">
@@ -23,6 +23,7 @@ const props = withDefaults(
     hideUnauthed?: boolean | undefined;
     auth?: boolean | undefined;
     roles?: string[];
+    sameWindow?: boolean;
     rosteredController?: boolean;
   }>(),
   {
@@ -31,11 +32,21 @@ const props = withDefaults(
     auth: undefined,
     hideUnauthed: undefined,
     rosteredController: false,
+    sameWindow: false,
     roles: () => [],
   }
 );
 
 const store = useUserStore();
+
+const target = computed(() => {
+  if (props.href && !props.sameWindow) {
+    return "_blank";
+  }
+
+  return "";
+});
+
 const display = computed(() => {
   if (props.auth === undefined || !props.auth) {
     return true;

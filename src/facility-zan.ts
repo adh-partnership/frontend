@@ -842,6 +842,7 @@ const fac: Facility = {
         {
           title: "IDS",
           href: "https://ids.zanartcc.org",
+          auth: true,
           rosteredController: true,
         },
       ],

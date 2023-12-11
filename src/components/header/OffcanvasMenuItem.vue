@@ -6,6 +6,7 @@
       :auth="props.auth"
       :roles="props.roles"
       :rostered-controller="props.rosteredController"
+      :same-window="props.sameWindow"
       :hide-unauthed="props.auth === true"
       class="font-semibold leading-9 capitalize text-heading-light dark:text-white dark:group-hover:text-colorado-yellow group-hover:text-colorado-red"
       @click="checkClick()"
@@ -30,6 +31,7 @@
           :auth="sl.auth"
           :rostered-controller="sl.rosteredController"
           :roles="sl.roles"
+          :same-window="sl.sameWindow"
           :hide-unauthed="sl.auth === true"
         >
           {{ sl.title }}
