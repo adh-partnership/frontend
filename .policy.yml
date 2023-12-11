@@ -1,15 +1,16 @@
 policy:
   approval:
-  - or:
-    - has auto-merge label
-    - and:
-      - or:
-        - the maintainers-frontend team has approved
+    - or:
+        - has auto-merge label
+        - and:
+            - or:
+                - the maintainers-frontend team has approved
+            - the HCF team has approved
+            - the ZAN team has approved
+            - the ZDV team has approved
+            - the ZLC team has approved
+            - the ZFW team has approved
         - an admin has approved
-      - the HCF team has approved
-      - the ZAN team has approved
-      - the ZDV team has approved
-      - the ZLC team has approved
 
 approval_rules:
   - name: the maintainers-frontend team has approved
@@ -24,7 +25,7 @@ approval_rules:
     requires:
       count: 1
       teams:
-      - "adh-partnership/maintainers-frontend"
+        - "adh-partnership/maintainers-frontend"
   - name: the HCF team has approved
     if:
       changed_files:
@@ -42,8 +43,8 @@ approval_rules:
     requires:
       count: 1
       teams:
-      - "adh-partnership/hcf"
-      - "adh-partnership/maintainers-frontend"
+        - "adh-partnership/hcf"
+        - "adh-partnership/maintainers-frontend"
   - name: the ZAN team has approved
     if:
       changed_files:
@@ -61,8 +62,8 @@ approval_rules:
     requires:
       count: 1
       teams:
-      - "adh-partnership/zan"
-      - "adh-partnership/maintainers-frontend"
+        - "adh-partnership/zan"
+        - "adh-partnership/maintainers-frontend"
   - name: the ZDV team has approved
     if:
       changed_files:
@@ -80,8 +81,8 @@ approval_rules:
     requires:
       count: 1
       teams:
-      - "adh-partnership/zdv"
-      - "adh-partnership/maintainers-frontend"
+        - "adh-partnership/zdv"
+        - "adh-partnership/maintainers-frontend"
   - name: the ZLC team has approved
     if:
       changed_files:
@@ -99,8 +100,27 @@ approval_rules:
     requires:
       count: 1
       teams:
-      - "adh-partnership/zlc"
-      - "adh-partnership/maintainers-frontend"
+        - "adh-partnership/zlc"
+        - "adh-partnership/maintainers-frontend"
+  - name: the ZFW team has approved
+    if:
+      changed_files:
+        paths:
+          - "src/facilities/zfw/.*"
+          - "src/facility-zfw.ts"
+    options:
+      request_review:
+        enabled: true
+        mode: teams
+      methods:
+        comments:
+          - "LGTM"
+          - "/lgtm"
+    requires:
+      count: 1
+      teams:
+        - "adh-partnership/zfw"
+        - "adh-partnership/maintainers-frontend"
   - name: an admin has approved
     options:
       allow_author: true
@@ -112,10 +132,10 @@ approval_rules:
     requires:
       count: 1
       teams:
-      - "adh-partnership/admin"
+        - "adh-partnership/admin"
   - name: has auto-merge label
     if:
       has_labels:
-      - "auto-merge"
+        - "auto-merge"
       has_author_in:
         users: ["adh-bot"]
