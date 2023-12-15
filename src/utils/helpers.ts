@@ -83,5 +83,5 @@ export const isRatingBelow = (rating: string, ratingToCompare: string): boolean 
   const ratings = ["SUS", "OBS", "S1", "S2", "S3", "C1", "C3", "I1", "I3", "SUP", "ADM"];
   ratings[-1] = "INA";
 
-  return ratings.indexOf(rating) < ratings.indexOf(ratingToCompare);
+  return ratings.indexOf(rating) > ratings.indexOf(ratingToCompare);
 };
