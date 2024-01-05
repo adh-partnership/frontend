@@ -97,6 +97,31 @@
           <option value="loa">LOA</option>
         </select>
       </div>
+      <div v-if="form.ControllerStatus === 'loa' && isAdmin()" class="flex items-center mb-4">
+      <div class="w-1-5">
+        <label class="block text-gray-500 dark:text-gray-200 font-bold md:text-right mb-1 md:mb-0 pr-4" for="loaDuration">
+          Duration
+        </label>
+      </div>
+      <div class="ml-2">
+        <select
+          id="loaDuration"
+          v-model="form.Duration"
+          class="block w-full bg-white dark:bg-black-deep border border-gray-200 text-gray-700 dark:text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:dark:bg-black-light focus:border-gray-500"
+          v-if="form.ControllerStatus === 'loa'"
+          @change="updateEndDate"
+        >
+          <option value="30">1 month</option>
+          <option value="90">3 months</option>
+          <option value="180">6 months</option>
+        </select>
+
+        <p v-if="form.ControllerStatus === 'loa'" class="text-gray-500 dark:text-gray-200">
+          LOA will end on {{ originalEndDate || calculateEndDate(form.Duration) }}
+        </p>
+      </div>
+    </div>
+
     </div>
     <div class="flex items-center mb-4">
       <div class="w-1/5">
@@ -162,17 +187,39 @@ let saveTimer: ReturnType<typeof setTimeout>;
 const store = useRosterStore();
 const userStore = useUserStore();
 
+
 const form: Ref<{
   ControllerType: string;
   ControllerStatus: string;
   OperatingInitials: string;
   RemovalReason: string;
+  Duration: string; 
 }> = ref({
   ControllerType: "none",
   ControllerStatus: "none",
   OperatingInitials: "",
   RemovalReason: "",
+  Duration: "30", 
 });
+
+const originalEndDate = ref<string | null>(localStorage.getItem('originalEndDate') || null);
+
+const calculateEndDate = (duration: string): string => {
+  const currentDate = new Date();
+  const endDate = new Date(currentDate.getTime() + parseInt(duration) * 24 * 60 * 60 * 1000);
+  const formattedEndDate = endDate.toDateString();
+
+  
+  localStorage.setItem('originalEndDate', formattedEndDate);
+
+  return formattedEndDate;
+};
+
+const updateEndDate = (): void => {
+ 
+  originalEndDate.value = localStorage.getItem('originalEndDate') || null;
+};
+
 
 enum ButtonStates {
   Idle = 0,
@@ -197,6 +244,11 @@ const matchFormToProps = (): void => {
 
 onMounted(() => {
   matchFormToProps();
+  
+  originalEndDate.value = localStorage.getItem('originalEndDate') || null;
+
+  
+  updateEndDate();
 });
 
 onUnmounted(() => {
@@ -347,4 +399,15 @@ const isAdmin = (): boolean => {
 .border-red {
   border: 1px solid red !important;
 }
+
+.w-1-5 {
+  white-space: nowrap;
+  word-break: normal;
+  margin-left: 50px;
+  margin-top: 10px;
+}
+#loaDuration {
+  margin-top: 40px; 
+}
+
 </style>
