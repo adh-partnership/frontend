@@ -24,11 +24,17 @@ export const convertTime = (since: string): string => {
   const hours = Math.floor(dur / (1000 * 60 * 60));
   const minutes = Math.floor((dur % (1000 * 60 * 60)) / (1000 * 60));
 
-  if (minutes < 10) {
-    return `${hours}+0${minutes}`;
-  }
-
-  return `${hours}+${minutes}`;
+  if (hours > 0) {
+    if (minutes > 0) {
+      return `${hours}h ${minutes}m`;
+    } else {
+      return `${hours}h`;
+    }
+  } else if (minutes > 0) {
+    return `${minutes}m`;
+  } else {
+    return "Just now";
+  };
 };
 
 export const getUTCDate = (date: string): string => {
