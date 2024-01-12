@@ -13,6 +13,11 @@ const fac: Facility = {
       name: "Home",
       component: () => import("@/facilities/hcf/views/pages/Homepage.vue"),
     },
+    {
+      path: "/routes",
+      name: "Routes",
+      component: () => import("@/facilities/hcf/views/pages/Prefroutes.vue"),
+    },
   ],
   minVisitorRating: "S1",
   domain: "vhcf.net",
@@ -158,7 +163,18 @@ const fac: Facility = {
       longitude: -155.048469,
     },
   ],
-  links: [],
+  links: [
+    {
+      title: "Facility",
+      sublinks: [
+        {
+          title: "Preferred Routes",
+          to: { name: "Routes" },
+        },
+        
+      ],
+    },
+  ],
 };
 
 export default fac;
