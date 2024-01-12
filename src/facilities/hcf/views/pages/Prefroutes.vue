@@ -59,7 +59,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { RouteData, data } from './components/routedata.js'; 
+import { RouteData, data } from './components/routedata.ts'; 
 
 const selectedFrom = ref('');
 const selectedTo = ref('');
