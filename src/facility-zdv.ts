@@ -11,6 +11,7 @@ const fac: Facility = {
   apiUrl: "https://api.zdvartcc.org",
   devApiUrl: "https://api.dev.zdvartcc.org",
   certificationsHideNone: true,
+  resources: ["SOPs", "LOAs", "vATIS", "Misc"],
   customRoutes: [
     {
       path: "/",
