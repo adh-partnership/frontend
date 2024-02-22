@@ -39,8 +39,9 @@ const updatePopups = (): void => {
             ${weather.value[airport.icao]?.flight_category}
           </button>
           <b>${airport.name}</b> (${airport.icao})</td></tr>
-      <tr class="border-b-1"><td><small><b>METAR</b>:<pre>${weather.value[airport.icao]
-        ?.raw_text}</pre></small></td></tr>
+      <tr class="border-b-1"><td><small><b>METAR</b>:<pre>${
+        weather.value[airport.icao]?.raw_text
+      }</pre></small></td></tr>
         <tr><td><small><b>TAF</b>: <pre>${
           tafs.value[airport.icao] || "<i>No TAF Available</i></div>"
         }</pre></small></td></tr></table>`,

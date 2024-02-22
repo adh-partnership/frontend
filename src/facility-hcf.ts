@@ -14,7 +14,6 @@ const fac: Facility = {
       component: () => import("@/facilities/hcf/views/pages/Homepage.vue"),
     },
   ],
-  minVisitorRating: "S1",
   domain: "vhcf.net",
   apiUrl: "https://api.vhcf.net",
   devApiUrl: "https://api.dev.vhcf.net",

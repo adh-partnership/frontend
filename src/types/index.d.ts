@@ -99,7 +99,6 @@ export type Facility = {
   footerClasses?: string;
   primaryBackground?: string;
   primaryHover?: string;
-  minVisitorRating: string;
   center: [number, number];
   domain: string;
   defaultZoom: number;

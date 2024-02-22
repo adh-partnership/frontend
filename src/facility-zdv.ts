@@ -6,7 +6,6 @@ const fac: Facility = {
   name: "Denver ARTCC",
   logo: "https://cdn.zdvartcc.org/assets/img/logo_150.png",
   skipMajor: false,
-  minVisitorRating: "S3",
   domain: "zdvartcc.org",
   apiUrl: "https://api.zdvartcc.org",
   devApiUrl: "https://api.dev.zdvartcc.org",

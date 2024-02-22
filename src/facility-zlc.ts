@@ -6,7 +6,6 @@ const fac: Facility = {
   name: "Salt Lake City ARTCC",
   logo: "https://cdn.zlcartcc.org/assets/img/logo.png",
   skipMajor: false,
-  minVisitorRating: "S3",
   domain: "zlcartcc.org",
   apiUrl: "https://api.zlcartcc.org",
   devApiUrl: "https://api.dev.zlcartcc.org",

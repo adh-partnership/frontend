@@ -1,7 +1,7 @@
 <template>
   <svg
     aria-hidden="true"
-    class="mr-2 animate-spin text-gray-300 dark:text-gray-700"
+    class="animate-spin text-gray-300 dark:text-gray-700"
     :class="classes"
     :style="`height: ${size}px; width: ${size}px;`"
     viewBox="0 0 100 101"

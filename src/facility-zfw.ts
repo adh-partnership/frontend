@@ -6,7 +6,6 @@ const fac: Facility = {
   name: "Fort Worth ARTCC",
   logo: "https://cdn.zfwartcc.net/New%20Logo.png",
   skipMajor: false,
-  minVisitorRating: "S1",
   domain: "zfwartcc.net",
   apiUrl: "https://api.zfwartcc.net",
   devApiUrl: "https://api.dev.zfwartcc.net",
