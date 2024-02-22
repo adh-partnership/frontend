@@ -13,7 +13,8 @@
   <div :class="footerClasses">
     <div class="py-4">
       <div class="container text-sm">
-        Copyright &copy; 2022 by {{ fac.name }}. <RouterLink to="/privacy">Privacy Policy</RouterLink>. Open Source at
+        Copyright &copy; {{ new Date().getFullYear() }} by {{ fac.name }}.
+        <RouterLink to="/privacy">Privacy Policy</RouterLink>. Open Source at
         <a href="https://github.com/adh-partnership/frontend">GitHub</a> (version: {{ version }}-{{ gitHash }}).
         <div class="float-right text-right">
           <button @click="toggleDark()">
