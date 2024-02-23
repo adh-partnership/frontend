@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <img class="max-w-10 h-auto" :src="props.event.banner" :alt="props.event.title" />
+    <img class="h-auto" :src="props.event.banner" :alt="props.event.title" />
   </div>
 </template>
 

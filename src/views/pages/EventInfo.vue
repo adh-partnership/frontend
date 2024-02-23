@@ -56,7 +56,7 @@
             <b>Error</b>: There was an error deleting the event. {{ error }}
           </alert>
         </div>
-        <img class="max-w-10 h-auto mt-4 lg:mt-0" :src="event.banner" :alt="event.title" />
+        <img class="h-auto mt-4 lg:mt-0" :src="event.banner" :alt="event.title" />
       </div>
       <div v-else>
         <form class="grid grid-cols-1 lg:grid-cols-2 gap-x-5">
