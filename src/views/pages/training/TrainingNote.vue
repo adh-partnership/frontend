@@ -62,7 +62,7 @@
       <div class="w-1/5">
         <b>Comments</b>
       </div>
-      <div class="w-4/5">
+      <div class="w-4/5 whitespace-pre">
         {{ note.comments }}
       </div>
     </div>
