@@ -24,7 +24,7 @@
               })
             }}
           </p>
-          <p class="whitespace-pre">{{ event.description }}</p>
+          <p>{{ event.description }}</p>
           <button
             v-if="canEditEvent()"
             class="btn bg-yellow-400 text-white font-bold py-2 px-4 ml-2 rounded"
