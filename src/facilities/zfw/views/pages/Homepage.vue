@@ -1,11 +1,17 @@
 <template>
-  <h1 class="text-2xl">Welcome to the Fort Worth ARTCC</h1>
+  <h1 class="text-2xl">Welcome to the Virtual Fort Worth ARTCC</h1>
   <p>
-    Welcome to Fort Worth ARTCC! The Fort Worth ARTCC covers parts of Texas, Oklahoma, New Mexico, Louisiana, and
-    Arkansas, with a square mileage of over 147,000. Our goal and mission are to provide professional air traffic
-    control services, foster a welcoming community, and enjoy this hobby to its greatest extent possible. Students get a
-    unique experience here with our student: instructor assignment program and get the advantage of consistent
-    instruction and scheduling once assigned an instructor. We hope to see you on the scope soon!
+    Welcome to the Virtual Fort Worth ARTCC! The Fort Worth ARTCC covers parts of Texas, Oklahoma, New Mexico,
+    Louisiana, and Arkansas, with a square mileage of over 147,000. Our goal and mission are to provide professional air
+    traffic control services, foster a welcoming community, and enjoy this hobby to its greatest extent possible.
+    Students get a unique experience here with our student: instructor assignment program and get the advantage of
+    consistent instruction and scheduling once assigned an instructor. We hope to see you on the scope soon!
+  </p>
+  <p>
+    The Virtual Fort Worth ARTCC is a subdivision of <a href="https://www.vatusa.net" target="_blank">VATUSA</a>, a
+    division of the <a href="https://www.vatsim.net" target="_blank">VATSIM Network</a>. This group and website are not
+    affiliated with the Federal Aviation Administration or any other government entity and must not be used for
+    realworld aviation purposes.
   </p>
   <div class="grid grid-cols-4 gap-4">
     <div class="card col-span-4 lg:col-span-3 h-min">
