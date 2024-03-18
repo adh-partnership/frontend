@@ -837,7 +837,7 @@ const fac: Facility = {
           title: "Schedule Training",
           href: "https://www.picktime.com/zanartcctraining",
           auth: true,
-          rostered_controller: true,
+          rosteredController: true,
         },
       ],
     },

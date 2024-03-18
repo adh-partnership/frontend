@@ -1,7 +1,11 @@
 <template>
   <div class="mb-4">
     <h1 class="text-3xl font-bold mb-0">Facility Staff</h1>
-    <p class="italic">The following volunteers help make this a great place to be!</p>
+    <p class="italic">
+      The following volunteers help make this a great place to be! These people are dedicated members of VATSIM who
+      volunteer their time to help the subdivision run smoothly. If you have any questions, feel free to reach out to
+      any of them.
+    </p>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
     <StaffCard v-for="atm in staff.atm" :key="atm.cid" :controller="atm" position="atm" title="Air Traffic Manager" />
