@@ -157,7 +157,17 @@ const fac: Facility = {
       longitude: -155.048469,
     },
   ],
-  links: [],
+  links: [
+    {
+      title: "Profile",
+      sublinks: [
+        {
+          title: "Schedule Training",
+          href: "https://vhcf.trafft.com",
+        },
+      ],
+    },
+  ],
 };
 
 export default fac;
