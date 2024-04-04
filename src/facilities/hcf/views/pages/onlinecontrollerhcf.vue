@@ -11,7 +11,7 @@
         class="flex items-center"
       >
         <div class="w-1/4">{{ user.position }}</div>
-        <div class="w-2/4 text-right whitespace-nowrap">{{ user.controller.first_name + ' ' + user.controller.last_name[0]+ '.' || "??" }}</div>
+        <div class="w-2/4 text-right whitespace-nowrap">{{ user.controller.first_name + " " + user.controller.last_name[0]+ "." || "??" }}</div>
         <div class="w-1/4 text-right">{{ convertTimeHCF(user.online_since) }}</div>
       </div>
     </div>
