@@ -11,7 +11,7 @@
         class="flex items-center"
       >
         <div class="w-1/4">{{ user.position }}</div>
-        <div class="w-2/4 text-right whitespace-nowrap">{{ user.controller.first_name + " " + user.controller.last_name.charAt(0) || "??" }}</div>
+        <div class="w-2/4 text-right whitespace-nowrap">{{ user.controller.first_name + " " + user.controller.last_name.charAt(0) || "??" }}</div> 
         <div class="w-1/4 text-right">{{ convertTimeHCF(user.online_since) }}</div>
       </div>
     </div>
@@ -54,7 +54,7 @@ const convertTimeHCF = (since: string): string => {
 
   const hours = Math.floor(dur / (1000 * 60 * 60));
   const minutes = Math.floor((dur % (1000 * 60 * 60)) / (1000 * 60));
- if (minutes < 10) {
+  if (minutes < 10) {
     return `${hours}:0${minutes}`;
   }
   return `${hours}:${minutes}`;
