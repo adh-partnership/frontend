@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { onMounted, ref, Ref } from "vue";
 import { Event } from "@/types";
-import OnlineControllers from "@/components/home/OnlineControllers.vue";
+import OnlineControllers from "./onlinecontrollerhcf.vue";
 import OnlineFlights from "@/components/home/OnlineFlights.vue";
 import TopControllers from "@/components/home/TopControllers.vue";
 import { useRouter } from "vue-router";
