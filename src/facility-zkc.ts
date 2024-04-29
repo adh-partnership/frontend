@@ -1,0 +1,165 @@
+import type { Facility } from "@/types";
+
+const fac: Facility = {
+  id: "KZKC",
+  faa_id: "ZKC",
+  name: "Kansas City ARTCC",
+  logo: "https://cdn.zkcartcc.org/assets/img/logo.png",
+  skipMajor: false,
+  domain: "zkcartcc.org",
+  apiUrl: "https://api.zkcartcc.org",
+  devApiUrl: "https://api.dev.zkcartcc.org",
+  certificationsHideNone: true,
+  navbarClasses: "bg-saltlake-orange dark:bg-saltlake-orange text-white",
+  footerClasses: "bg-saltlake-orange dark:bg-black-deep text-white",
+  primaryBackground: "bg-saltlake-orange",
+  primaryHover: "bg-saltlake-orange hover:bg-amber-800",
+  resources: ["SOPs", "LOAs", "vATIS", "Misc"],
+  customRoutes: [
+    {
+      path: "/",
+      name: "Home",
+      component: () => import("@/facilities/zkc/views/pages/Homepage.vue"),
+    },
+    {
+      path: "/staffing_request",
+      name: "StaffingRequest",
+      component: () => import("@/facilities/zdv/views/pages/StaffingRequest.vue"),
+    },
+  ],
+  roles: [
+    {
+      name: "ATM",
+      role: "atm",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "DATM",
+      role: "datm",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "TA",
+      role: "ta",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "EC",
+      role: "ec",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "FE",
+      role: "fe",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "WM",
+      role: "wm",
+      canGrant: ["atm", "datm", "wm"],
+    },
+    {
+      name: "Events Team",
+      role: "events",
+      canGrant: ["atm", "datm", "ec", "wm"],
+    },
+    {
+      name: "Facilities Team",
+      role: "facilities",
+      canGrant: ["atm", "datm", "fe", "wm"],
+    },
+    {
+      name: "Instructor",
+      role: "ins",
+      canGrant: ["atm", "datm", "ta", "wm"],
+    },
+    {
+      name: "Mentor",
+      role: "mtr",
+      canGrant: ["atm", "datm", "ta", "wm"],
+    },
+  ],
+  boundaries: {
+    center: [
+      [44.316667, -106.266667],
+      [43.883333, -107.283333],
+      [42.416666, -107.05],
+      [41.608333, -108],
+      [41.366667, -108.275],
+      [40.85, -109.1],
+      [40, -109.166667],
+      [39.583333, -110.3],
+      [39.216667, -109.983333],
+      [38.933333, -109.983333],
+      [38.2, -109.983333],
+      [38.129167, -110.156944],
+      [37.833333, -110.883333],
+      [37.4125, -111.879167],
+      [37.5, -112.058333],
+      [37.5, -113],
+      [37.716667, -113.783333],
+      [37.883333, -113.65],
+      [38.016667, -114.2],
+      [37.883333, -116.183333],
+      [37.883333, -117.016667],
+      [38.083333, -117.266667],
+      [39.933333, -117.366667],
+      [41, -119.5],
+      [42.666667, -119],
+      [43.633333, -119.283333],
+      [44.840555, -118.416667],
+      [45.333333, -117.75],
+      [45.333333, -115],
+      [48.416667, -115],
+      [49, -114.666667],
+      [49, -103.166667],
+      [45, -103.166667],
+      [45.1, -104.316667],
+      [45.2375, -106],
+      [44.316667, -106.266667],
+    ],
+  },
+  center: [43.20625, -111.333333],
+  defaultZoom: 6,
+  airports: [
+    {
+      icao: "KMCI",
+      name: "Kansas City International Airport",
+      latitude: 39.2976111,
+      longitude: -94.7138889,
+    },
+    {
+      icao: "KSTL",
+      name: "St Louis Lambert International Airport",
+      latitude: 38.7486982,
+      longitude: -90.3700257,
+    },
+    {
+      icao: "KICT",
+      name: "Wichita Dwight D Eisenhower National Airport",
+      latitude: 37.6499525,
+      longitude: -97.4330428,
+    },
+    {
+      icao: "KHUT",
+      name: "Hutchinson Regional Airport",
+      latitude: 38.0661547,
+      longitude: -97.8604897,
+    },
+  ],
+  // This merges with the links in src/facility.ts using title as the key
+  links: [
+    {
+      title: "Pilots",
+      to: "#",
+      sublinks: [
+        {
+          to: { name: "StaffingRequest" },
+          title: "Staffing Request",
+        },
+      ],
+    },
+  ],
+};
+
+export default fac;
