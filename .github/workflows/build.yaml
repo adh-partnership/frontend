@@ -36,7 +36,7 @@ jobs:
 
     strategy:
       matrix:
-        facility: [zdv, zan, hcf, zlc, zfw]
+        facility: [zdv, zan, hcf, zlc, zfw, zkc]
         include:
         - facility: hcf
           name: HCF
@@ -63,6 +63,11 @@ jobs:
           secret: KZLC_GITOPS_TOKEN 
           repo: kzlc/gitops
           frontend: adhp/zlc-frontend
+        - facility: zkc
+          name: KZKC
+          secret: KZKC_GITOPS_TOKEN
+          repo: kzkc/gitops
+          frontend: adhp/zkc-frontend
 
     steps:
     - uses: actions/checkout@v3
@@ -137,7 +142,7 @@ jobs:
 
     strategy:
       matrix:
-        facility: [zdv, zan, hcf, zlc, zfw]
+        facility: [zdv, zan, hcf, zlc, zfw, zkc]
         include:
         - facility: hcf
           name: HCF
@@ -164,6 +169,11 @@ jobs:
           secret: KZLC_GITOPS_TOKEN 
           repo: kzlc/gitops
           frontend: adhp/zlc-frontend
+        - facility: zkc
+          name: KZKC
+          secret: KZKC_GITOPS_TOKEN
+          repo: kzkc/gitops
+          frontend: adhp/zkc-frontend
   
     runs-on: ubuntu-latest
     needs: build
