@@ -66,7 +66,7 @@ jobs:
         - facility: zkc
           name: KZKC
           secret: KZKC_GITOPS_TOKEN
-          repo: kzkc/gitops
+          repo: kzkcartcc/gitops
           frontend: adhp/zkc-frontend
 
     steps:
@@ -172,7 +172,7 @@ jobs:
         - facility: zkc
           name: KZKC
           secret: KZKC_GITOPS_TOKEN
-          repo: kzkc/gitops
+          repo: kzkcartcc/gitops
           frontend: adhp/zkc-frontend
   
     runs-on: ubuntu-latest
