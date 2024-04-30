@@ -19,6 +19,9 @@ module.exports = {
       pattern: /saltlake/,
     },
     {
+      pattern: /kansas/,
+    },
+    {
       pattern: /grid-cols/,
       variants: ["sm", "md", "lg"],
     },
@@ -68,6 +71,8 @@ module.exports = {
         "saltlake-orange": "#a8672a",
         "fortworth-blue": "#002868",
         "fortworth-red": "#bf0a30",
+        "kansas-red": "FF0000",
+        "kansas-hover": "A00000",
         white: {
           DEFAULT: "#FFFFFF",
           light: "#f9f9f9",
