@@ -10,10 +10,10 @@ const fac: Facility = {
   apiUrl: "https://api.zkcartcc.org",
   devApiUrl: "https://api.dev.zkcartcc.org",
   certificationsHideNone: true,
-  navbarClasses: "bg-saltlake-orange dark:bg-saltlake-orange text-white",
-  footerClasses: "bg-saltlake-orange dark:bg-black-deep text-white",
-  primaryBackground: "bg-saltlake-orange",
-  primaryHover: "bg-saltlake-orange hover:bg-amber-800",
+  navbarClasses: "bg-kansas-red dark:bg-kansas-red text-white",
+  footerClasses: "bg-kansas-red dark:bg-black-deep text-white",
+  primaryBackground: "bg-kansas-red",
+  primaryHover: "bg-kansas-red hover:bg-kansas-hover",
   resources: ["SOPs", "LOAs", "vATIS", "Misc"],
   customRoutes: [
     {
