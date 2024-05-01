@@ -256,6 +256,14 @@ const fac: Facility = {
       created_at: "2023-05-14T18:51:57.177Z",
       updated_at: "2023-05-14T18:51:57.177Z",
     },
+    {
+      category: "Misc",
+      description: "Controller Cheat Sheet",
+      name: "Controller Cheat Sheet",
+      url: "https://vats.im/zlccheatsheet",
+      created_at: "2024-04-30T18:37:18",
+      updated_at: "2024-03-07T18:37:18",
+    },
   ],
 };
 
