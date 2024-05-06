@@ -134,10 +134,10 @@ const fac: Facility = {
       longitude: -97.4330428,
     },
     {
-      icao: "KHUT",
-      name: "Hutchinson Regional Airport",
-      latitude: 38.0661547,
-      longitude: -97.8604897,
+      icao: "KTUL",
+      name: "Tulsa International Airport",
+      latitude: 36.1983933,
+      longitude: -95.8881053,
     },
   ],
   // This merges with the links in src/facility.ts using title as the key
