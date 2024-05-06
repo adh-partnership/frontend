@@ -71,8 +71,8 @@ module.exports = {
         "saltlake-orange": "#a8672a",
         "fortworth-blue": "#002868",
         "fortworth-red": "#bf0a30",
-        "kansas-red": "#ff0000",
-        "kansas-hover": "#a00000",
+        "kansas-blue": "#146496",
+        "kansas-hover": "#256085",
         white: {
           DEFAULT: "#FFFFFF",
           light: "#f9f9f9",
