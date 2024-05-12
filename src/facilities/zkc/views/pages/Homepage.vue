@@ -33,7 +33,7 @@
         <OnlineControllers />
       </div>
       <div class="card">
-        <WeatherTable :stations="['KMCI', 'KSTL', 'KICT', 'KHUT']" rules show-updated sort title table grid-size="5" />
+        <WeatherTable :stations="['KMCI', 'KSTL', 'KICT', 'KTUL']" rules show-updated sort title table grid-size="5" />
       </div>
     </div>
     <div class="card col-span-4 h-min">
