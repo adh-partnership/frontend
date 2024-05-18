@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version to tag (blank will auto-generate)"
+        description: "Version to tag (blank will auto-generate, e.g., 'v1.10')"
         required: false
 
 jobs:
