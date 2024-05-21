@@ -241,7 +241,7 @@ const addVisitor = async (): Promise<void> => {
       visitButtonState.value = ButtonStates.Saved;
       store.updateController(props.controller.cid, {
         ...props.controller,
-        controller_type: "none",
+        controller_type: "visitor",
       });
       saveTimer = setTimeout(() => {
         visitButtonState.value = ButtonStates.Idle;
