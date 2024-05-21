@@ -250,7 +250,7 @@ const addVisitor = async (): Promise<void> => {
       visitButtonState.value = ButtonStates.Error;
     }
   } catch (error) {
-    buttonState.value = ButtonStates.Error;
+    visitButtonState.value = ButtonStates.Error;
   }
 };
 
@@ -284,7 +284,7 @@ const removeController = async (): Promise<void> => {
       removalButtonState.value = ButtonStates.Error;
     }
   } catch (error) {
-    buttonState.value = ButtonStates.Error;
+    removalButtonState.value = ButtonStates.Error;
   }
 };
 
