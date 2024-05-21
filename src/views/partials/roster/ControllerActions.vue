@@ -232,11 +232,6 @@ const addVisitor = async (): Promise<void> => {
     return;
   }
 
-  if (!form.value.RemovalReason) {
-    focusRemoval();
-    return;
-  }
-
   removalButtonState.value = ButtonStates.Saving;
   try {
     const response = await ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
