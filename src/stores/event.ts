@@ -17,7 +17,7 @@ const useEventStore = defineStore("event", {
       fetching: false,
       hasFetched: false,
       fetched: new Date(),
-    } as EventState),
+    }) as EventState,
   getters: {
     shouldFetch: (state) => {
       if (state.hasFetched) {
