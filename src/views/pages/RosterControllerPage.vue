@@ -34,6 +34,15 @@
             :class="openTab === 3 ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
             @click="toggleTabs(3)"
           >
+            Feedback
+          </a>
+        </li>
+        <li v-if="canActionController()" class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+          <a
+            class="cursor-pointer text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
+            :class="openTab === 4 ? primaryBackground : 'dark:text-white light:text-colorado-blue light:bg-white'"
+            @click="toggleTabs(4)"
+          >
             Actions
           </a>
         </li>
@@ -49,6 +58,39 @@
               <TrainingNotes :controller="controller" />
             </div>
             <div v-if="canActionController()" :class="{ hidden: openTab !== 3, block: openTab === 3 }">
+              <div v-if="!feedbacks" class="text-center">
+                <center><Spinner class="fill-colorado-blue" large /></center>
+                <p class="mt-4">Loading feedback...</p>
+              </div>
+              <div v-else>
+                <table class="w-full text-center table table-fixed">
+                  <thead class="border-b-1">
+                    <tr>
+                      <th class="w-24">Position</th>
+                      <th class="w-24">Rating</th>
+                      <th class="hidden md:block">Comment</th>
+                      <th class="w-24">Feedback Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="feedback in userFeedbacks"
+                      :key="feedback.id"
+                      class="border-b-8 border-white dark:border-black-light"
+                    >
+                      <td>{{ feedback.position }}</td>
+                      <td>{{ feedback.rating.charAt(0).toUpperCase() + feedback.rating.slice(1) }}</td>
+                      <td class="hidden md:block">{{ feedback.comments }}</td>
+                      <td>{{ new Date(feedback.created_at).toLocaleDateString() }}</td>
+                    </tr>
+                    <tr v-if="userFeedbacks.length === 0">
+                      <td colspan="7">The selected controller has received no accepted feedback.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div v-if="canActionController()" :class="{ hidden: openTab !== 4, block: openTab === 4 }">
               <ControllerActions :controller="controller" />
               <ControllerRoles :controller="controller" />
             </div>
@@ -61,11 +103,12 @@
 
 <script setup lang="ts">
 import { hasRole, isAuthenticated } from "@/utils/auth";
-import { onBeforeMount, onMounted, ref, watch } from "vue";
+import { computed, onBeforeMount, onMounted, Ref, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { Controller } from "@/types";
 import { primaryBackground } from "@/utils/colors";
 import { storeToRefs } from "pinia";
+import type { Feedback } from "@/types";
 
 import ControllerActions from "@/views/partials/roster/ControllerActions.vue";
 import ControllerHeader from "@/components/ControllerHeader.vue";
@@ -74,6 +117,7 @@ import ControllerRoles from "@/views/partials/roster/ControllerRoles.vue";
 import TrainingNotes from "@/views/partials/training/TrainingNotes.vue";
 import useRosterStore from "@/stores/roster";
 import useUserStore from "@/stores/users";
+import { ZDVAPI } from "@/utils/api";
 
 const loading = ref(true);
 const openTab = ref(1);
@@ -84,6 +128,30 @@ const { controllers, lastRoster } = storeToRefs(rosterStore);
 const userStore = useUserStore();
 const cid = route.params.cid === "me" ? userStore.user?.cid : parseInt(route.params.cid as string, 10);
 const controller = ref(cid ? (rosterStore.getController(cid) as Controller) : ({} as Controller));
+
+// Feedback data
+const feedbacks: Ref<Feedback[] | null> = ref(null);
+const userFeedbacks = computed(() => {
+  if (feedbacks.value == null) {
+    return [];
+  }
+  return feedbacks.value;
+});
+
+const fetchFeedback = async (): Promise<void> => {
+  try {
+    const result = await ZDVAPI.get(`/v1/feedback?cid=${controller.value.cid}&status=approved`);
+    if (result.status === 200) {
+      if (result.data === null) {
+        feedbacks.value = [];
+      } else {
+        feedbacks.value = result.data;
+      }
+    }
+  } catch (e) {
+    feedbacks.value = [];
+  }
+};
 
 const isMe = (): boolean => {
   return isAuthenticated() && cid === userStore.user?.cid;
@@ -138,6 +206,9 @@ watch(controllers, () => {
 
 const toggleTabs = (tab: number): void => {
   openTab.value = tab;
+  if (tab === 3) {
+    fetchFeedback();
+  }
 };
 </script>
 
