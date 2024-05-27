@@ -50,7 +50,7 @@ const useEventStore = defineStore("event", {
     async fetchEvents() {
       this.fetching = true;
       try {
-        const { data } = await ZDVAPI.get("/v1/events");
+        const { data } = await ZDVAPI.get("/v1/events?limit=10");
         this.events = data.sort((a: Event, b: Event) => a.start_date.localeCompare(b.start_date));
       } catch (e) {
         this.events = [];
