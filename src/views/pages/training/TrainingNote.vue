@@ -62,9 +62,7 @@
       <div class="w-1/5">
         <b>Comments</b>
       </div>
-      <div class="w-4/5">
-        {{ note.comments }}
-      </div>
+      <div class="w-4/5" v-html="noteComments"></div>
     </div>
   </div>
 </template>
@@ -72,6 +70,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import sanitizeHtml from "sanitize-html";
 
 import type { Controller, TrainingNote } from "@/types";
 import ControllerHeader from "@/components/ControllerHeader.vue";
@@ -87,6 +86,7 @@ const controller = ref(rosterStore.getController(cid) as Controller);
 const loadingController = ref(true);
 const loadingNote = ref(true);
 const note = ref({} as TrainingNote);
+const noteComments = ref("");
 const failed = ref(false);
 
 const loading = computed(() => {
@@ -111,6 +111,9 @@ onMounted(async () => {
   try {
     const result = await ZDVAPI.get(`/v1/training/${cid}`);
     [note.value] = result.data.filter((n: TrainingNote) => n.id === parseInt(route.params.id as string, 10));
+    noteComments.value = sanitizeHtml(note.value.comments.replaceAll("\n", "<br/>"), {
+      allowedTags: ["br", "strong", "em", "p", "b", "i", "a", "ul", "ol", "li"],
+    });
   } catch (e) {
     failed.value = true;
   } finally {
