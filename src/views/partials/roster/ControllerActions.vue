@@ -232,30 +232,25 @@ const addVisitor = async (): Promise<void> => {
     return;
   }
 
-  if (!form.value.RemovalReason) {
-    focusRemoval();
-    return;
-  }
-
-  removalButtonState.value = ButtonStates.Saving;
+  visitButtonState.value = ButtonStates.Saving;
   try {
     const response = await ZDVAPI.patch(`/v1/user/${props.controller.cid}`, {
       controller_type: "visitor",
     });
     if (response.status === 200) {
-      removalButtonState.value = ButtonStates.Saved;
+      visitButtonState.value = ButtonStates.Saved;
       store.updateController(props.controller.cid, {
         ...props.controller,
-        controller_type: "none",
+        controller_type: "visitor",
       });
       saveTimer = setTimeout(() => {
-        removalButtonState.value = ButtonStates.Idle;
+        visitButtonState.value = ButtonStates.Idle;
       }, 2000);
     } else {
-      removalButtonState.value = ButtonStates.Error;
+      visitButtonState.value = ButtonStates.Error;
     }
   } catch (error) {
-    buttonState.value = ButtonStates.Error;
+    visitButtonState.value = ButtonStates.Error;
   }
 };
 
@@ -289,7 +284,7 @@ const removeController = async (): Promise<void> => {
       removalButtonState.value = ButtonStates.Error;
     }
   } catch (error) {
-    buttonState.value = ButtonStates.Error;
+    removalButtonState.value = ButtonStates.Error;
   }
 };
 

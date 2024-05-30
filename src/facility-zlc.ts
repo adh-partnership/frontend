@@ -232,7 +232,7 @@ const fac: Facility = {
       sublinks: [
         {
           title: "Schedule Training",
-          href: "https://www.picktime.com/vzdv",
+          href: "https://training.zlcartcc.org",
         },
       ],
     },
@@ -255,6 +255,14 @@ const fac: Facility = {
       url: "https://vats.im/dta",
       created_at: "2023-05-14T18:51:57.177Z",
       updated_at: "2023-05-14T18:51:57.177Z",
+    },
+    {
+      category: "Misc",
+      description: "Controller Cheat Sheet",
+      name: "Controller Cheat Sheet",
+      url: "https://vats.im/zlccheatsheet",
+      created_at: "2024-04-30T18:37:18",
+      updated_at: "2024-03-07T18:37:18",
     },
   ],
 };

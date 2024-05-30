@@ -4,7 +4,7 @@ const fac: Facility = {
   id: "KZFW",
   faa_id: "ZFW",
   name: "Fort Worth ARTCC",
-  logo: "https://cdn.zfwartcc.net/New%20Logo.png",
+  logo: "https://zfw.nyc3.cdn.digitaloceanspaces.com/New%20Logo.png",
   skipMajor: false,
   domain: "zfwartcc.net",
   apiUrl: "https://api.zfwartcc.net",
