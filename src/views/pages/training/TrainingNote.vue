@@ -62,21 +62,23 @@
       <div class="w-1/5">
         <b>Comments</b>
       </div>
-      <div class="w-4/5" v-html="noteComments"></div>
+      <div class="w-4/5">
+        <TrainingNoteComment :comments="note.comments" />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, h } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import DOMPurify from "dompurify";
 
 import type { Controller, TrainingNote } from "@/types";
 import ControllerHeader from "@/components/ControllerHeader.vue";
 import Spinner from "@/components/Spinner.vue";
 import useRosterStore from "@/stores/roster";
 import { ZDVAPI } from "@/utils/api";
+import TrainingNoteComment from "./comment";
 
 const rosterStore = useRosterStore();
 const route = useRoute();
@@ -86,7 +88,6 @@ const controller = ref(rosterStore.getController(cid) as Controller);
 const loadingController = ref(true);
 const loadingNote = ref(true);
 const note = ref({} as TrainingNote);
-const noteComments = ref("");
 const failed = ref(false);
 
 const loading = computed(() => {
@@ -111,7 +112,6 @@ onMounted(async () => {
   try {
     const result = await ZDVAPI.get(`/v1/training/${cid}`);
     [note.value] = result.data.filter((n: TrainingNote) => n.id === parseInt(route.params.id as string, 10));
-    noteComments.value = DOMPurify.sanitize(note.value.comments.replaceAll("\n", "<br/>"));
   } catch (e) {
     failed.value = true;
   } finally {
