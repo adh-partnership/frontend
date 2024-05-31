@@ -68,9 +68,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, h } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import sanitizeHtml from "sanitize-html";
+import DOMPurify from "dompurify";
 
 import type { Controller, TrainingNote } from "@/types";
 import ControllerHeader from "@/components/ControllerHeader.vue";
@@ -111,9 +111,7 @@ onMounted(async () => {
   try {
     const result = await ZDVAPI.get(`/v1/training/${cid}`);
     [note.value] = result.data.filter((n: TrainingNote) => n.id === parseInt(route.params.id as string, 10));
-    noteComments.value = sanitizeHtml(note.value.comments.replaceAll("\n", "<br/>"), {
-      allowedTags: ["br", "strong", "em", "p", "b", "i", "a", "ul", "ol", "li"],
-    });
+    noteComments.value = DOMPurify.sanitize(note.value.comments.replaceAll("\n", "<br/>"));
   } catch (e) {
     failed.value = true;
   } finally {
