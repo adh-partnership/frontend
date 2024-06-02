@@ -63,7 +63,7 @@
         <b>Comments</b>
       </div>
       <div class="w-4/5">
-        <TrainingNoteComment :comments="note.comments" />
+        <ShowHtml :input="note.comments" />
       </div>
     </div>
   </div>
@@ -78,7 +78,7 @@ import ControllerHeader from "@/components/ControllerHeader.vue";
 import Spinner from "@/components/Spinner.vue";
 import useRosterStore from "@/stores/roster";
 import { ZDVAPI } from "@/utils/api";
-import TrainingNoteComment from "./comment";
+import ShowHtml from "../../../utils/showHtml";
 
 const rosterStore = useRosterStore();
 const route = useRoute();

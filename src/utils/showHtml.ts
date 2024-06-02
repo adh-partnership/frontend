@@ -2,19 +2,19 @@ import { defineComponent, h } from "vue";
 import DOMPurify from "dompurify";
 
 export default defineComponent({
-  name: "TrainingNoteComment",
+  name: "ShowHtml",
   props: {
-    comments: {
+    input: {
       type: String,
       required: true,
     },
   },
   computed: {
-    commentsDisplay() {
-      return DOMPurify.sanitize(this.comments.replaceAll("\n", "<br>"));
+    inputDisplay() {
+      return DOMPurify.sanitize(this.input.replaceAll("\n", "<br>"));
     },
   },
   render() {
-    return h("p", { innerHTML: this.commentsDisplay }, []);
+    return h("p", { innerHTML: this.inputDisplay }, []);
   },
 });
