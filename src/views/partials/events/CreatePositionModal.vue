@@ -101,14 +101,14 @@ const positionValid = (): boolean => {
   }
 
   let suffixMatch = false;
-  ["_CTR", "_APP", "_DEP", "_TWR", "_GND", "_DEL", "_FSS"].forEach((suffix) => {
+  ["_CTR", "_APP", "_DEP", "_TWR", "_GND", "_DEL", "_FSS", "_TMU"].forEach((suffix) => {
     if (position.value.position.endsWith(suffix)) {
       suffixMatch = true;
     }
   });
   if (!suffixMatch) {
     error.value =
-      "Invalid position entered. Must end in one of the following: _CTR, _APP, _DEP, _TWR, _GND, _DEL, _FSS";
+      "Invalid position entered. Must end in one of the following: _CTR, _APP, _DEP, _TWR, _GND, _DEL, _FSS, _TMU";
     return false;
   }
 
