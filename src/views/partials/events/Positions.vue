@@ -355,7 +355,9 @@ const toggleAssignDropdown = (id: number): void => {
 
 const enroutePositions = computed(() => {
   if (props.positions) {
-    return props.positions.filter((pos) => pos.position.includes("_CTR") || pos.position.includes("_FSS") || pos.position.includes("_TMU"));
+    return props.positions.filter(
+      (pos) => pos.position.includes("_CTR") || pos.position.includes("_FSS") || pos.position.includes("_TMU")
+    );
   }
   return [];
 });
