@@ -41,6 +41,7 @@
         >
           <option value="pending">Pending</option>
           <option value="approved">Approved</option>
+          <option value="approved_silent">Approved (don't announce)</option>
           <option value="rejected">Rejected</option>
         </select>
       </div>
