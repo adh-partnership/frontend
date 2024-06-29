@@ -40,8 +40,8 @@
           class="block rounded-md p-2.5 w-full text-sm text-gray-900 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-black-light dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="pending">Pending</option>
-          <option value="approved">Approved</option>
-          <option value="approved_silent">Approved (don't announce)</option>
+          <option value="approved">Approved (Discord praise)</option>
+          <option value="approved_silent">Approved (Silent)</option>
           <option value="rejected">Rejected</option>
         </select>
       </div>
