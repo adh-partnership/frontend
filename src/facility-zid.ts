@@ -3,7 +3,7 @@ import type { Facility } from "@/types";
 const fac: Facility = {
   id: "KZID",
   faa_id: "ZID",
-  name: "Indianapolis ARTCC",
+  name: "Indy Center",
   navbarName: " ",
   logo: "https://cdn.zidartcc.org/assets/img/indy_logo.svg",
   skipMajor: false,
@@ -14,7 +14,7 @@ const fac: Facility = {
   footerClasses: "bg-black-deep text-white",
   primaryBackground: "bg-black-deep",
   certificationsHideNone: true,
-  resources: ["SOPs", "LOAs", "vATIS", "Misc"],
+  resources: ["SOPs", "CBs", "vATIS", "Misc"],
   customRoutes: [
     {
       path: "/",
