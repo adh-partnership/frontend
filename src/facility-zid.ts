@@ -14,7 +14,7 @@ const fac: Facility = {
   footerClasses: "bg-black-deep text-white",
   primaryBackground: "bg-black-deep",
   certificationsHideNone: true,
-  resources: ["SOPs", "CBs", "vATIS", "Misc"],
+  resources: ["SOPs", "LOAs", "CBs", "vATIS", "Misc"],
   customRoutes: [
     {
       path: "/",
