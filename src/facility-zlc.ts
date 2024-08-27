@@ -232,7 +232,7 @@ const fac: Facility = {
       sublinks: [
         {
           title: "Schedule Training",
-          href: "https://training.zlcartcc.org",
+          href: "https://www.picktime.com/vzdv",
         },
       ],
     },
