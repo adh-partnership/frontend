@@ -42,7 +42,7 @@ module.exports = {
     "bg-fortworth-blue",
     "list-inside",
     "bg-slate-100",
-    "bg-slate-800"
+    "bg-slate-800",
   ],
   theme: {
     extend: {
@@ -71,7 +71,7 @@ module.exports = {
         "saltlake-orange": "#a8672a",
         "fortworth-blue": "#002868",
         "fortworth-red": "#bf0a30",
-        "kansas-blue": "#146496",
+        "kansas-gray": "#424549",
         "kansas-hover": "#256085",
         white: {
           DEFAULT: "#FFFFFF",
