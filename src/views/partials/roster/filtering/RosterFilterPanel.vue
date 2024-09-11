@@ -1,13 +1,13 @@
 <template>
-  <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+  <div class="p-4 dark:bg-slate-900 bg-slate-50">
     <!-- Input Box Filter -->
     <div class="flex flex-col items-start pb-3">
-      <label for="search" class="text-lg font-medium text-gray-700 dark:text-gray-300">Search</label>
+      <label for="search" class="text-lg font-medium text-gray-700 dark:text-white">Search</label>
       <input
         id="search"
         v-model="search"
         type="text"
-        class="rounded-md border border-gray-300 dark:border-gray-700 p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="rounded-md border border-gray-500 dark:border-gray-100 p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-black-deep dark:text-white"
         placeholder="Search for a controller..."
         @input="filterAndEmit"
       />
@@ -21,13 +21,13 @@
         :key="filterKey"
         class="flex flex-col items-start space-y-1 space-x-1 mb-4 flex-grow"
       >
-        <label :for="`filter_${filterKey}`" class="text-lg capitalize font-medium text-gray-700 dark:text-gray-300">
+        <label :for="`filter_${filterKey}`" class="text-lg capitalize font-medium text-gray-700 dark:text-white">
           {{ filter.label }}
         </label>
         <select
           :id="`filter_${filterKey}`"
           v-model="filter.value"
-          class="rounded-md border border-gray-300 dark:border-gray-700 p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="rounded-md border border-gray-500 dark:border-gray-100 p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-black-deep dark:text-white"
           @change="filterAndEmit"
         >
           <option value="">Select {{ filter.label }}</option>
