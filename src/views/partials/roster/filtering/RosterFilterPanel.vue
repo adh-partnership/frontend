@@ -2,7 +2,16 @@
   <div class="p-4 dark:bg-slate-900 bg-slate-50">
     <!-- Input Box Filter -->
     <div class="flex flex-col items-start pb-3">
-      <label for="search" class="text-lg font-medium text-gray-700 dark:text-white">Search</label>
+      <div class="flex justify-between items-center pb-3 w-full">
+        <label for="search" class="text-lg font-medium text-gray-700 dark:text-white">Search</label>
+        <button
+          @click="clearFilters"
+          class="text-sm dark:text-white text-gray-600 hover:text-gray-800 hover:underline"
+          v-if="isDirty"
+        >
+          Clear Filters
+        </button>
+      </div>
       <input
         id="search"
         v-model="search"
@@ -41,14 +50,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { CertificationItem, Controller } from "@/types";
+import { useSessionStorage } from "@vueuse/core";
 
 // Props
 const props = defineProps<{ roster: Controller[]; modelValue: Controller[]; certifications: CertificationItem[] }>();
 
+const filterSessionState = useSessionStorage("roster-search", {
+  search: "",
+  filters: props.certifications.map((cert) => ({ label: cert.display_name, value: "" })),
+} as FilterSessionState);
+
 // Refs
 const search = ref("");
+const isDirty = ref(false);
+
+// Lifecycle
+onMounted(() => {
+  search.value = filterSessionState.value.search;
+  filters.forEach((filter, index) => {
+    filter.value = filterSessionState.value.filters[index].value;
+  });
+  filterAndEmit();
+});
 
 // Emits
 const emit = defineEmits(["update:modelValue"]);
@@ -80,6 +105,14 @@ const filters: Filter[] = [
   },
 ];
 
+// Method to clear filters and reset session storage
+function clearFilters(): void {
+  search.value = ""; // Reset search
+  filters.forEach((filter) => (filter.value = "")); // Reset each filter value
+  filterAndEmit(); // Emit changes
+  filterSessionState.value = { search: "", filters: filters }; // Update session storage
+}
+
 function filterAndEmit(): void {
   const searchFiltered = props.roster.filter((controller) => {
     return `${controller.first_name} ${controller.last_name}`.toLowerCase().includes(search.value.toLowerCase());
@@ -91,6 +124,10 @@ function filterAndEmit(): void {
     });
   });
 
+  filterSessionState.value = { search: search.value, filters: filters };
+
+  isDirty.value = search.value !== "" || filters.some((filter) => filter.value !== "");
+
   emit("update:modelValue", dropdownFiltered);
 }
 
@@ -99,5 +136,10 @@ type Filter = {
   filterFunction: (controller: Controller, value: string) => boolean;
   options: string[];
   value: string;
+};
+
+type FilterSessionState = {
+  search: string;
+  filters: Filter[];
 };
 </script>
