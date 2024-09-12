@@ -108,7 +108,9 @@ function clearFilters(): void {
  */
 function filterAndEmit(): void {
   const searchFiltered = props.roster.filter((controller) => {
-    return `${controller.first_name} ${controller.last_name}`.toLowerCase().includes(search.value.toLowerCase());
+    return `${controller.operating_initials} ${controller.first_name} ${controller.last_name}`
+      .toLowerCase()
+      .includes(search.value.toLowerCase());
   });
 
   const dropdownFiltered = searchFiltered.filter((controller) => {
