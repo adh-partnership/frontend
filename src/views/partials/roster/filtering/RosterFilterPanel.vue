@@ -57,28 +57,13 @@ import { useSessionStorage } from "@vueuse/core";
 // Props
 const props = defineProps<{ roster: Controller[]; modelValue: Controller[]; certifications: CertificationItem[] }>();
 
+// Refs
+const search = ref("");
+const isDirty = ref(false);
 const filterSessionState = useSessionStorage("roster-search", {
   search: "",
   filters: props.certifications.map((cert) => ({ label: cert.display_name, value: "" })),
 } as FilterSessionState);
-
-// Refs
-const search = ref("");
-const isDirty = ref(false);
-
-// Lifecycle
-onMounted(() => {
-  search.value = filterSessionState.value.search;
-  filters.forEach((filter, index) => {
-    filter.value = filterSessionState.value.filters[index].value;
-  });
-  filterAndEmit();
-});
-
-// Emits
-const emit = defineEmits(["update:modelValue"]);
-
-// Filters that get dynamically rendered into Dropdowns.
 const filters: Filter[] = [
   {
     label: "Rating",
@@ -105,7 +90,12 @@ const filters: Filter[] = [
   },
 ];
 
-// Method to clear filters and reset session storage
+// Emits
+const emit = defineEmits(["update:modelValue"]);
+
+/**
+ * Clear all filters and search
+ */
 function clearFilters(): void {
   search.value = ""; // Reset search
   filters.forEach((filter) => (filter.value = "")); // Reset each filter value
@@ -113,6 +103,9 @@ function clearFilters(): void {
   filterSessionState.value = { search: "", filters: filters }; // Update session storage
 }
 
+/**
+ * Apply filters and emit the filtered roster
+ */
 function filterAndEmit(): void {
   const searchFiltered = props.roster.filter((controller) => {
     return `${controller.first_name} ${controller.last_name}`.toLowerCase().includes(search.value.toLowerCase());
@@ -131,6 +124,18 @@ function filterAndEmit(): void {
   emit("update:modelValue", dropdownFiltered);
 }
 
+// Lifecycle
+onMounted(() => {
+  search.value = filterSessionState.value.search;
+  filters.forEach((filter, index) => {
+    filter.value = filterSessionState.value.filters[index].value;
+  });
+  filterAndEmit();
+});
+
+/**
+ * Filter configuration for the dropdowns.
+ */
 type Filter = {
   label: string;
   filterFunction: (controller: Controller, value: string) => boolean;
@@ -138,6 +143,9 @@ type Filter = {
   value: string;
 };
 
+/**
+ * Filter session state. Used to store the search and filter values in session storage.
+ */
 type FilterSessionState = {
   search: string;
   filters: Filter[];
