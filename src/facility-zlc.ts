@@ -14,7 +14,7 @@ const fac: Facility = {
   footerClasses: "bg-saltlake-orange dark:bg-black-deep text-white",
   primaryBackground: "bg-saltlake-orange",
   primaryHover: "bg-saltlake-orange hover:bg-amber-800",
-  resources: ["SOPs", "LOAs", "vATIS", "Misc"],
+  resources: ["SOPs", "LOAs", "vATIS", "Supplements", "Misc"],
   customRoutes: [
     {
       path: "/",
