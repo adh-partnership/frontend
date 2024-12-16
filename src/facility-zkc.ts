@@ -153,6 +153,16 @@ const fac: Facility = {
       ],
     },
   ],
+  staticResources: [
+    {
+      category: "Misc",
+      description: "ScratchPad Cheatsheet",
+      name: "ScratchPad Cheatsheet",
+      url: "https://docs.google.com/spreadsheets/d/1VgTgOgFWDQ_t6USFnl5dx2IorZMX8ACE/edit?usp=sharing&ouid=102287920074985472002&rtpof=true&sd=true",
+      created_at: "2024-12-16T00:00:00.000Z",
+      updated_at: "2024-12-16T00:00:00.000Z",
+    },
+  ],
 };
 
 export default fac;
