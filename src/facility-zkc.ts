@@ -162,6 +162,14 @@ const fac: Facility = {
       created_at: "2024-12-16T00:00:00.000Z",
       updated_at: "2024-12-16T00:00:00.000Z",
     },
+    { 
+      category: "Misc",
+      description: "ZKC Alias Reference Sheet",
+      name: "ZKC Alias Reference Sheet",
+      url: "https://docs.google.com/spreadsheets/d/1Gj_u0Fa0F2YyTYSydA2LYI5QDxfU6nOZVDDbYOiZJGE/edit?usp=sharing",
+      created_at: "2024-12-16T00:00:00.000Z",
+      updated_at: "2024-12-16T00:00:00.000Z",
+    },
   ],
 };
 
