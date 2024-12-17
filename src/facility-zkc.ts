@@ -162,7 +162,7 @@ const fac: Facility = {
       created_at: "2024-12-16T00:00:00.000Z",
       updated_at: "2024-12-16T00:00:00.000Z",
     },
-    { 
+    {
       category: "Misc",
       description: "ZKC Alias Reference Sheet",
       name: "ZKC Alias Reference Sheet",
