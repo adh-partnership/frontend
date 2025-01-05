@@ -7,7 +7,7 @@
       <div v-else-if="fetched && error !== ''">
         <div class="m-3">Error getting roster: {{ error }}</div>
       </div>
-      <div v-else><RosterTable :roster="activeControllers"></RosterTable></div>
+      <div v-else><RosterTable :roster="activeControllers" :certifications="certifications"></RosterTable></div>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ import useRosterStore from "@/stores/roster";
 const fetched = ref(false);
 const error = ref("");
 const rosterStore = useRosterStore();
-const { controllers } = storeToRefs(rosterStore);
+const { controllers, certifications } = storeToRefs(rosterStore);
 
 const activeControllers = computed(() => controllers.value.filter((c) => c.controller_type !== "none"));
 
