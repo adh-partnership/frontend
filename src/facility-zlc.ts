@@ -64,6 +64,11 @@ const fac: Facility = {
       canGrant: ["atm", "datm", "ec", "wm"],
     },
     {
+      name: "Web Team",
+      role: "web",
+      canGrant: ["atm", "datm", "fe", "wm"],
+    },
+    {
       name: "Facilities Team",
       role: "facilities",
       canGrant: ["atm", "datm", "fe", "wm"],
@@ -76,6 +81,11 @@ const fac: Facility = {
     {
       name: "Mentor",
       role: "mtr",
+      canGrant: ["atm", "datm", "ta", "wm"],
+    },
+    {
+      name: "Mentor-in-Training",
+      role: "mit",
       canGrant: ["atm", "datm", "ta", "wm"],
     },
   ],
