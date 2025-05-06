@@ -7,14 +7,14 @@ const fac: Facility = {
   navbarName: " ",
   logo: "https://cdn.flyindycenter.com/assets/img/indy_logo.svg",
   skipMajor: false,
-  domain: "zidartcc.org",
+  domain: "flyindycenter.com",
   apiUrl: "https://api.flyindycenter.com",
   devApiUrl: "https://api.flyindycenter.com",
   navbarClasses: "bg-black-deep text-white",
   footerClasses: "bg-black-deep text-white",
   primaryBackground: "bg-black-deep",
   certificationsHideNone: true,
-  resources: ["SOPs", "LOAs", "CBs", "vATIS", "Pilots", "Misc"],
+  resources: ["vATIS", "Misc"],
   customRoutes: [
     {
       path: "/",
