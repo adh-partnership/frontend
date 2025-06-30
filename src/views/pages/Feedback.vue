@@ -56,7 +56,7 @@
                     >
                       <option value="" selected>Select Controller</option>
                       <option
-                        v-for="controller in rosterStore.getActiveRoster"
+                        v-for="controller in sortedControllers"
                         :key="controller.cid"
                         :value="controller.cid.toString()"
                       >
@@ -289,6 +289,8 @@ const userFeedbacks = computed(() => {
   return feedbacks.value.filter((f) => f.controller.cid === userStore.user?.cid);
 });
 
+const sortedControllers = ref([]);
+
 // Tab System
 const openTab = ref(1);
 const toggleTabs = (tab: number): void => {
@@ -356,6 +358,13 @@ const goTo = (id: number): void => {
 
 onMounted(async (): Promise<void> => {
   await rosterStore.fetchRoster();
+  
+  // Sort controllers alphabetically by name
+  sortedControllers.value = rosterStore.getActiveRoster.sort((a, b) => {
+    const nameA = `${a.first_name} ${a.last_name}`.toLowerCase();
+    const nameB = `${b.first_name} ${b.last_name}`.toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
   if (isAdmin()) {
     try {
       let result = await ZDVAPI.get(`/v1/feedback?status=pending`);
