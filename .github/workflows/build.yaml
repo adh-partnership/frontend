@@ -139,7 +139,7 @@ jobs:
       run: |
         image_digest_sha=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ github.ref_name }}-${{ env.sha_short }})
         image_digest_branch=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ secrets.DOCKER_USERNAME }}/frontend:${{ matrix.facility }}-${{ github.ref_name }})
-        cosign sign --key env://COSIGN_PRIVATE_KEY $image_digest_sha $image_digest_branch
+        cosign sign -y --key env://COSIGN_PRIVATE_KEY $image_digest_sha $image_digest_branch
 ###########################################################################################################
   deploy:
     name: Update ${{ matrix.facility.name }} GitOps Repo
