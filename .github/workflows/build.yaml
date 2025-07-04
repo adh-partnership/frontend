@@ -95,7 +95,7 @@ jobs:
     - name: Install cosign
       uses: sigstore/cosign-installer@main
       with:
-        cosign-release: 'v1.13.1'
+        cosign-release: 'v2.5.2'
     - name: Create .env
       run: |
         SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)
