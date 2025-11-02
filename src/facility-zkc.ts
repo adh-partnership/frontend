@@ -150,11 +150,11 @@ const fac: Facility = {
           to: { name: "StaffingRequest" },
           title: "Staffing Request",
         },
-        {
-          title: "Profile",
-          auth: true,
-          rosteredController: true,
-          sublinks: [
+      ],
+    },
+    {
+      title: "Profile",
+      sublinks: [
         {
           title: "Scheddy",
           href: "https://scheddy.zkcartcc.org",
