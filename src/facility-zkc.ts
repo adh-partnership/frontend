@@ -152,6 +152,15 @@ const fac: Facility = {
         },
       ],
     },
+    {
+      title: "Profile",
+      sublinks: [
+        {
+          title: "Scheddy",
+          href: "https://scheddy.zkcartcc.org",
+        },
+      ],
+    },
   ],
   staticResources: [
     {
