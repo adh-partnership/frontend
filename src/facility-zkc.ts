@@ -158,6 +158,7 @@ const fac: Facility = {
         {
           title: "Scheddy",
           href: "https://scheddy.zkcartcc.org",
+        },
       ],
     },
   ],
