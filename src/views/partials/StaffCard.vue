@@ -9,7 +9,7 @@
     <p class="mt-2">
       {{ description }}
     </p>
-    <a :href="`mailto:${emailTo}@${emailDomain}`">
+    <a :href="`mailto:${facilityPrefix}-${emailTo}@vatusa.net`">
       <i class="fa-solid fa-envelope"></i>
     </a>
   </div>
@@ -27,7 +27,7 @@ type Props = {
   title: string;
   email?: string;
 };
-const emailDomain = fac.domain;
+const facilityPrefix = fac.faa_id.toLowerCase();
 const props = defineProps<Props>();
 const emailTo = ref(props.email || props.position);
 const description = ref(StaffDescriptions[props.position] || "Unknown");

@@ -120,9 +120,9 @@
       After VATSIM has purged your data, please send a written request to {{ facility }}'s Air Traffic Manager by
       emailing
       <a
-        :href="`mailto:atm@${emailDomain}`"
+        :href="`mailto:${facilityPrefix}-atm@vatusa.net`"
         class="text-colorado-blue dark:text-colorado-yellow hover:text-colorado-red hover:dark:text-colorado-red underline"
-        >atm@{{ emailDomain }}</a
+        >{{ facilityPrefix }}-atm@vatusa.net</a
       >. It is a manual process, so please allow up to 30 days for information to be purged. You will receive an email
       response once the data has been purged.
     </p>
@@ -137,7 +137,7 @@
 <script setup lang="ts">
 import fac from "@/facility";
 
-const emailDomain = fac.domain;
+const facilityPrefix = fac.faa_id.toLowerCase();
 const facility = fac.name;
 </script>
 
