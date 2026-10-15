@@ -1,7 +1,8 @@
 <template>
+  <RosterFilterPanel v-model="filteredRoster" :roster="roster" :certifications="certifications" />
   <div>
     <table
-      v-for="(controller, index) in props.roster"
+      v-for="(controller, index) in filteredRoster"
       :key="controller.cid"
       class="w-full cursor-pointer"
       :class="{ 'bg-slate-100 dark:bg-slate-800': (index - 1) % 2, 'dark:bg-slate-900 bg-slate-50': index % 2 }"
@@ -37,14 +38,19 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 
-import type { Controller } from "@/types";
+import type { CertificationItem, Controller } from "@/types";
 import ControllerCertificationBadges from "@/components/ControllerCertificationBadges.vue";
 import { getControllerTitle } from "@/utils/helpers";
+import RosterFilterPanel from "@/views/partials/roster/filtering/RosterFilterPanel.vue";
+import { ref } from "vue";
 
 const router = useRouter();
 const props = defineProps<{
   roster: Controller[];
+  certifications: CertificationItem[];
 }>();
+
+const filteredRoster = ref(props.roster);
 
 const goToController = (cid: number): void => {
   router.push(`/roster/${cid}`);
